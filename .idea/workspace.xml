@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="16d88876-88d8-4668-91b5-3c169be72a6c" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/dataSources.ids" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/webhw.iml" afterPath="$PROJECT_DIR$/.idea/webhw.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bupl/grids.py" afterPath="$PROJECT_DIR$/bupl/grids.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webhw/settings.py" afterPath="$PROJECT_DIR$/webhw/settings.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webhw/templates/boc_grid.html" afterPath="$PROJECT_DIR$/webhw/templates/boc_grid.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webhw/templates/example3-editing.html" afterPath="$PROJECT_DIR$/webhw/templates/example3-editing.html" />
     </list>
     <ignored path="webhw.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -42,7 +34,7 @@
       <file leaf-file-name="boc_grid.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/webhw/templates/boc_grid.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="186" column="6" selection-start="5881" selection-end="5881" vertical-scroll-proportion="0.79389316">
+            <state line="188" column="7" selection-start="5897" selection-end="5897" vertical-scroll-proportion="0.8396947">
               <folding>
                 <marker date="1364805689231" expanded="true" signature="683:5888" placeholder="..." />
                 <marker date="1364805689231" expanded="false" signature="697:714" placeholder="..." />
@@ -479,6 +471,11 @@
       <created>1363002864977</created>
       <updated>1363002864977</updated>
     </task>
+    <task id="LOCAL-00001" summary="Add a Combobox">
+      <created>1364805713858</created>
+      <updated>1364805713858</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TodoView" selected-index="2">
@@ -703,7 +700,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/webhw/templates/boc_grid.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="186" column="6" selection-start="5881" selection-end="5881" vertical-scroll-proportion="0.79389316">
+        <state line="188" column="7" selection-start="5897" selection-end="5897" vertical-scroll-proportion="0.8396947">
           <folding>
             <marker date="1364805689231" expanded="true" signature="683:5888" placeholder="..." />
             <marker date="1364805689231" expanded="false" signature="697:714" placeholder="..." />
