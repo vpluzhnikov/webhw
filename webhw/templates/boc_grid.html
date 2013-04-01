@@ -42,7 +42,8 @@
     <script>
         var columns = []
         var griddata = []
-        var options = {}
+        var options = {
+        }
 
 
         function requiredFieldValidator(value) {
@@ -51,6 +52,67 @@
             } else {
                 return {valid: true, msg: null};
             }
+        }
+
+        function SelectCellEditor(args) {
+            var $select;
+            var defaultValue;
+            var scope = this;
+
+            this.init = function () {
+
+                if (args.column.options) {
+                    opt_values = args.column.options.split(',');
+                } else {
+                    opt_values = "yes,no".split(',');
+                }
+                option_str = ""
+                for (i in opt_values) {
+                    v = opt_values[i];
+                    option_str += "<OPTION value='" + v + "'>" + v + "</OPTION>";
+                }
+                $select = $("<SELECT tabIndex='0' class='editor-select'>" + option_str + "</SELECT>");
+                $select.appendTo(args.container);
+                $select.focus();
+            };
+
+            this.destroy = function () {
+                $select.remove();
+            };
+
+            this.focus = function () {
+                $select.focus();
+            };
+
+            this.loadValue = function (item) {
+                defaultValue = item[args.column.field];
+                $select.val(defaultValue);
+            };
+
+            this.serializeValue = function () {
+                if (args.column.options) {
+                    return $select.val();
+                } else {
+                    return ($select.val() == "yes");
+                }
+            };
+
+            this.applyValue = function (item, state) {
+                item[args.column.field] = state;
+            };
+
+            this.isValueChanged = function () {
+                return ($select.val() != defaultValue);
+            };
+
+            this.validate = function () {
+                return {
+                    valid: true,
+                    msg: null
+                };
+            };
+
+            this.init();
         }
 
         var grid;
@@ -89,20 +151,39 @@
                 if (d["editor"] == "Slick.Editors.Text") {
                     d["editor"] = Slick.Editors.Text
                 }
+                if (d["validator"] == "requiredFieldValidator") {
+                    d["validator"] = requiredFieldValidator
+                }
+                if (d["editor"] == "SelectCellEditor") {
+                    d["editor"] = SelectCellEditor
+                }
                 columns[col] = d
             }
-            console.log(columns)
+            console.log(columns);
+
+
+                for (var i = 0; i < 5; i++) {
+                    var d = (griddata[i] = {});
+
+                    d["code"] = "Task"+i;
+                    d["name"] = "This is a sample task";
+                    d["choice"] = "Black";
+
+                }
+
+
             grid = new Slick.Grid("#myGrid", griddata, columns, options);
             grid.setSelectionModel(new Slick.CellSelectionModel());
+
             grid.onAddNewRow.subscribe(function (e, args) {
                 var item = args.item;
-                grid.invalidateRow(data.length);
-                data.push(item);
+                grid.invalidateRow(griddata.length);
+                griddata.push(item);
                 grid.updateRowCount();
                 grid.render();
             });
         })
     </script>
+</div>
 </body>
 </html>
-s

@@ -24,7 +24,7 @@
   <div style="width:900px;">
     <div id="myGrid" style="width:100%;height:500px;"></div>
   </div>
-
+</div>
 {#  <div class="options-panel">#}
 {#    <h2>Demonstrates:</h2>#}
 {#    <ul>#}
@@ -65,6 +65,67 @@
     }
   }
 
+  function SelectCellEditor(args) {
+      var $select;
+      var defaultValue;
+      var scope = this;
+
+      this.init = function () {
+
+          if (args.column.options) {
+              opt_values = args.column.options.split(',');
+          } else {
+              opt_values = "yes,no".split(',');
+          }
+          option_str = ""
+          for (i in opt_values) {
+              v = opt_values[i];
+              option_str += "<OPTION value='" + v + "'>" + v + "</OPTION>";
+          }
+          $select = $("<SELECT tabIndex='0' class='editor-select'>" + option_str + "</SELECT>");
+          $select.appendTo(args.container);
+          $select.focus();
+      };
+
+      this.destroy = function () {
+          $select.remove();
+      };
+
+      this.focus = function () {
+          $select.focus();
+      };
+
+      this.loadValue = function (item) {
+          defaultValue = item[args.column.field];
+          $select.val(defaultValue);
+      };
+
+      this.serializeValue = function () {
+          if (args.column.options) {
+              return $select.val();
+          } else {
+              return ($select.val() == "yes");
+          }
+      };
+
+      this.applyValue = function (item, state) {
+          item[args.column.field] = state;
+      };
+
+      this.isValueChanged = function () {
+          return ($select.val() != defaultValue);
+      };
+
+      this.validate = function () {
+          return {
+              valid: true,
+              msg: null
+          };
+      };
+
+      this.init();
+  }
+
   var grid;
   var data = [];
   var columns = [
@@ -75,7 +136,7 @@
     {id: "start", name: "Start", field: "start", minWidth: 60, editor: Slick.Editors.Date},
     {id: "finish", name: "Finish", field: "finish", minWidth: 60, editor: Slick.Editors.Date},
     {id: "effort-driven", name: "Effort Driven", width: 80, minWidth: 20, maxWidth: 80, cssClass: "cell-effort-driven", field: "effortDriven", formatter: Slick.Formatters.Checkmark, editor: Slick.Editors.Checkbox},
-    {id: "color", name:"Color", field:"color", width: 80, minWidth: 20, maxWidth: 80, options: "Red,Green,Blue,Black,White", editor: Slick.Editors.SelectCell}
+    {id: "color", name:"Color", field:"color", width: 80, minWidth: 20, maxWidth: 80, options: "Red,Green,Blue,Black,White", editor: SelectCellEditor}
   ];
   var options = {
     editable: true,
