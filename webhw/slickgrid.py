@@ -8,6 +8,7 @@ class SlickGrid(object):
     cosmo_grid = True # allows to create grid withot db on back-end
     col_options = None
     grid_options = None
+    frame = None
 
     def get_default_grid_options(self):
         self.grid_options = {
@@ -57,3 +58,11 @@ class SlickGrid(object):
             return self.grid_options
         else:
             return self.get_default_grid_options()
+
+    def get_grid(self):
+        self.frame = {}
+        self.frame['data'] = self.get_grid_data()
+        self.frame['options'] = self.get_grid_options()
+        self.frame['columns'] = self.get_grid_columns()
+        return self.frame
+
