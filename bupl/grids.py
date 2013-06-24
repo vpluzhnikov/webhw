@@ -43,7 +43,7 @@ class BOC_Grid(SlickGrid):
                     'options': ',Intel x86,Oracle SPARC,IBM Power', 'editor': 'SelectCellEditor',
                     'validator': 'requiredFieldValidator'},
                    {'id' : 'ostype', 'name': 'Тип ОС', 'width': 150, 'cssClass' : 'cell-title',
-                    'options': ',Windows,Linux (RHEL),Oracle Solaris, IBM AIX', 'editor': 'SelectCellEditor',
+                    'options': ',Windows,Linux (RHEL),Oracle Solaris,IBM AIX', 'editor': 'SelectCellEditor',
                     'validator': 'requiredFieldValidator'},
                    {'id' : 'swaddons', 'name': 'Дополнительное ПО', 'width': 150, 'cssClass' : 'cell-title',
                     'editor': 'Slick.Editors.LongText'},
@@ -57,6 +57,6 @@ class BOC_Grid(SlickGrid):
                     'options': ',нет,да', 'editor': 'SelectCellEditor'},
                    {'id' : 'backuptype', 'name': 'Резервное копирование', 'width': 120, 'cssClass' : 'cell-title',
                     'options': ',нет,да', 'editor': 'SelectCellEditor'},
-                   {'id' : 'comment', 'name': 'Дополнительные требований', 'width': 250, 'cssClass' : 'cell-title',
+                   {'id' : 'comment', 'name': 'Дополнительные требования', 'width': 250, 'cssClass' : 'cell-title',
                     'editor': 'Slick.Editors.LongText'},
                    ]

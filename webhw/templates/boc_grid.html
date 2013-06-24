@@ -47,6 +47,29 @@
         var griddata = []
         var options = {
         }
+        var colnumbers = { 'itemtype1' : 0,
+                    'itemname' : 1,
+                    'itemtype2' : 2,
+                    'servername': 3,
+                    'ex_cpucount' : 4,
+                    'ex_ramcount' : 5,
+                    'ex_sancount' : 6 ,
+                    'ex_nascount': 7,
+                    'cpucount' : 8,
+                    'ramcount' : 9,
+                    'sancount' : 10,
+                    'nascount' : 11,
+                    'itemcount' : 12,
+                    'platformtype' : 13,
+                    'ostype' : 14,
+                    'swaddons' : 15,
+                    'itemstate' : 16,
+                    'lansegment' : 17,
+                    'dbtype' : 18,
+                    'clustype' : 19,
+                    'backuptype' : 20,
+                    'comment' : 21
+        }
 
 
         function requiredFieldValidator(value) {
@@ -126,7 +149,7 @@
             async: false,
             dataType: 'json',
             success: function(data, status){
-                console.log(data)
+{#                console.log(data)#}
                 griddata = data.data;
                 columns = data.columns;
                 options = data.options;
@@ -148,7 +171,6 @@
 {#            console.log("OPTIONS: " + options);#}
 
             for (col in columns) {
-                console.log(col)
                 d = columns[col]
                 if (d["editor"] == "Slick.Editors.Text") {
                     d["editor"] = Slick.Editors.Text
@@ -169,21 +191,102 @@
             grid = new Slick.Grid("#myGrid", griddata, columns, options);
             grid.setSelectionModel(new Slick.CellSelectionModel());
 
-            grid.onBeforeEditCell.subscribe(function(e,args) {
+{#            grid.onBeforeEditCell.subscribe(function(e,args) {#}
 {#                console.log("beforeEdit");#}
 {#                console.log(args.row);#}
 {#                console.log(args.cell);#}
-            });
+{#            if (!isCellEditable(args.row, args.cell, args.item)) {#}
+{#                return false;#}
+{#            }#}
+            {#                console.log(grid.getColumns())#}
+{#            });#}
 
             grid.onCellChange.subscribe(function(e,args) {
-                console.log("cellChange");
-                console.log(args.row);
-                console.log(args.cell);
-{#                alert("OK");#}
+                grid.invalidateRow(args.row);
+                if (grid.getColumns()[args.cell].field == "itemtype1") {
+                    if (!griddata[args.row][grid.getColumns()[colnumbers["itemname"]].field] || griddata[args.row][grid.getColumns()[colnumbers["itemname"]].field] == "") {
+                        griddata[args.row][grid.getColumns()[colnumbers["itemname"]].field] = griddata[args.row][grid.getColumns()[colnumbers["itemtype1"]].field];
+                    }
+                }
+                if (grid.getColumns()[args.cell].field == "itemtype2") {
+                    if (griddata[args.row][grid.getColumns()[colnumbers["itemtype2"]].field] == "новая позиция"){
+                        griddata[args.row][grid.getColumns()[colnumbers["servername"]].field] = "-";
+                        griddata[args.row][grid.getColumns()[colnumbers["ex_cpucount"]].field] = "-";
+                        griddata[args.row][grid.getColumns()[colnumbers["ex_ramcount"]].field] = "-";
+                        griddata[args.row][grid.getColumns()[colnumbers["ex_sancount"]].field] = "-";
+                        griddata[args.row][grid.getColumns()[colnumbers["ex_nascount"]].field] = "-";
+                    }
+                }
+                if (grid.getColumns()[args.cell].field == "platformtype") {
+                    if (griddata[args.row][grid.getColumns()[colnumbers["platformtype"]].field] == "Intel x86"){
+                        griddata[args.row][grid.getColumns()[colnumbers["ostype"]].field] = "Linux (RHEL)";
+                    }
+                    if (griddata[args.row][grid.getColumns()[colnumbers["platformtype"]].field] == "Oracle SPARC"){
+                        griddata[args.row][grid.getColumns()[colnumbers["ostype"]].field] = "Oracle Solaris";
+                    }
+                    if (griddata[args.row][grid.getColumns()[colnumbers["platformtype"]].field] == "IBM Power"){
+                        griddata[args.row][grid.getColumns()[colnumbers["ostype"]].field] = "IBM AIX";
+                    }
+                }
+
+                if (grid.getColumns()[args.cell].field == "ostype") {
+                    if (griddata[args.row][grid.getColumns()[colnumbers["ostype"]].field] == "Linux (RHEL)" ||
+                            griddata[args.row][grid.getColumns()[colnumbers["ostype"]].field] == "Windows"){
+                        griddata[args.row][grid.getColumns()[colnumbers["platformtype"]].field] = "Intel x86";
+                    }
+                    if (griddata[args.row][grid.getColumns()[colnumbers["ostype"]].field] == "Oracle Solaris"){
+                        griddata[args.row][grid.getColumns()[colnumbers["platformtype"]].field] = "Oracle SPARC";
+                    }
+                    if (griddata[args.row][grid.getColumns()[colnumbers["ostype"]].field] == "IBM AIX"){
+                        griddata[args.row][grid.getColumns()[colnumbers["platformtype"]].field] = "IBM Power";
+                    }
+                }
+
+                grid.render();
             });
+
 
             grid.onAddNewRow.subscribe(function (e, args) {
                 var item = args.item;
+                console.log("from new row handler");
+                console.log(item);
+                console.log(args);
+                if (args["column"]["id"] == "itemtype1") {
+                    item["itemname"] = item["itemtype1"];
+                }
+                if (args["column"]["id"] == "itemtype2") {
+                    if (item["itemtype2"] == "новая позиция") {
+                        item["servername"] = "-";
+                        item["ex_cpucount"] = "-";
+                        item["ex_ramcount"] = "-";
+                        item["ex_sancount"] = "-";
+                        item["ex_nascount"] = "-";
+                    }
+                }
+                if (args["column"]["id"] == "platformtype") {
+                    if (item["platformtype"] == "Intel x86"){
+                        item["ostype"] = "Linux (RHEL)";
+                    }
+                    if (item["platformtype"] == "Oracle SPARC"){
+                        item["ostype"] = "Oracle Solaris";
+                    }
+                    if (item["platformtype"] == "IBM Power"){
+                        item["ostype"] = "IBM AIX";
+                    }
+                }
+
+                if (args["column"]["id"] == "ostype") {
+                    if (item["ostype"] == "Linux (RHEL)" || item["ostype"] == "Windows" ){
+                        item["platformtype"] = "Intel x86";
+                    }
+                    if (item["ostype"] == "Oracle Solaris"){
+                        item["platformtype"] = "Oracle SPARC";
+                    }
+                    if (item["ostype"] == "IBM AIX"){
+                        item["platformtype"] = "IBM Power";
+                    }
+                }
+
                 grid.invalidateRow(griddata.length);
                 griddata.push(item);
                 grid.updateRowCount();
@@ -208,10 +311,6 @@
                     prjname.value = data.project_name;
                     prjcustomer.value = data.customer;
                     prjmanager.value = data.manager;
-                    {#                    griddata = data.data;#}
-                    {#                    columns = data.columns;#}
-                    {#                    options = data.options;#}
-{#                    prjname.value = data.Project-Name#}
                 }
             });
         };

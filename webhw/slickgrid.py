@@ -25,6 +25,7 @@ class SlickGrid(object):
 
     def get_grid_data(self):
         GRID_DATA = []
+        FIRST_LINE = {}
         if hasattr(self, 'queryset') and self.queryset == None and hasattr(self, 'cosmo_grid') and self.cosmo_grid and \
            hasattr(self, 'columns') and self.columns is not None:
 #            COLS = {}
@@ -32,6 +33,9 @@ class SlickGrid(object):
 #                COLS.update({col : ''})
 #            GRID_DATA.append(COLS)
             GRID_DATA = []
+#            for key in self.col_options:
+#                FIRST_LINE.update({key['id'] : ''})
+#            GRID_DATA.append(FIRST_LINE)
         elif hasattr(self, 'queryset') and self.queryset is not None:
             GRID_DATA = self.get_dbdata()
         return GRID_DATA

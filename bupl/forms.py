@@ -13,9 +13,9 @@ class BocForm(forms.Form):
         PRJLIST.append([prjnum['prj_number'] , str(prjnum['prj_number']).split(".")[0]])
     prjselect = forms.ChoiceField(choices=PRJLIST, label='Номер проекта')
     prjname = forms.CharField(label='Название проекта',
-        widget=forms.TextInput(attrs={'size':'150'}))
+        widget=forms.TextInput(attrs={'size':'150', 'readonly':'readonly'}))
     customer = forms.CharField(label='Заказчик',
-        widget=forms.TextInput(attrs={'size':'30'}))
+        widget=forms.TextInput(attrs={'size':'30', 'readonly':'readonly'}))
     manager = forms.CharField(label='Руководитель проекта',
-        widget=forms.TextInput(attrs={'size':'30'}))
+        widget=forms.TextInput(attrs={'size':'30', 'readonly':'readonly'}))
 
