@@ -215,6 +215,36 @@
                         griddata[args.row][grid.getColumns()[colnumbers["ex_ramcount"]].field] = "-";
                         griddata[args.row][grid.getColumns()[colnumbers["ex_sancount"]].field] = "-";
                         griddata[args.row][grid.getColumns()[colnumbers["ex_nascount"]].field] = "-";
+                        if (griddata[args.row][grid.getColumns()[colnumbers["itemtype1"]].field] == "Сервер приложения"){
+                            griddata[args.row][grid.getColumns()[colnumbers["cpucount"]].field] = 6;
+                            griddata[args.row][grid.getColumns()[colnumbers["ramcount"]].field] = 48;
+                            griddata[args.row][grid.getColumns()[colnumbers["sancount"]].field] = 0;
+                            griddata[args.row][grid.getColumns()[colnumbers["nascount"]].field] = 0;
+                            griddata[args.row][grid.getColumns()[colnumbers["platformtype"]].field] = "Intel x86";
+                            griddata[args.row][grid.getColumns()[colnumbers["ostype"]].field] = "Linux (RHEL)";
+                        }
+                        if (griddata[args.row][grid.getColumns()[colnumbers["itemtype1"]].field] == "Терминальный сервер"){
+                            griddata[args.row][grid.getColumns()[colnumbers["cpucount"]].field] = 4;
+                            griddata[args.row][grid.getColumns()[colnumbers["ramcount"]].field] = 24;
+                            griddata[args.row][grid.getColumns()[colnumbers["sancount"]].field] = 0;
+                            griddata[args.row][grid.getColumns()[colnumbers["nascount"]].field] = 0;
+                            griddata[args.row][grid.getColumns()[colnumbers["platformtype"]].field] = "Intel x86";
+                            griddata[args.row][grid.getColumns()[colnumbers["ostype"]].field] = "Windows";
+
+                        }
+                        if (griddata[args.row][grid.getColumns()[colnumbers["itemtype1"]].field] == "Балансировщик"){
+                            griddata[args.row][grid.getColumns()[colnumbers["cpucount"]].field] = "-";
+                            griddata[args.row][grid.getColumns()[colnumbers["ramcount"]].field] = "-";
+                            griddata[args.row][grid.getColumns()[colnumbers["sancount"]].field] = "-";
+                            griddata[args.row][grid.getColumns()[colnumbers["nascount"]].field] = "-";
+                        }
+                        if (griddata[args.row][grid.getColumns()[colnumbers["itemtype1"]].field] == "IBM DataPower"){
+                            griddata[args.row][grid.getColumns()[colnumbers["cpucount"]].field] = "-";
+                            griddata[args.row][grid.getColumns()[colnumbers["ramcount"]].field] = "-";
+                            griddata[args.row][grid.getColumns()[colnumbers["sancount"]].field] = "-";
+                            griddata[args.row][grid.getColumns()[colnumbers["nascount"]].field] = "-";
+                        }
+
                     }
                 }
                 if (grid.getColumns()[args.cell].field == "platformtype") {
@@ -239,6 +269,17 @@
                     }
                     if (griddata[args.row][grid.getColumns()[colnumbers["ostype"]].field] == "IBM AIX"){
                         griddata[args.row][grid.getColumns()[colnumbers["platformtype"]].field] = "IBM Power";
+                    }
+                }
+
+                if (grid.getColumns()[args.cell].field == "itemstate") {
+                    if (griddata[args.row][grid.getColumns()[colnumbers["itemstate"]].field] == "пром") {
+                        griddata[args.row][grid.getColumns()[colnumbers["clustype"]].field] = "да";
+                        griddata[args.row][grid.getColumns()[colnumbers["backuptype"]].field] = "да";
+                    }
+                    if (griddata[args.row][grid.getColumns()[colnumbers["itemstate"]].field] == "тест"){
+                        griddata[args.row][grid.getColumns()[colnumbers["clustype"]].field] = "нет";
+                        griddata[args.row][grid.getColumns()[colnumbers["backuptype"]].field] = "нет";
                     }
                 }
 
@@ -284,6 +325,17 @@
                     }
                     if (item["ostype"] == "IBM AIX"){
                         item["platformtype"] = "IBM Power";
+                    }
+                }
+
+                if (args["column"]["id"] == "itemstate") {
+                    if (item["itemstate"] == "пром"){
+                        item["clustype"] = "да";
+                        item["backuptype"] = "да";
+                    }
+                    if (item["itemstate"] == "тест"){
+                        item["clustype"] = "нет";
+                        item["backuptype"] = "нет";
                     }
                 }
 

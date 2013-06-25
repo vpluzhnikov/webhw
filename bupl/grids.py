@@ -12,13 +12,15 @@ class BOC_Grid(SlickGrid):
     col_options = [
 #        {'id' : 'code', 'name': '№ п/п', 'width': 40, 'cssClass' : 'cell-title', 'editor':
 #        'Slick.Editors.Text',  'validator': 'requiredFieldValidator'},
+#                   {'id': "#", 'name': '', 'width': 30, 'behavior': 'selectAndMove', 'selectable': 'false',
+#                    'resizable': 'false' },
                    {'id' : 'itemtype1', 'name': 'Тип позиции', 'width': 160, 'cssClass' : 'cell-title',
                     'options': ',Сервер СУБД,Сервер приложения,Терминальный сервер,Балансировщик,IBM DataPower',
                     'editor':  'SelectCellEditor'},
                    {'id' : 'itemname', 'name': 'Наименование позиции', 'width': 220, 'cssClass' : 'cell-title',
                     'editor' : 'Slick.Editors.Text',  'validator': 'requiredFieldValidator'},
                    {'id' : 'itemtype2', 'name': 'Новый/апгрейд', 'width': 120, 'cssClass' : 'cell-title',
-                    'options': ',новая позиция,апгрейд', 'editor':  'SelectCellEditor'},
+                    'options': ',новая позиция,модернизация', 'editor':  'SelectCellEditor'},
                    {'id' : 'servername', 'name': 'Имя сервера', 'width': 100, 'cssClass' : 'cell-title', 'editor':
                        'Slick.Editors.Text'},
                    {'id' : 'ex_cpucount', 'name': 'Кол-во CPU', 'width': 100, 'cssClass' : 'cell-title', 'editor':
@@ -53,7 +55,7 @@ class BOC_Grid(SlickGrid):
                     'options': ',Альфа,Сигма,Тау', 'editor': 'SelectCellEditor'},
                    {'id' : 'dbtype', 'name': 'Тип СУБД', 'width': 120, 'cssClass' : 'cell-title',
                     'options': ',MSSQL,Oracle DB,IBM DB2', 'editor': 'SelectCellEditor'},
-                   {'id' : 'clustype', 'name': 'Системная кластризация', 'width': 120, 'cssClass' : 'cell-title',
+                   {'id' : 'clustype', 'name': 'Территориальная защита', 'width': 120, 'cssClass' : 'cell-title',
                     'options': ',нет,да', 'editor': 'SelectCellEditor'},
                    {'id' : 'backuptype', 'name': 'Резервное копирование', 'width': 120, 'cssClass' : 'cell-title',
                     'options': ',нет,да', 'editor': 'SelectCellEditor'},
