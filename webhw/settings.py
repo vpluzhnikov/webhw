@@ -9,6 +9,12 @@ LOG = PROJECT_DIR + '/log/'
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+UPLOAD_DIR = PROJECT_DIR + '/bocuploads/'
+
+FILE_UPLOAD_MAX_MEMORY_SIZE = '104857600'
+#FILE_UPLOAD_HANDLERS = ('webhw.upload_handlers.UploadProgressCachedHandler', ) +\
+#                       global_settings.FILE_UPLOAD_HANDLERS
+
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -97,7 +103,7 @@ TEMPLATE_LOADERS = (
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+#    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:

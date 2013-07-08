@@ -139,3 +139,4 @@ class Prjneeds(models.Model):
     class Meta:
         db_table = u'PrjNeeds'
         verbose_name_plural = "Требования по проектам"
+

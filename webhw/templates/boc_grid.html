@@ -21,7 +21,13 @@
 </head>
 <body>
 
-{{ form.as_table }}
+<form id="boc_form" enctype="multipart/form-data" method="post">
+
+{{ form.as_p }}
+
+    <input type="submit" id="id_calc" name="calc" value="Рассчитать" />
+
+</form>
 
 <div style="position:relative">
     <div style="width:1200px;">
@@ -207,20 +213,6 @@
                 });
             });
 
-{#            grid.onClick.subscribe(function (e) {#}
-{#                var cell = grid.getCellFromEvent(e);#}
-{#                if (grid.getColumns()[cell.cell].id == "priority") {#}
-{#                    if (!grid.getEditorLock().commitCurrentEdit()) {#}
-{#                        return;#}
-{#                    }#}
-{##}
-{#                    var states = { "Low": "Medium", "Medium": "High", "High": "Low" };#}
-{#                    data[cell.row].priority = states[data[cell.row].priority];#}
-{#                    grid.updateRow(cell.row);#}
-{#                    e.stopPropagation();#}
-{#                }#}
-{#            });#}
-
         $("#contextMenu").click(function (e) {
             if (!$(e.target).is("li")) {
                 return;
@@ -235,8 +227,6 @@
             grid.invalidate();
             grid.render();
         });
-
-
 
             grid.onCellChange.subscribe(function(e,args) {
                 grid.invalidateRow(args.row);
@@ -396,7 +386,6 @@
                 dataType: 'json',
                 data: { "project_id" : prjselectbox.value },
                 success: function(data, status){
-{#                    console.log(data)#}
                     prjname.value = data.project_name;
                     prjcustomer.value = data.customer;
                     prjmanager.value = data.manager;
@@ -405,6 +394,17 @@
         };
         prjselectbox.onchange=prjselect_handler
 
+        $("#id_calc").click( function ()
+        {
+            console.log(griddata);
+        }
+        );
+
+        $("#id_file").change(function (){
+            var fileName = $(this).val();
+            console.log(fileName)
+            $("form#boc_form").submit();
+        });
 
     </script>
 </div>

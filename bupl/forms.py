@@ -11,11 +11,13 @@ class BocForm(forms.Form):
     PRJLIST.append([0, 'Без номера'])
     for prjnum in AllProjects:
         PRJLIST.append([prjnum['prj_number'] , str(prjnum['prj_number']).split(".")[0]])
-    prjselect = forms.ChoiceField(choices=PRJLIST, label='Номер проекта')
+
+    file = forms.FileField(label='Загрузить из xls', required=False)
+    prjselect = forms.ChoiceField(choices=PRJLIST, label='Номер проекта', required=False)
     prjname = forms.CharField(label='Название проекта',
-        widget=forms.TextInput(attrs={'size':'150', 'readonly':'readonly'}))
+        widget=forms.TextInput(attrs={'size':'150', 'readonly':'readonly'}), required=False)
     customer = forms.CharField(label='Заказчик',
-        widget=forms.TextInput(attrs={'size':'30', 'readonly':'readonly'}))
+        widget=forms.TextInput(attrs={'size':'30', 'readonly':'readonly'}), required=False)
     manager = forms.CharField(label='Руководитель проекта',
-        widget=forms.TextInput(attrs={'size':'30', 'readonly':'readonly'}))
+        widget=forms.TextInput(attrs={'size':'30', 'readonly':'readonly'}), required=False)
 
