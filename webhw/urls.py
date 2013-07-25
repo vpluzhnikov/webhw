@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, include, url
-from bupl.views import index, boc_grid_setup, boc_grid_form, boc_get_prj_name, upload_xls_file
+from bupl.views import index, boc_grid_setup, boc_grid_form, boc_get_prj_name, boc_grid_calc
 from webhw import settings
 
 # Uncomment the next two lines to enable the admin:
@@ -12,8 +12,8 @@ urlpatterns = patterns('',
     # url(r'^webhw/', include('webhw.foo.urls')),
     url(r'^$', index),
     url(r'^boc_setup$', boc_grid_setup),
+    url(r'^boc_calc', boc_grid_calc),
     url(r'^boc_get_prj_name$', boc_get_prj_name),
-    url(r'^upload_xls_file$',upload_xls_file),
     url(r'^boc$', boc_grid_form),
     url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
 

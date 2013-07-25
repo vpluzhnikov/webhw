@@ -5,6 +5,9 @@ from webhw.settings import UPLOAD_DIR
 from os import remove
 
 def handle_xls_file(f, name):
+    """
+    Uploads an xls file
+    """
     with open(UPLOAD_DIR + name, 'wb+') as destination:
         for chunk in f.chunks():
             destination.write(chunk)

@@ -70,7 +70,7 @@ class Network(models.Model):
         verbose_name_plural = "Сетевые сегменты"
 
 
-class Project(models.Model):
+class Projects(models.Model):
 #    id = models.IntegerField(primary_key=True)
     priority = models.CharField(max_length=765, blank=True)
     customer = models.CharField(max_length=765, blank=True)
@@ -83,7 +83,7 @@ class Project(models.Model):
         return u"%s - %s - %s - %s - %s - %s - %s" % (self.priority, self.customer, self.prj_name, self.prj_number,
                                                       self.manager, self.state, self.comments)
     class Meta:
-        db_table = u'Project'
+        db_table = u'projects'
         verbose_name_plural = "Проекты"
 
 class Dates(models.Model):
@@ -109,7 +109,7 @@ class Role(models.Model):
 
 class Prjneeds(models.Model):
 #    id = models.IntegerField(primary_key=True)
-    prj_number = models.ForeignKey(Project, null=True, db_column='prj_number', blank=True)
+    prj_number = models.ForeignKey(Projects, null=True, db_column='prj_number', blank=True)
     abs_type = models.ForeignKey(Bankingsystem, null=True, db_column='abs_type', blank=True)
     ent_name = models.ForeignKey(Env, null=True, db_column='ent_name', blank=True)
     item_name = models.CharField(max_length=765, blank=True)
@@ -140,3 +140,11 @@ class Prjneeds(models.Model):
         db_table = u'PrjNeeds'
         verbose_name_plural = "Требования по проектам"
 
+class Prices(models.Model):
+#    id = models.CharField(max_length=765, primary_key=True)
+    hw_class = models.DecimalField(max_digits=14, decimal_places=2)
+    hw_type = models.CharField(max_length=765)
+    price = models.DecimalField(max_digits=67, decimal_places=30)
+    hw_full_name = models.CharField(max_length=765)
+    class Meta:
+        db_table = u'prices'

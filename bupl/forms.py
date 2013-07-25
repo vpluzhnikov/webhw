@@ -1,12 +1,12 @@
 __author__ = 'vss'
 # -*- coding: utf-8 -*-
 from django import forms
-from bupl.models import Project
+from bupl.models import Projects
 from django.utils.translation import ugettext as _
 
 class BocForm(forms.Form):
     PRJLIST = []
-    AllProjects = Project.objects.values('prj_number').distinct()
+    AllProjects = Projects.objects.values('prj_number').distinct()
 
     PRJLIST.append([0, 'Без номера'])
     for prjnum in AllProjects:

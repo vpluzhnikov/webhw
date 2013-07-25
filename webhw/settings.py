@@ -189,12 +189,12 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': False,
             },
-        'upload': {
-            'handlers': ['console', 'logfiles'],
+        'bupl': {
+            'handlers': ['console'],
             'level': 'INFO',
             },
-        'confcenter' : {
-            'handlers' : ['console', 'logfiles'],
+        'webhw' : {
+            'handlers' : ['console'],
             'level' : 'INFO',
             },
         }

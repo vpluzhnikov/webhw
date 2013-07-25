@@ -25,7 +25,7 @@
 
 {{ form.as_p }}
 
-    <input type="submit" id="id_calc" name="calc" value="Рассчитать" />
+    <input type="button" id="id_calc" name="calc" value="Рассчитать" />
 
 </form>
 
@@ -56,28 +56,30 @@
         var griddata = []
         var options = {
         }
-        var colnumbers = { 'itemtype1' : 0,
-                    'itemname' : 1,
-                    'itemtype2' : 2,
-                    'servername': 3,
-                    'ex_cpucount' : 4,
-                    'ex_ramcount' : 5,
-                    'ex_sancount' : 6 ,
-                    'ex_nascount': 7,
-                    'cpucount' : 8,
-                    'ramcount' : 9,
-                    'sancount' : 10,
-                    'nascount' : 11,
-                    'itemcount' : 12,
-                    'platformtype' : 13,
-                    'ostype' : 14,
-                    'swaddons' : 15,
-                    'itemstate' : 16,
-                    'lansegment' : 17,
-                    'dbtype' : 18,
-                    'clustype' : 19,
-                    'backuptype' : 20,
-                    'comment' : 21
+        var colnumbers = { 'cost' : 0,
+                    'itemtype1' : 1,
+                    'itemname' : 2,
+                    'itemtype2' : 3,
+                    'servername': 4,
+                    'ex_cpucount' : 5,
+                    'ex_ramcount' : 6,
+                    'ex_sancount' : 7 ,
+                    'ex_nascount': 8,
+                    'cpucount' : 9,
+                    'ramcount' : 10,
+                    'sancount' : 11,
+                    'nascount' : 12,
+                    'itemcount' : 13,
+                    'platformtype' : 14,
+                    'ostype' : 15,
+                    'swaddons' : 16,
+                    'itemstate' : 17,
+                    'lansegment' : 18,
+                    'dbtype' : 19,
+                    'clustype' : 20,
+                    'backuptype' : 21,
+                    'comment' : 22,
+                    'price' : 23
         }
 
 
@@ -151,10 +153,11 @@
         }
 
         var grid;
-        var url = "/boc_setup"
+        var url_setup = "/boc_setup"
+        var url_setup = "/boc_setup"
 
         $.ajax({
-            url: url,
+            url: url_setup,
             async: false,
             dataType: 'json',
             success: function(data, status){
@@ -396,7 +399,43 @@
 
         $("#id_calc").click( function ()
         {
-            console.log(griddata);
+            var url_boc_calc = "/boc_calc"
+            gdata = {}
+            i = 1
+            for (line in griddata) {
+                gdata[i] = griddata[line];
+                i++;
+            }
+            console.log(gdata);
+            $.ajax({
+                type : 'POST',
+                url: url_boc_calc,
+                async: false,
+                dataType: 'json',
+{#                proccessData: false,#}
+                data: {"json" : JSON.stringify(griddata) },
+                success: function(data, status){
+                      griddata = data.data;
+{#                       dfdf#}
+                    grid = new Slick.Grid("#myGrid", griddata, columns, options);
+                    grid.setSelectionModel(new Slick.CellSelectionModel());
+                    grid.onContextMenu.subscribe(function (e) {
+                        e.preventDefault();
+                        var cell = grid.getCellFromEvent(e);
+                        $("#contextMenu")
+                                .data("row", cell.row)
+                                .css("top", e.pageY)
+                                .css("left", e.pageX)
+                                .show();
+
+                        $("body").one("click", function () {
+                            $("#contextMenu").hide();
+                        });
+                    });
+
+{#                    fdfdf#}
+                }
+            });
         }
         );
 
