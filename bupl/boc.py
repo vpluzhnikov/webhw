@@ -4,6 +4,8 @@ from os import remove
 from xlrd import open_workbook
 from webhw.slickgrid import SlickGrid
 from logging import getLogger
+from bupl.models import Prices
+from decimal import *
 
 logger = getLogger(__name__)
 
@@ -31,6 +33,7 @@ class BOC:
                                'ex_nascount': 11,
                                'cpucount': 24,
                                'ramcount': 26,
+                               'hddcount' : 28,
                                'sancount': 30,
                                'nascount': 32,
                                'itemcount': 34,
@@ -46,16 +49,15 @@ class BOC:
         }
         self.queryset = None
         self.columns = ['price', 'itemtype1', 'itemname', 'itemtype2', 'servername', 'ex_cpucount', 'ex_ramcount',
-                        'ex_sancount', 'ex_nascount', 'cpucount', 'ramcount', 'sancount', 'nascount', 'itemcount',
-                        'platformtype', 'ostype', 'swaddons', 'itemstate', 'lansegment', 'dbtype', 'clustype',
-                        'backuptype', 'comment']
+                        'ex_sancount', 'ex_nascount', 'cpucount', 'ramcount', 'hddcount','sancount', 'nascount',
+                        'itemcount', 'platformtype', 'ostype', 'swaddons', 'itemstate', 'lansegment', 'dbtype',
+                        'clustype', 'backuptype', 'comment']
         self.col_options = [
             #        {'id' : 'code', 'name': '№ п/п', 'width': 40, 'cssClass' : 'cell-title', 'editor':
             #        'Slick.Editors.Text',  'validator': 'requiredFieldValidator'},
             #                   {'id': "#", 'name': '', 'width': 30, 'behavior': 'selectAndMove', 'selectable': 'false',
             #                    'resizable': 'false' },
-            {'id' : 'price', 'name': 'Общая стоимость', 'width': 100, 'cssClass' : 'cell-title',
-             'editor': 'Slick.Editors.Text'},
+            {'id' : 'price', 'name': 'Общая стоимость', 'width': 100, 'cssClass' : 'cell-title'},
             {'id' : 'itemtype1', 'name': 'Тип позиции', 'width': 160, 'cssClass' : 'cell-title',
              'options': ',Сервер СУБД,Сервер приложения,Терминальный сервер,Балансировщик,IBM DataPower',
              'editor':  'SelectCellEditor'},
@@ -77,6 +79,8 @@ class BOC:
                 'Slick.Editors.Text'},
             {'id' : 'ramcount', 'name': 'Требуется ОЗУ, Гб', 'width': 100, 'cssClass' : 'cell-title', 'editor':
                 'Slick.Editors.Text'},
+            {'id' : 'hddcount', 'name': 'Требуется СХД (внутренее), Гб', 'width': 120, 'cssClass' : 'cell-title',
+             'editor': 'Slick.Editors.Text'},
             {'id' : 'sancount', 'name': 'Требуется СХД (SAN), Гб', 'width': 100, 'cssClass' : 'cell-title',
              'editor': 'Slick.Editors.Text'},
             {'id' : 'nascount', 'name': 'Требуется СХД (NAS), Гб', 'width': 100, 'cssClass' : 'cell-title',
@@ -92,7 +96,8 @@ class BOC:
             {'id' : 'swaddons', 'name': 'Дополнительное ПО', 'width': 150, 'cssClass' : 'cell-title',
              'editor': 'Slick.Editors.LongText'},
             {'id' : 'itemstate', 'name': 'Статус (пром/тест)', 'width': 100, 'cssClass' : 'cell-title',
-             'options': ',пром,тест', 'editor': 'SelectCellEditor', 'validator': 'requiredFieldValidator'},
+             'options': ',пром,тест(НТ),тест(другое)', 'editor': 'SelectCellEditor',
+             'validator': 'requiredFieldValidator'},
             {'id' : 'lansegment', 'name': 'Сегмент сети', 'width': 120, 'cssClass' : 'cell-title',
              'options': ',Альфа,Сигма,Тау', 'editor': 'SelectCellEditor'},
             {'id' : 'dbtype', 'name': 'Тип СУБД', 'width': 120, 'cssClass' : 'cell-title',
@@ -178,6 +183,278 @@ class BOC:
         """
         Calculates prices for requrements and modify self.data with price values
         """
+        error_flag = False
+        new_data = []
+        for line in self.data:
+            if line.keys() > 0:
+                line_price = 0
+                logger.error(line)
+
+# ---------------------------------------------
+# Check for input data
+# ---------------------------------------------
+
+#Checking for cells contents
+                if not 'itemtype1' in line.keys():
+                    line['itemtype1'] = u'Требуется указать'
+                    error_flag = True
+
+#Checking for row types
+                if not 'itemtype2' in line.keys():
+                    line['itemtype2'] = u'Требуется указать'
+                    error_flag = True
+
+#Checking fot OS type
+                if not 'ostype' in line.keys() and (line['itemtype1'] <> u'IBM DataPower') and \
+                   (line['itemtype1'] <> u'Балансировщик'):
+                    line['ostype'] = u'Требуется указать'
+                    error_flag = True
+
+#Checking for CPU count
+                if not 'cpucount' in line.keys():
+                    if ('itemtype2' in line.keys()):
+                        if line['itemtype2'] == u'модернизация':
+                            line['cpucount'] = 0
+                        elif line['itemtype2'] == u'новая позиция':
+                            line['cpucount'] = 0
+                            error_flag = True
+                        else:
+                            line['cpucount'] = u'Требуется указать'
+                            error_flag = True
+                elif (line['itemtype1'] <> u'IBM DataPower') and (line['itemtype1'] <> u'Балансировщик'):
+                    try:
+                        int(line['cpucount'])
+                    except:
+                        line['cpucount'] = u'Укажите целое число'
+                        error_flag = True
+
+#Checking for count
+                if not 'itemcount' in line.keys():
+                    line['itemcount'] = 1
+                else:
+                    try:
+                        int(line['itemcount'])
+                    except:
+                        line['itemcount'] = u'Укажите целое число'
+                        error_flag = True
+
+#Checking for RAM requirenments
+                if 'ramcount' in line.keys() and (line['itemtype1'] <> u'IBM DataPower') and\
+                   (line['itemtype1'] <> u'Балансировщик'):
+                    try:
+                        int(line['ramcount'])
+                    except:
+                        line['ramcount'] = u'Укажите целое число'
+                        error_flag = True
+                elif (not 'ramcount' in line.keys()) and ('itemtype2' in line.keys()):
+                    if (line['itemtype2'] == u'новая позиция') and ('cpucount' in line.keys()) and (not error_flag):
+                        try:
+                            line['ramcount'] = int(line['cpucount']) * 2
+                        except:
+                            error_flag = True
+                    elif (line['itemtype2'] == u'модернизация'):
+                        line['ramcount'] = 0
+                    else:
+                        line['ramcount'] = u'Требуется указать'
+                        error_flag = True
+                elif (line['itemtype1'] <> u'IBM DataPower') and (line['itemtype1'] <> u'Балансировщик'):
+                    line['ramcount'] = u'Требуется указать'
+                    error_flag = True
+
+#Checking for internal disk requirenments
+                if 'hddcount' in line.keys() and (line['itemtype1'] <> u'IBM DataPower') and\
+                   (line['itemtype1'] <> u'Балансировщик'):
+                    try:
+                        int(line['hddcount'])
+                    except:
+                        line['hddcount'] = u'Укажите целое число'
+                        error_flag = True
+                elif (not 'hddcount' in line.keys()) and ('itemtype2' in line.keys()):
+                    if line['itemtype2'] == u'модернизация':
+                        line['hddcount'] = 0
+                    else:
+                        line['hddcount'] = u'Требуется указать'
+                        error_flag = True
+                elif (line['itemtype1'] <> u'IBM DataPower') and (line['itemtype1'] <> u'Балансировщик'):
+                    line['hddcount'] = u'Требуется указать'
+                    error_flag = True
+
+#Checking for san disk requienments
+                if 'sancount' in line.keys() and (line['itemtype1'] <> u'IBM DataPower') and\
+                   (line['itemtype1'] <> u'Балансировщик'):
+                    try:
+                        int(line['sancount'])
+                    except:
+                        line['sancount'] = u'Укажите целое число'
+                        error_flag = True
+                elif (line['itemtype1'] <> u'IBM DataPower') and (line['itemtype1'] <> u'Балансировщик'):
+                    line['sancount'] = 0
+
+#Checking for san disk requienments
+                if 'nascount' in line.keys() and (line['itemtype1'] <> u'IBM DataPower') and \
+                   (line['itemtype1'] <> u'Балансировщик'):
+                    try:
+                        int(line['nascount'])
+                    except:
+                        line['nascount'] = u'Укажите целое число'
+                        error_flag = True
+                elif (line['itemtype1'] <> u'IBM DataPower') and (line['itemtype1'] <> u'Балансировщик'):
+                    line['nascount'] = 0
+
+#Checking for type of item
+                if not 'itemstate' in line.keys():
+                    line['itemstate'] = u'тест(другое)'
+                elif not(line['itemstate'] in [u'пром' , u'тест(НТ)', u'тест(другое)']):
+                    line['itemstate'] = u'Не верно'
+                    error_flag = True
+
+#Checking for lan segment
+                if not 'lansegment' in line.keys():
+                    line['lansegment'] = u'Альфа'
+                elif not(line['lansegment'] in [u'Альфа' , u'Сигма' , u'Тау' ]):
+                    line['lansegment'] = u'Не верно'
+                    error_flag = True
+
+#Checking for cluster requirenments
+                if not 'clustype' in line.keys():
+                    if line['itemstate'] == u'пром':
+                        line['clustype'] = u'да'
+                    else:
+                        line['clustype'] = u'нет'
+                elif not(line['clustype'] in [u'да', u'нет']):
+                    line['clustype'] = u'Не верно'
+                    error_flag = True
+
+#Checking for backup requirenments
+                if not 'backuptype' in line.keys():
+                    if line['itemstate'] == u'пром':
+                        line['backuptype'] = u'да'
+                    else:
+                        line['backuptype'] = u'нет'
+                elif not(line['backuptype'] in [u'да', u'нет']):
+                    line['backuptype'] = u'Не верно'
+                    error_flag = True
+
+# ---------------------------------------------
+# Calculation for new systems only
+# ---------------------------------------------
+
+#Calculation for new x86 systems
+                if (not error_flag) and (line['itemtype2'] == u'новая позиция') and \
+                   ((line['itemtype1'] == u'Сервер приложения') or (line['itemtype1'] == u'Терминальный сервер') or
+                    (line['itemtype1'] == u'Сервер СУБД')) and \
+                   ((line['ostype'] == u'Windows') or (line['ostype'] == u'Linux (RHEL)')):
+                    if (int(line['cpucount']) <= 16):
+                        line_price += Prices.objects.get(hw_type = 'x86_ent').price * int(line['cpucount']) * \
+                                      int(line['itemcount'])
+                        line_price += Prices.objects.get(hw_type = 'san_stor_vmware').price * int(line['hddcount']) *\
+                                      int(line['itemcount'])
+                        line_price += Prices.objects.get(hw_type = 'san_stor_mid').price * int(line['sancount']) *\
+                                      int(line['itemcount'])
+                        line_price += Prices.objects.get(hw_type = 'nas_stor').price * int(line['nascount']) *\
+                                      int(line['itemcount'])
+                        line_price += Prices.objects.get(hw_type = 'vmware_lic').price * int(line['cpucount']) * \
+                                      int(line['itemcount'])
+                        line_price += Prices.objects.get(hw_type = 'vmware_support').price * int(line['cpucount']) * \
+                                      int(line['itemcount'])
+                    elif (int(line['cpucount']) > 16):
+                        line_price += Prices.objects.get(hw_type = 'x86_mid').price * int(line['cpucount']) *\
+                                      int(line['itemcount'])
+                        if (line['itemtype1'] == u'Сервер СУБД') and (line['itemstate'] == u'пром'):
+                            line_price += Prices.objects.get(hw_type = 'san_stor_repl').price * int(line['sancount']) *\
+                                                                            int(line['itemcount'])
+                        elif (line['itemtype1'] == u'Сервер СУБД') and (line['itemstate'] == u'тест(НТ)'):
+                            line_price += Prices.objects.get(hw_type = 'san_stor_hiend').price * int(line['sancount'])*\
+                                          int(line['itemcount'])
+                        else:
+                            line_price += Prices.objects.get(hw_type = 'san_stor_mid').price * int(line['sancount']) *\
+                                          int(line['itemcount'])
+                        line_price += Prices.objects.get(hw_type = 'nas_stor').price * int(line['nascount']) *\
+                                      int(line['itemcount'])
+
+#Calculation for new AIX and Solaris systems
+                if (not error_flag) and (line['itemtype2'] == u'новая позиция') and\
+                   ((line['itemtype1'] == u'Сервер приложения') or (line['itemtype1'] == u'Сервер СУБД')) and\
+                   ((line['ostype'] == u'IBM AIX') or (line['ostype'] == u'Oracle Solaris')):
+                    if (int(line['cpucount']) <= 128):
+                        if (line['ostype'] == u'IBM AIX'):
+                            line_price += Prices.objects.get(hw_type = 'ppc_mid').price * int(line['cpucount']) *\
+                                      int(line['itemcount'])
+                        if (line['ostype'] == u'Oracle Solaris'):
+                            line_price += Prices.objects.get(hw_type = 't_mid').price * int(line['cpucount']) *\
+                                          int(line['itemcount'])
+                    elif (int(line['cpucount']) > 128):
+                        if (line['ostype'] == u'IBM AIX'):
+                            line_price += Prices.objects.get(hw_type = 'ppc_hiend').price * int(line['cpucount']) *\
+                                      int(line['itemcount'])
+                        if (line['ostype'] == u'Oracle Solaris'):
+                            line_price += Prices.objects.get(hw_type = 'sparc_hiend').price * int(line['cpucount']) *\
+                                          int(line['itemcount'])
+                    if (line['itemstate'] == u'пром'):
+                        if (line['backuptype'] == u'да') and (int(line['sancount']) > 2000):
+                            line_price += Prices.objects.get(hw_type = 'san_stor_full').price *\
+                                      int(line['sancount']) * int(line['itemcount'])
+                        else:
+                            line_price += Prices.objects.get(hw_type = 'san_stor_repl').price *\
+                                      int(line['sancount']) * int(line['itemcount'])
+                    elif (line['itemstate'] == u'тест(НТ)'):
+                        line_price += Prices.objects.get(hw_type = 'san_stor_hiend').price *\
+                                  int(line['sancount']) * int(line['itemcount'])
+                    else:
+                        line_price += Prices.objects.get(hw_type = 'san_stor_mid').price *\
+                                  int(line['sancount']) * int(line['itemcount'])
+                    line_price += Prices.objects.get(hw_type = 'nas_stor').price * int(line['nascount']) *\
+                              int(line['itemcount'])
+                    if (line['itemstate'] == u'пром'):
+                        line_price += Prices.objects.get(hw_type = 'symantec_lic').price * int(line['cpucount']) *\
+                                  int(line['itemcount'])
+                        line_price += Prices.objects.get(hw_type = 'symantec_support').price *\
+                                  int(line['cpucount']) * int(line['itemcount']) * 3
+#Calculation for Alteons
+                if (not error_flag) and (line['itemtype2'] == u'новая позиция') and\
+                           (line['itemtype1'] == u'Балансировщик'):
+                    line_price += Prices.objects.get(hw_type = 'loadbalancer').price * int(line['itemcount'])
+
+#Calculation for Datapowers
+                if (not error_flag) and (line['itemtype2'] == u'новая позиция') and \
+                   (line['itemtype1'] == u'IBM DataPower'):
+                    line_price += Prices.objects.get(hw_type = 'datapower').price * int(line['itemcount'])
+
+                logger.error(line)
+                logger.error(error_flag)
+
+# ---------------------------------------------
+# Calculation for upgrades only
+# ---------------------------------------------
+
+
+
+
+# ---------------------------------------------
+# Common position for new systems and upgrades
+# ---------------------------------------------
+#Calculation for windows licence (new systems and upgrade)
+                if (line['ostype'] == u'Windows'):
+                    line_price += Prices.objects.get(hw_type = 'ms_lic').price * int(line['cpucount']) \
+                                  * int(line['itemcount'])
+#Calculation for RHEL support (new systems and upgrade)
+                elif (line['ostype'] == u'Linux (RHEL)'):
+                    line_price += Prices.objects.get(hw_type = 'rhel_support').price * int(line['cpucount']) * \
+                                  int(line['itemcount'])
+
+#Calculation for backup (new systems and upgrade)
+                if (line['backuptype'] == u'да') and (line['itemtype1'] <> u'IBM DataPower') and \
+                   (line['itemtype1'] <> u'Балансировщик') :
+                    line_price += Prices.objects.get(hw_type='backup_stor').price * \
+                                  (int(line['hddcount']) + int(line['nascount']) + int(line['sancount'])) * \
+                                  int(line['itemcount'])
+
+                line['price'] = str(line_price.quantize(Decimal(10) ** -2))
+
+                if error_flag:
+                    line['price'] = 'Ошибка данных'
+                new_data.append(line)
+        self.data = new_data
         return True
 
     def __xls_check(self):

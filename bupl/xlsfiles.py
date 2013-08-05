@@ -19,6 +19,9 @@ def handle_xls_file(f, name):
             return None
 
 def check_filetype(f, name):
+    """
+    Checks extension for uploaded file
+    """
     if ( ('xls' in name) and not ('xlsx' in name) ):
         return True
     else:
