@@ -183,12 +183,15 @@ class BOC:
         """
         Calculates prices for requrements and modify self.data with price values
         """
-        error_flag = False
         new_data = []
         for line in self.data:
+            line['price'] = ''
+            error_flag = False
             if line.keys() > 0:
                 line_price = 0
+                logger.error("--------- BEFORE")
                 logger.error(line)
+
 
 # ---------------------------------------------
 # Check for input data
@@ -203,6 +206,23 @@ class BOC:
                 if not 'itemtype2' in line.keys():
                     line['itemtype2'] = u'Требуется указать'
                     error_flag = True
+                elif line['itemtype2'] == u'модернизация':
+#                    logger.error("--------- IN CHECKING")
+#                    logger.error(line)
+#                    logger.error(line['itemtype2'])
+                    if (not 'servername' in line.keys()) or (line['servername'] == '-') or \
+                       (line['servername'] == u'Требуется указать'):
+                        line['servername'] = 'Требуется указать'
+                        error_flag = True
+                    else:
+                        for key in ('ex_cpucount', 'ex_ramcount', 'ex_sancount', 'ex_nascount'):
+                            if (key in line) and (line[key] <> '-'):
+                                try:
+                                    int(line[key])
+                                except:
+                                    line[key] = 0
+                            else:
+                                line[key] = 0
 
 #Checking fot OS type
                 if not 'ostype' in line.keys() and (line['itemtype1'] <> u'IBM DataPower') and \
@@ -391,6 +411,10 @@ class BOC:
                             line_price += Prices.objects.get(hw_type = 'sparc_hiend').price * int(line['cpucount']) *\
                                           int(line['itemcount'])
                     if (line['itemstate'] == u'пром'):
+                        line_price += Prices.objects.get(hw_type = 'symantec_lic').price * int(line['cpucount']) *\
+                                      int(line['itemcount'])
+                        line_price += Prices.objects.get(hw_type = 'symantec_support').price *\
+                                      int(line['cpucount']) * int(line['itemcount']) * 3
                         if (line['backuptype'] == u'да') and (int(line['sancount']) > 2000):
                             line_price += Prices.objects.get(hw_type = 'san_stor_full').price *\
                                       int(line['sancount']) * int(line['itemcount'])
@@ -405,11 +429,11 @@ class BOC:
                                   int(line['sancount']) * int(line['itemcount'])
                     line_price += Prices.objects.get(hw_type = 'nas_stor').price * int(line['nascount']) *\
                               int(line['itemcount'])
-                    if (line['itemstate'] == u'пром'):
-                        line_price += Prices.objects.get(hw_type = 'symantec_lic').price * int(line['cpucount']) *\
-                                  int(line['itemcount'])
-                        line_price += Prices.objects.get(hw_type = 'symantec_support').price *\
-                                  int(line['cpucount']) * int(line['itemcount']) * 3
+#                    if (line['itemstate'] == u'пром'):
+#                        line_price += Prices.objects.get(hw_type = 'symantec_lic').price * int(line['cpucount']) *\
+#                                  int(line['itemcount'])
+#                        line_price += Prices.objects.get(hw_type = 'symantec_support').price *\
+#                                  int(line['cpucount']) * int(line['itemcount']) * 3
 #Calculation for Alteons
                 if (not error_flag) and (line['itemtype2'] == u'новая позиция') and\
                            (line['itemtype1'] == u'Балансировщик'):
@@ -420,19 +444,89 @@ class BOC:
                    (line['itemtype1'] == u'IBM DataPower'):
                     line_price += Prices.objects.get(hw_type = 'datapower').price * int(line['itemcount'])
 
-                logger.error(line)
-                logger.error(error_flag)
-
 # ---------------------------------------------
 # Calculation for upgrades only
 # ---------------------------------------------
+#Calculation for new x86 systems
+                if (not error_flag) and (line['itemtype2'] == u'модернизация') and\
+                   ((line['itemtype1'] == u'Сервер приложения') or (line['itemtype1'] == u'Терминальный сервер') or
+                    (line['itemtype1'] == u'Сервер СУБД')) and\
+                   ((line['ostype'] == u'Windows') or (line['ostype'] == u'Linux (RHEL)')):
+                    if (int(line['cpucount']) + int(line['ex_cpucount']) <= 16) and (not int(line['ex_cpucount']) == 0):
+#                        logger.error("excpucount = %s" % (int(line['ex_cpucount'])))
+                        line_price += Prices.objects.get(hw_type = 'x86_ent').price * int(line['cpucount']) *\
+                                      int(line['itemcount'])
+                        line_price += Prices.objects.get(hw_type = 'san_stor_vmware').price * int(line['hddcount']) *\
+                                      int(line['itemcount'])
+                        line_price += Prices.objects.get(hw_type = 'san_stor_mid').price * int(line['sancount']) *\
+                                      int(line['itemcount'])
+                        line_price += Prices.objects.get(hw_type = 'nas_stor').price * int(line['nascount']) *\
+                                      int(line['itemcount'])
+                        line_price += Prices.objects.get(hw_type = 'vmware_lic').price * int(line['cpucount']) *\
+                                      int(line['itemcount'])
+                        line_price += Prices.objects.get(hw_type = 'vmware_support').price * int(line['cpucount']) *\
+                                      int(line['itemcount'])
+                    elif ((int(line['ex_cpucount']) > 16) or (int(line['ex_cpucount']) == 0)):
+                        line['cpucount'] = 0
+                        line['hddcount'] = 0
+                        if (line['itemtype1'] == u'Сервер СУБД') and (line['itemstate'] == u'пром'):
+                            line_price += Prices.objects.get(hw_type = 'san_stor_repl').price * int(line['sancount']) *\
+                                          int(line['itemcount'])
+                        elif (line['itemtype1'] == u'Сервер СУБД') and (line['itemstate'] == u'тест(НТ)'):
+                            line_price += Prices.objects.get(hw_type = 'san_stor_hiend').price * int(line['sancount'])*\
+                                          int(line['itemcount'])
+                        else:
+                            line_price += Prices.objects.get(hw_type = 'san_stor_mid').price * int(line['sancount']) *\
+                                          int(line['itemcount'])
+                        line_price += Prices.objects.get(hw_type = 'nas_stor').price * int(line['nascount']) *\
+                                      int(line['itemcount'])
+                    else:
+                        logger("Error in x86 upgrade calculation for line = %s" % (line))
+                        error_flag = True
 
-
+#Calculation for AIX and Solaris upgrades
+                if (not error_flag) and (line['itemtype2'] == u'модернизация') and\
+                   ((line['itemtype1'] == u'Сервер приложения') or (line['itemtype1'] == u'Сервер СУБД')) and\
+                   ((line['ostype'] == u'IBM AIX') or (line['ostype'] == u'Oracle Solaris')):
+                    if (int(line['cpucount']) + int(line['ex_cpucount']) <= 128)and(not int(line['ex_cpucount']) == 0):
+                        if (line['ostype'] == u'IBM AIX'):
+                            line_price += Prices.objects.get(hw_type = 'ppc_mid').price * int(line['cpucount']) *\
+                                  int(line['itemcount'])
+                        if (line['ostype'] == u'Oracle Solaris'):
+                            line_price += Prices.objects.get(hw_type = 't_mid').price * int(line['cpucount']) *\
+                                      int(line['itemcount'])
+                    else:
+                        if (line['ostype'] == u'IBM AIX'):
+                            line_price += Prices.objects.get(hw_type = 'ppc_hiend').price * int(line['cpucount']) *\
+                                          int(line['itemcount'])
+                        if (line['ostype'] == u'Oracle Solaris'):
+                            line_price += Prices.objects.get(hw_type = 'sparc_hiend').price * int(line['cpucount']) *\
+                                          int(line['itemcount'])
+                    if (line['itemstate'] == u'пром'):
+                        line_price += Prices.objects.get(hw_type = 'symantec_lic').price * int(line['cpucount']) *\
+                                      int(line['itemcount'])
+                        line_price += Prices.objects.get(hw_type = 'symantec_support').price *\
+                                      int(line['cpucount']) * int(line['itemcount']) * 3
+                        if (line['backuptype'] == u'да')and((int(line['sancount']) + int(line['ex_sancount'])) > 2000):
+                            line_price += Prices.objects.get(hw_type = 'san_stor_full').price *\
+                                          int(line['sancount']) * int(line['itemcount'])
+                        else:
+                            line_price += Prices.objects.get(hw_type = 'san_stor_repl').price *\
+                                          int(line['sancount']) * int(line['itemcount'])
+                    elif (line['itemstate'] == u'тест(НТ)'):
+                        line_price += Prices.objects.get(hw_type = 'san_stor_hiend').price * \
+                                      int(line['sancount']) * int(line['itemcount'])
+                    else:
+                        line_price += Prices.objects.get(hw_type = 'san_stor_mid').price *\
+                                  int(line['sancount']) * int(line['itemcount'])
+                    line_price += Prices.objects.get(hw_type = 'nas_stor').price * int(line['nascount']) *\
+                              int(line['itemcount'])
 
 
 # ---------------------------------------------
 # Common position for new systems and upgrades
 # ---------------------------------------------
+
 #Calculation for windows licence (new systems and upgrade)
                 if (line['ostype'] == u'Windows'):
                     line_price += Prices.objects.get(hw_type = 'ms_lic').price * int(line['cpucount']) \
@@ -449,11 +543,19 @@ class BOC:
                                   (int(line['hddcount']) + int(line['nascount']) + int(line['sancount'])) * \
                                   int(line['itemcount'])
 
-                line['price'] = str(line_price.quantize(Decimal(10) ** -2))
+                logger.error("--------- AFTER")
+                logger.error(line)
+                logger.error(error_flag)
 
-                if error_flag:
+                if ('price' in line.keys()) and (line['price'] <> u'Ошибка данных') and (not error_flag) and \
+                   (line_price <>0):
+                    line['price'] = '$ ' + str(line_price.quantize(Decimal(10) ** -2))
+                elif error_flag:
                     line['price'] = 'Ошибка данных'
+
                 new_data.append(line)
+                logger.error("--------- ENDED ----------")
+
         self.data = new_data
         return True
 
