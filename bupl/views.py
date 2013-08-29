@@ -9,8 +9,10 @@ from bupl.forms import BocForm
 from bupl.models import Projects
 from bupl.xlsfiles import handle_xls_file
 from webhw.common import get_session_key, whoami
+from webhw.settings import BOC_WORK_DIR
 from bupl.boc import BOC, EMPTY, IN_XLS, IN_DB, IN_SESSION
 from logging import getLogger
+
 
 
 logger = getLogger(__name__)
@@ -29,11 +31,32 @@ def boc_grid_setup(request):
     Returns a JSON with grid data to new form or to loaded from file form
     """
     boc = BOC(type=EMPTY)
-    if request.session['grid_data'] <> []:
-        boc.type = IN_SESSION
-        boc.data = request.session['grid_data']
-        request.session['grid_data'] = []
+#    print request.session.keys()
+    if 'grid_data' in request.session.keys():
+        if request.session['grid_data'] <> []:
+            boc.type = IN_SESSION
+            boc.data = request.session['grid_data']
+            request.session['grid_data'] = []
     return HttpResponse(dumps(boc.get_grid()))
+
+def boc_xlssave(request):
+    """
+    Saves all boc data to XLS file
+    """
+    print "IN XLS SAVE"
+    data = {}
+    boc = BOC(type=EMPTY, bocworkdir = BOC_WORK_DIR)
+    try:
+        boc.data = loads(request.POST['json'])
+        boc.calculate()
+        data['filename'] = boc.save_in_xls()
+        data['error'] = "None"
+        logger.error(data)
+#        print data
+        return HttpResponse(dumps(data))
+    except:
+        return HttpResponse(dumps({'error' : 'Unknown error'}))
+
 
 def boc_grid_calc(request):
     """
@@ -43,7 +66,10 @@ def boc_grid_calc(request):
     try:
         boc.data = loads(request.POST['json'])
         boc.calculate()
-        return HttpResponse(dumps(boc.get_grid()))
+        data = boc.get_grid()
+        data['totalcost'] = boc.totalcost
+        print data
+        return HttpResponse(dumps(data))
     except:
         return HttpResponse(dumps({'error' : 'Unknown error'}))
 
@@ -73,7 +99,7 @@ def boc_grid_form(request):
         form = BocForm(request.POST, request.FILES)
         if form.is_valid():
             UF_FORM = form.cleaned_data
-            if 'calc' not in request.POST:
+            if (not 'xlsexport' in request.POST) and ('calc' not in request.POST):
                 if 'X-Progress-ID' in request.GET:
                     request.session['X-Progress-ID'] = request.GET['X-Progress-ID']
                 fileattr = handle_xls_file(request.FILES['file'], get_session_key(request) + '_' +
@@ -87,8 +113,8 @@ def boc_grid_form(request):
                 else:
                     logger.info("File type %s is not good, reported from %s" % (request.FILES['file'].name, whoami()))
                     return HttpResponse('Bad file type or file corrupted')
-            else:
-                logger.info("Starting calculating")
+            elif 'xlsexport' in request.POST:
+                logger.error("Starting export to XLS")
                 return HttpResponse("Ok")
         else:
             print "%s" % repr(form.errors)

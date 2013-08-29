@@ -20,4 +20,3 @@ class BocForm(forms.Form):
         widget=forms.TextInput(attrs={'size':'30', 'readonly':'readonly'}), required=False)
     manager = forms.CharField(label='Руководитель проекта',
         widget=forms.TextInput(attrs={'size':'30', 'readonly':'readonly'}), required=False)
-

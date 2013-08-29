@@ -26,6 +26,11 @@
 {{ form.as_p }}
 
     <input type="button" id="id_calc" name="calc" value="Рассчитать" />
+    <input type="button" id="id_xlsexport" name="xlsexport" value="Экспорт в xls" />
+    <div id="totalcost_section" style="display: NONE" align="left">
+        <p>Общая стоимость: <label id="id_totalcost"></label></p>
+    </div>
+
 
 </form>
 
@@ -411,15 +416,51 @@
                             {#                proccessData: false,#}
                             data: {"json" : JSON.stringify(griddata) },
                             success: function(data, status){
+{#                                window.alert(data.totalcost);#}
                                 griddata = data.data;
                                 console.log(griddata)
                                 grid.setData(griddata)
                                 grid.render();
+{#                                $("id_totalcost").value = data.totalcost;#}
+                                document.getElementById('id_totalcost').innerHTML = data.totalcost + ' $';
+{#                                $("#totalcost_section").append('Общая стоимость ' + data.totalcost + ' $');#}
+                                $("#totalcost_section").show();
                             }
                         });
                     }
             );
 
+            $("#id_xlsexport").click(function ()
+                {
+                    var url_boc_xlssave = "/boc_xlssave"
+                    gdata = {}
+                    i = 1
+                    for (line in griddata) {
+                        gdata[i] = griddata[line];
+                        i++;
+                    }
+                    $.ajax({
+                        type : 'POST',
+                        url: url_boc_xlssave,
+                        async: false,
+                        dataType: 'json',
+                        data: {"json" : JSON.stringify(griddata) },
+                        success: function(data, status){
+                            error = data.error;
+                            console.log(data)
+{#                            grid.setData(griddata)#}
+{#                            grid.render();#}
+                            {#                                $("id_totalcost").value = data.totalcost;#}
+{#                            document.getElementById('id_totalcost').innerHTML = data.totalcost + ' $';#}
+                            {#                                $("#totalcost_section").append('Общая стоимость ' + data.totalcost + ' $');#}
+{#                            $("#totalcost_section").show();#}
+                        }
+                    });
+
+                    {#                    var yourValue = 123;#}
+{#                    $('form').append('<input type="hidden" id="griddata" name="griddata" value="'+ gdata +'"/>');#}
+                }
+            );
         })
 
         var prjselectbox = document.getElementById('id_prjselect')

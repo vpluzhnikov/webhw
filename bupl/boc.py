@@ -2,10 +2,12 @@
 __author__ = 'vs'
 from os import remove
 from xlrd import open_workbook
+from xlwt import Workbook, XFStyle, Font, easyxf
 from webhw.slickgrid import SlickGrid
 from logging import getLogger
 from bupl.models import Prices
 from decimal import *
+from time import time
 
 logger = getLogger(__name__)
 
@@ -15,9 +17,11 @@ IN_DB = 2
 IN_SESSION = 3
 
 class BOC:
-    def __init__(self, type = EMPTY, filename = None):
+    def __init__(self, type = EMPTY, filename = None, bocworkdir = None):
         self.type = type
+        self.bocworkdir = bocworkdir
         self.data = None
+        self.totalcost = 0
         self.xls_filename = filename
         self.xls_workbook = None
         self.xls_worksheet = None
@@ -25,7 +29,6 @@ class BOC:
             self.xls_valid = self.__xls_check()
         self.xls_colnumbers = { 'itemname' : 6,
                                'itemtype1' : 6,
-#                               'itemtype2': 2,
                                'servername': 7,
                                'ex_cpucount': 8,
                                'ex_ramcount': 9,
@@ -47,6 +50,30 @@ class BOC:
                                'backuptype': 42,
                                'comment': 45
         }
+        self.xls_colnames = { 'itemname' : u'Наименование позиции',
+                                'itemtype1' : u'Тип позиции',
+                                'servername': u'Имя сервера',
+                                'ex_cpucount': u'Кол-во CPU',
+                                'ex_ramcount': u'Кол-во ОЗУ, Гб',
+                                'ex_sancount': u'Кол-во СХД (SAN), Гб',
+                                'ex_nascount': u'Кол-во СХД (NAS), Гб',
+                                'cpucount': u'Требуется CPU',
+                                'ramcount': u'Требуется ОЗУ, Гб',
+                                'hddcount' : u'Требуется СХД (внутренее), Гб',
+                                'sancount': u'Требуется СХД (SAN), Гб',
+                                'nascount': u'Требуется СХД (NAS), Гб',
+                                'itemcount': u'Кол-во',
+                                'platformtype': u'Тип платформы',
+                                'ostype': u'Тип ОС',
+                                'swaddons': u'Дополнительное ПО',
+                                'itemstate': u'Статус (пром/тест)',
+                                'lansegment': u'Сегмент сети',
+                                'dbtype': u'Тип СУБД',
+                                'clustype': u'Территориальная защита',
+                                'backuptype': u'Резервное копирование',
+                                'comment': u'Дополнительные требования'
+        }
+
         self.queryset = None
         self.columns = ['price', 'itemtype1', 'itemname', 'itemtype2', 'servername', 'ex_cpucount', 'ex_ramcount',
                         'ex_sancount', 'ex_nascount', 'cpucount', 'ramcount', 'hddcount','sancount', 'nascount',
@@ -183,6 +210,7 @@ class BOC:
         """
         Calculates prices for requrements and modify self.data with price values
         """
+        self.totalcost = 0
         new_data = []
         for line in self.data:
             line['price'] = ''
@@ -522,7 +550,6 @@ class BOC:
                     line_price += Prices.objects.get(hw_type = 'nas_stor').price * int(line['nascount']) *\
                               int(line['itemcount'])
 
-
 # ---------------------------------------------
 # Common position for new systems and upgrades
 # ---------------------------------------------
@@ -549,7 +576,7 @@ class BOC:
 
                 if ('price' in line.keys()) and (line['price'] <> u'Ошибка данных') and (not error_flag) and \
                    (line_price <>0):
-                    line['price'] = '$ ' + str(line_price.quantize(Decimal(10) ** -2))
+                    line['price'] = str(line_price.quantize(Decimal(10) ** -2))
                 elif error_flag:
                     line['price'] = 'Ошибка данных'
 
@@ -557,7 +584,44 @@ class BOC:
                 logger.error("--------- ENDED ----------")
 
         self.data = new_data
+        for line in self.data:
+            if (line['price'] <> u'Ошибка данных'):
+                try:
+                    self.totalcost += Decimal(line['price'])
+                except:
+                    logger.info("Line has not correct price")
+        if self.totalcost <> 0:
+            self.totalcost = str(self.totalcost.quantize(Decimal(10) ** -2))
         return True
+
+
+    def save_in_xls(self):
+        try:
+            filename = str(int(time())) + '.xls'
+            logger.error(filename)
+            workbook = Workbook()
+            headstyle = easyxf('font: bold 1, height 240; border: top thin, right thin, bottom thin, left thin; '
+                               'align: wrap 1;')
+            bodystyle = easyxf('border: top thin, right thin, bottom thin, left thin;')
+            worksheet = workbook.add_sheet(u'Бюджетная оценка', cell_overwrite_ok=True)
+            for key in self.xls_colnames.keys():
+                worksheet.write(0, self.xls_colnumbers[key], self.xls_colnames[key], headstyle)
+                worksheet.col(self.xls_colnumbers[key]).width = int((1+len(self.xls_colnames[key])) * 256)
+            line_count = 1
+            for line in self.data:
+                for key in self.xls_colnames.keys():
+                    if key in line.keys():
+                        worksheet.write(line_count, self.xls_colnumbers[key], line[key], bodystyle)
+                worksheet.write(line_count, 0, line['price'], bodystyle)
+                line_count += 1
+#            worksheet.write(0, 1, u'Тело', bodystyle)
+            logger.error(self.bocworkdir + filename)
+            workbook.save(self.bocworkdir + filename)
+            return filename
+        except:
+            logger.error("Error creating xls file")
+            return None
+
 
     def __xls_check(self):
         """

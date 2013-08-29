@@ -6,6 +6,7 @@ import logging
 
 PROJECT_DIR = os.path.dirname(__file__)
 LOG = PROJECT_DIR + '/log/'
+BOC_WORK_DIR = PROJECT_DIR + '/boc_workdir/'
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
