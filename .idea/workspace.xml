@@ -4,12 +4,6 @@
     <list default="true" id="16d88876-88d8-4668-91b5-3c169be72a6c" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/138108.xls" afterPath="$PROJECT_DIR$/138108.xls" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bupl/boc.py" afterPath="$PROJECT_DIR$/bupl/boc.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bupl/forms.py" afterPath="$PROJECT_DIR$/bupl/forms.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bupl/views.py" afterPath="$PROJECT_DIR$/bupl/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webhw/settings.py" afterPath="$PROJECT_DIR$/webhw/settings.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webhw/templates/boc_grid.html" afterPath="$PROJECT_DIR$/webhw/templates/boc_grid.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webhw/urls.py" afterPath="$PROJECT_DIR$/webhw/urls.py" />
     </list>
     <ignored path="webhw.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -32,7 +26,7 @@
       <file leaf-file-name="boc_grid.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/webhw/templates/boc_grid.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="434" column="55" selection-start="20113" selection-end="20124" vertical-scroll-proportion="-271.25">
+            <state line="434" column="55" selection-start="20113" selection-end="20124" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -95,7 +89,7 @@
       <file leaf-file-name="boc.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bupl/boc.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="355" column="51" selection-start="18005" selection-end="18005" vertical-scroll-proportion="0.1875">
+            <state line="431" column="1" selection-start="22747" selection-end="22925" vertical-scroll-proportion="0.027522936">
               <folding>
                 <element signature="e#42#63#0" expanded="true" />
               </folding>
@@ -173,7 +167,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -182,64 +175,9 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webhw" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webhw" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webhw" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webhw" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webhw" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webhw" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webhw" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webhw" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="boc_workdir" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webhw" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webhw" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bupl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -460,7 +398,11 @@
       <created>1375938455159</created>
       <updated>1375938455159</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Boc save in xls implemented">
+      <created>1377770259946</created>
+      <updated>1377770259946</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TodoView" selected-index="2">
@@ -485,17 +427,17 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32958803" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32958803" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22668579" sideWeight="0.7128589" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26542324" sideWeight="0.7141074" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39950064" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28963795" sideWeight="0.5035868" order="10" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28714108" sideWeight="0.4913917" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28589264" sideWeight="0.0" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32958803" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -542,7 +484,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Boc calculate fully implemented" />
+    <option name="LAST_COMMIT_MESSAGE" value="Boc save in xls implemented" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -563,23 +505,59 @@
     <MESSAGE value="Major changes in BOC class and preliminary support for boc calculate method" />
     <MESSAGE value="Boc calculate implemented for new hardware" />
     <MESSAGE value="Boc calculate fully implemented" />
+    <MESSAGE value="Boc save in xls implemented" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/bupl/models.py">
+    <entry file="file://$PROJECT_DIR$/webhw/media/js/slick.grid.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="111" column="43" selection-start="4215" selection-end="4215" vertical-scroll-proportion="3.0662982">
+        <state line="1226" column="34" selection-start="39741" selection-end="39741" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file:///Library/Python/2.7/site-packages/django/utils/simplejson/__init__.py">
+    <entry file="file://$PROJECT_DIR$/webhw/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="25" selection-start="595" selection-end="612" vertical-scroll-proportion="-0.027624309">
+        <state line="8" column="12" selection-start="177" selection-end="189" vertical-scroll-proportion="0.0">
           <folding />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bupl/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="34" column="33" selection-start="1187" selection-end="1187" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bupl/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="91" selection-start="1024" selection-end="1024" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bupl/xlsfiles.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="38" selection-start="602" selection-end="602" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bupl/boc.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="415" column="12" selection-start="21614" selection-end="21614" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#42#63#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bupl/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="111" column="43" selection-start="4215" selection-end="4215" vertical-scroll-proportion="3.0662982" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/webhw/slickgrid.py">
@@ -601,28 +579,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///Library/Python/2.7/site-packages/xlwt/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="0" selection-start="23" selection-end="23" vertical-scroll-proportion="0.055248618" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/webhw/settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="8" column="12" selection-start="177" selection-end="189" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///Library/Python/2.7/site-packages/xlwt/Style.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="44" selection-start="291" selection-end="291" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///Library/Python/2.7/site-packages/xlwt/Formatting.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="76" column="34" selection-start="2933" selection-end="2936" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -643,7 +602,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/webhw/templates/boc_grid.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="434" column="55" selection-start="20113" selection-end="20124" vertical-scroll-proportion="-271.25">
+        <state line="434" column="55" selection-start="20113" selection-end="20124" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -655,23 +614,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///Library/Python/2.7/site-packages/xlwt/Workbook.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="340" column="19" selection-start="9521" selection-end="9553" vertical-scroll-proportion="0.3602941">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///Library/Python/2.7/site-packages/xlwt/Worksheet.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1028" column="8" selection-start="30913" selection-end="30913" vertical-scroll-proportion="0.33272058">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/bupl/boc.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="355" column="51" selection-start="18005" selection-end="18005" vertical-scroll-proportion="0.1875">
+        <state line="431" column="1" selection-start="22747" selection-end="22925" vertical-scroll-proportion="0.027522936">
           <folding>
             <element signature="e#42#63#0" expanded="true" />
           </folding>
