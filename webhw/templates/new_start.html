@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+{% load i18n %}
+
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <noscript>Для корректной работы страницы включите JavaScript в настройках браузера</noscript>
+    <script src="{{ MEDIA_URL }}/js/lib/firebugx.js"></script>
+    <script src="{{ MEDIA_URL }}/js/lib/jquery-1.7.min.js"></script>
+    <script src="{{ MEDIA_URL }}/js/lib/jquery.arcticmodal-0.3.min.js"></script>
+
+    {#    <script src="{{ MEDIA_URL }}/js/boc.js" type="text/javascript" xmlns="http://www.w3.org/1999/html"></script>#}
+{#        <script src="{{MEDIA_URL}}/js/lib/jquery-ui-1.8.16.custom.min.js"></script>#}
+{#        <script src="{{MEDIA_URL}}/js/lib/jquery.event.drag-2.0.min.js"></script>#}
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Форма БОц</title>
+    <link rel="stylesheet" href="{{MEDIA_URL}}/css/slick.grid.css" type="text/css"/>
+    <link rel="stylesheet" href="{{MEDIA_URL}}/css/jquery-ui-1.8.16.custom.css" type="text/css"/>
+    <link rel="stylesheet" href="{{MEDIA_URL}}/css/kanso.css" type="text/css"/>
+    <link rel="stylesheet" href="{{MEDIA_URL}}/css/popup.css" type="text/css"/>
+    <link rel="stylesheet" href="{{MEDIA_URL}}/css/jquery.arcticmodal-0.3.css" type="text/css"/>
+    <link rel="stylesheet" href="{{MEDIA_URL}}/css/themes/simple.css" type="text/css"/>
+
+</head>
+<body>
+
+<form id="boc_form" enctype="multipart/form-data" method="post">
+   <table>
+        <tr>
+            <td> <a id="load" class="button is-inverse has-icon-spacing"><i class="fa fa-upload"></i> Импорт</a> </td>
+            <td> <a id="save" class="button is-inverse has-icon-spacing"><i class="fa fa-download"></i> Экспорт</a> </td>
+        </tr>
+        <tr>
+            <td> <a id="add_req" class="button is-inverse has-fixed-icon"><i class="fa fa-plus"></i></a> </td>
+        </tr>
+   </table>
+    <input type="file" id="xls_file" style="display: none">
+    <hr>
+    <div id="prom">
+        <table id="prom_table">
+            <tr>
+                <td><a class="button is-link">Промышленные среды: </a></td>
+                <td><a class="button is-link">Кол-во 0</a></td>
+                <td><a class="button is-link">Стоимость 0$</a></td>
+            </tr>
+        </table>
+    </div>
+    <hr>
+    <div id="test-nt">
+        <table id="test_nt_table">
+            <tr>
+                <td><a class="button is-link">Среды нагрузочного тестирования: </a></td>
+                <td><a class="button is-link">Кол-во 0</a></td>
+                <td><a class="button is-link">Стоимость 0$</a></td>
+            </tr>
+        </table>
+    </div>
+    <hr>
+    <div id="test-other">
+        <table id="test_other_table">
+            <tr>
+                <td><a class="button is-link">Прочие тестовые среды: </a></td>
+                <td><a class="button is-link">Кол-во 0</a></td>
+                <td><a class="button is-link">Стоимость 0$</a></td>
+            </tr>
+        </table>
+    </div>
+    <hr>
+</form>
+
+<div style="display: none;">
+    <div class="box-modal" id="add_req_dialog">
+        <div class="box-modal_close arcticmodal-close">закрыть</div>
+        <div id="main_params">
+            <select id="itemtype2" name="itemtype2">
+                <option value="new">Новый</option>
+                <option value="upgrade">Модернизация</option>
+            </select>
+            <select id="itemtype1" name="itemtype1">
+                <option value="db">Сервер СУБД</option>
+                <option value="app">Сервер приложения</option>
+                <option value="term">Терминальный сервер</option>
+                <option value="lb">Балансировщик</option>
+                <option value="dp">IBM DataPower</option>
+            </select>
+            <select id="itemstatus" name="itemstatus">
+                <option value="prom">Пром</option>
+                <option value="test-nt">Тест (НТ)</option>
+                <option value="test-other">Тест (другое)</option>
+            </select>
+            <hr>
+        </div>
+        <div id="upgrade_params" style="display: none;">
+            <p><label class="label-modal" for="servername">Имя сервера:</label>
+            <input class="textbox-modal" id="servername" type="text" size="10" value="-"> </p>
+            <hr>
+        </div>
+        <div id="new_params">
+            <p> <label class="label-modal" for="cpu_count">Кол-во CPU:</label>
+                <input class="textbox-modal" id="cpu_count" type="text" size="3" value="0">
+                <label class="label-modal" for="ram_count">Кол-во ОЗУ:</label>
+                <input class="textbox-modal" id="ram_count" type="text" size="4" value="0">
+                <label class="label-modal" for="hdd_count">Кол-во внутреннего СХД,Гб:</label>
+                <input class="textbox-modal" id="hdd_count" type="text" size="5" value="0">
+            </p>
+            <p> <label class="label-modal" for="san_count">Кол-во СХД (SAN),Гб:</label>
+                <input class="textbox-modal" id="san_count" type="text" size="5" value="0">
+                <label class="label-modal" for="nas_count">Кол-во СХД (NAS),Гб:</label>
+                <input class="textbox-modal" id="nas_count" type="text" size="5" value="0"> </p>
+            <hr>
+        </div>
+        <div id="detailed_params">
+            <p> <label class="label-modal" for="item_count">Кол-во позиций:</label>
+                <input class="textbox-modal" id="item_count" type="text" size="3" value="0">
+                <p>
+                    <select id="ostype" name="ostype">
+                        <option value="aix">AIX</option>
+                        <option value="solaris">Solaris</option>
+                        <option value="hpux">HP-UX</option>
+                        <option value="linux">Linux (RHEL)</option>
+                        <option value="widows">Windows</option>
+                    </select>
+                    <select id="platform_type" name="platform_type">
+                        <option value="power">IBM Power</option>
+                        <option value="t_series">Oracle T</option>
+                        <option value="m_series">Oracle M</option>
+                        <option value="itanium">HP Itanium</option>
+                        <option value="x86">Intel x86</option>
+                    </select>
+                </p>
+                <p>
+                    <label class="label-modal" for="lan_segment">Сегмент LAN:</label>
+                    <select id="lan_segment" name="lan_segment">
+                        <option value="alpha">Alpha</option>
+                        <option value="sigma">Sigma</option>
+                        <option value="tay">Tau</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <label class="label-modal" for="lan_segment" style="display: none;">Тип СУБД:</label>
+                    <select id="db_type" name="db_type" style="display: none;">
+                        <option value="oracle">Oracle DB</option>
+                        <option value="db2">IBM DB2</option>
+                        <option value="mssql">MS SQL</option>
+                    </select>
+                </p>
+                <p>
+                    <label class="label-modal" for="cluster_type">Тип кластреизации:</label>
+                    <select id="cluster_type" name="cluster_type">
+                        <option value="vcs">Территориальная</option>
+                        <option value="app">Уровня приложения</option>
+                        <option value="none">Нет</option>
+                    </select>
+                    <label class="label-modal" for="backup_type">Резервное копирование:</label>
+                    <select id="backup_type" name="cluster_type">
+                        <option value="yes">Да</option>
+                        <option value="no">Нет</option>
+                    </select>
+                </p>
+            <hr>
+        </div>
+
+
+        <a id="add_req_modal" class="button is-inverse has-fixed-icon"><i class="fa fa-plus"></i></a>
+    </div>
+</div>
+
+
+<script src="{{ MEDIA_URL }}/js/boc.js"></script>
+</body>
+</html>

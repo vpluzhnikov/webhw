@@ -26,6 +26,9 @@ def index(request):
 #    elif app_action == 'list':
     return render_to_response("example3-editing.html", {'MEDIA_URL' : MEDIA_URL})
 
+def boc_main(request):
+    return render_to_response("new_start.html", {'MEDIA_URL' : MEDIA_URL})
+
 def boc_grid_setup(request):
     """
     Returns a JSON with grid data to new form or to loaded from file form
@@ -54,6 +57,10 @@ def boc_xlssave(request):
         logger.error(data)
 #        print data
         return HttpResponse(dumps(data))
+#        fsock = open(BOC_WORK_DIR + data['filename'],"r")
+#        response = HttpResponse(fsock, mimetype = "application/ms-excel")
+#        response['Content-Disposition'] = 'attachment; filename = %s' % data['filename']
+#        return response
     except:
         return HttpResponse(dumps({'error' : 'Unknown error'}))
 
@@ -115,7 +122,15 @@ def boc_grid_form(request):
                     return HttpResponse('Bad file type or file corrupted')
             elif 'xlsexport' in request.POST:
                 logger.error("Starting export to XLS")
-                return HttpResponse("Ok")
+                if 'xlsfilename' in request.POST:
+                    fsock = open(BOC_WORK_DIR + request.POST['xlsfilename'], "r")
+                    response = HttpResponse(fsock, mimetype="application/ms-excel")
+                    response['Content-Disposition'] = 'attachment; filename = %s' % request.POST['xlsfilename']
+                    form.clean()
+                    return response
+                else:
+                    logger.error("No xlsfilename")
+
         else:
             print "%s" % repr(form.errors)
 
