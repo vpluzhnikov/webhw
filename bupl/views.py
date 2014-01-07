@@ -12,6 +12,7 @@ from webhw.common import get_session_key, whoami
 from webhw.settings import BOC_WORK_DIR
 from bupl.boc import BOC, EMPTY, IN_XLS, IN_DB, IN_SESSION
 from logging import getLogger
+from eos import calculate_req_line
 
 
 
@@ -26,8 +27,14 @@ def index(request):
 #    elif app_action == 'list':
     return render_to_response("example3-editing.html", {'MEDIA_URL' : MEDIA_URL})
 
-def boc_main(request):
+def eos_main(request):
     return render_to_response("new_start.html", {'MEDIA_URL' : MEDIA_URL})
+
+def add_req(request):
+    req_line = loads(request.POST['json'])
+    print calculate_req_line(req_line)
+    return HttpResponse(dumps(calculate_req_line(req_line)))
+
 
 def boc_grid_setup(request):
     """

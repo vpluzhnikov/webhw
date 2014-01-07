@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, include, url
-from bupl.views import index, boc_grid_setup, boc_grid_form, boc_get_prj_name, boc_grid_calc, boc_xlssave, boc_main
+from bupl.views import index, boc_grid_setup, boc_grid_form, boc_get_prj_name, boc_grid_calc, boc_xlssave, eos_main, \
+    add_req
 from webhw import settings
 
 # Uncomment the next two lines to enable the admin:
@@ -10,8 +11,9 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'webhw.views.home', name='home'),
     # url(r'^webhw/', include('webhw.foo.urls')),
-    url(r'^$', boc_main),
-#    url(r'^boc_setup$', boc_main),
+    url(r'^$', eos_main),
+    url(r'^add_req$', add_req),
+    #    url(r'^boc_setup$', boc_main),
     url(r'^boc_setup$', boc_grid_setup),
     url(r'^boc_calc', boc_grid_calc),
     url(r'^boc_xlssave', boc_xlssave),
