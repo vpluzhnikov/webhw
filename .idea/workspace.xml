@@ -1,25 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="16d88876-88d8-4668-91b5-3c169be72a6c" name="Default" comment="Fixed caclulation algo">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/locale/fonts/Arial.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/locale/fonts/Verdana.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/webhw/media/fonts/font-awesome/fontawesome-webfont.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/webhw/media/fonts/font-awesome/fontawesome-webfont.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/webhw/media/fonts/font-awesome/fontawesome-webfont.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/webhw/media/fonts/open-sans-semi-bold/OpenSans-Semibold-webfont.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/webhw/media/fonts/open-sans-semi-bold/OpenSans-Semibold-webfont.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/webhw/media/fonts/open-sans-semi-bold/OpenSans-Semibold-webfont.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/webhw/media/fonts/font-awesome/fontawesome-webfont.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/webhw/media/fonts/open-sans-semi-bold/OpenSans-Semibold-webfont.svg" />
+    <list default="true" id="16d88876-88d8-4668-91b5-3c169be72a6c" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/webhw/media/images/sb-logo.jpg" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/138108.xls" afterPath="$PROJECT_DIR$/138108.xls" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bupl/eos.py" afterPath="$PROJECT_DIR$/bupl/eos.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bupl/views.py" afterPath="$PROJECT_DIR$/bupl/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webhw/media/js/eos.js" afterPath="$PROJECT_DIR$/webhw/media/js/eos.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webhw/settings.py" afterPath="$PROJECT_DIR$/webhw/settings.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webhw/templates/new_start.html" afterPath="$PROJECT_DIR$/webhw/templates/new_start.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webhw/urls.py" afterPath="$PROJECT_DIR$/webhw/urls.py" />
     </list>
     <ignored path="webhw.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -259,6 +244,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="media" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webhw" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webhw" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webhw" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="media" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="images" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -554,7 +561,11 @@
       <created>1389124291432</created>
       <updated>1389124291432</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Export to PDF function added">
+      <created>1389256472974</created>
+      <updated>1389256472974</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TodoView" selected-index="2">
@@ -636,7 +647,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed caclulation algo" />
+    <option name="LAST_COMMIT_MESSAGE" value="Export to PDF function added" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -660,6 +671,7 @@
     <MESSAGE value="Boc save in xls implemented" />
     <MESSAGE value="New design for start form" />
     <MESSAGE value="Fixed caclulation algo" />
+    <MESSAGE value="Export to PDF function added" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
