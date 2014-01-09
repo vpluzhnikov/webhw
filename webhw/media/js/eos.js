@@ -54,46 +54,46 @@ function renderEos() {
     $("#test_nt_body").empty();
     $("#test_other_body").empty();
     for (var i =0; i < eos_items.length; ++i) {
-        item = eos_items[i];
-        console.log(item);
-        if (item["itemstatus"] == 'prom'){
+        e_item = eos_items[i];
+        console.log(e_item);
+        if (e_item["itemstatus"] == 'prom'){
             $("#prom_body").append("<table> <tr>"+
-                "<td> <label class=\"main_window_data\">"+ru_vals[item["itemtype2"]]+"</label></td>" +
-                "<td> <label class=\"main_window_data\">"+ru_vals[item["itemtype1"]]+"</label></td>" +
-                "<td> <label class=\"main_window_data\"> Кол-во: "+item["item_count"]+"</label></td>"+
-                "<td> <label class=\"main_window_data\"> Тип: "+ru_vals[item["platform_type"]]+"</label></td>"+
-                "<td> <label class=\"main_window_data\"> Стоимость "+item["price"]+"$</label></td>"+
+                "<td> <label class=\"main_window_data\">"+ru_vals[e_item["itemtype2"]]+"</label></td>" +
+                "<td> <label class=\"main_window_data\">"+ru_vals[e_item["itemtype1"]]+"</label></td>" +
+                "<td> <label class=\"main_window_data\"> Кол-во: "+e_item["item_count"]+"</label></td>"+
+                "<td> <label class=\"main_window_data\"> Тип: "+ru_vals[e_item["platform_type"]]+"</label></td>"+
+                "<td> <label class=\"main_window_data\"> Стоимость "+e_item["price"]+"$</label></td>"+
                 "<td> <a onclick=\"prepareReqForm("+ i +")\" class=\"button is-inverse has-fixed-icon\"><i class=\"fa fa-pencil-square-o\"></i></a> </td>" +
                 "<td> <a onclick=\"deleteReq("+ i +")\" class=\"button is-inverse has-fixed-icon\"><i class=\"fa fa-trash-o\"></i></a> </td>" +
                 "</tr> </table>");
             prom_count += 1;
-            prom_cost += parseFloat(item["price"]);
+            prom_cost += parseFloat(e_item["price"]);
         }
-        if (item["itemstatus"] == 'test-nt'){
+        if (e_item["itemstatus"] == 'test-nt'){
             $("#test_nt_body").append("<table> <tr>"+
-                "<td> <label class=\"main_window_data\">"+ru_vals[item["itemtype2"]]+"</label></td>" +
-                "<td> <label class=\"main_window_data\">"+ru_vals[item["itemtype1"]]+"</label></td>" +
-                "<td> <label class=\"main_window_data\"> Кол-во: "+item["item_count"]+"</label></td>"+
-                "<td> <label class=\"main_window_data\"> Тип: "+ru_vals[item["platform_type"]]+"</label></td>"+
-                "<td> <label class=\"main_window_data\"> Стоимость "+item["price"]+"$</label></td>"+
+                "<td> <label class=\"main_window_data\">"+ru_vals[e_item["itemtype2"]]+"</label></td>" +
+                "<td> <label class=\"main_window_data\">"+ru_vals[e_item["itemtype1"]]+"</label></td>" +
+                "<td> <label class=\"main_window_data\"> Кол-во: "+e_item["item_count"]+"</label></td>"+
+                "<td> <label class=\"main_window_data\"> Тип: "+ru_vals[e_item["platform_type"]]+"</label></td>"+
+                "<td> <label class=\"main_window_data\"> Стоимость "+e_item["price"]+"$</label></td>"+
                 "<td> <a onclick=\"prepareReqForm("+ i +")\" class=\"button is-inverse has-fixed-icon\"><i class=\"fa fa-pencil-square-o\"></i></a> </td>" +
                 "<td> <a onclick=\"deleteReq("+ i +")\" class=\"button is-inverse has-fixed-icon\"><i class=\"fa fa-trash-o\"></i></a> </td>" +
                 "</tr> </table>");
             test_nt_count += 1;
-            test_nt_cost += parseFloat(item["price"]);
+            test_nt_cost += parseFloat(e_item["price"]);
         }
-        if (item["itemstatus"] == 'test-other'){
+        if (e_item["itemstatus"] == 'test-other'){
             $("#test_other_body").append("<table> <tr>"+
-                "<td> <label class=\"main_window_data\">"+ru_vals[item["itemtype2"]]+"</label></td>" +
-                "<td> <label class=\"main_window_data\">"+ru_vals[item["itemtype1"]]+"</label></td>" +
-                "<td> <label class=\"main_window_data\"> Кол-во: "+item["item_count"]+"</label></td>"+
-                "<td> <label class=\"main_window_data\"> Тип: "+ru_vals[item["platform_type"]]+"</label></td>"+
-                "<td> <label class=\"main_window_data\"> Стоимость "+item["price"]+"$</label></td>"+
+                "<td> <label class=\"main_window_data\">"+ru_vals[e_item["itemtype2"]]+"</label></td>" +
+                "<td> <label class=\"main_window_data\">"+ru_vals[e_item["itemtype1"]]+"</label></td>" +
+                "<td> <label class=\"main_window_data\"> Кол-во: "+e_item["item_count"]+"</label></td>"+
+                "<td> <label class=\"main_window_data\"> Тип: "+ru_vals[e_item["platform_type"]]+"</label></td>"+
+                "<td> <label class=\"main_window_data\"> Стоимость "+e_item["price"]+"$</label></td>"+
                 "<td> <a onclick=\"prepareReqForm("+ i +")\" class=\"button is-inverse has-fixed-icon\"><i class=\"fa fa-pencil-square-o\"></i></a> </td>" +
                 "<td> <a onclick=\"deleteReq("+ i +")\" class=\"button is-inverse has-fixed-icon\"><i class=\"fa fa-trash-o\"></i></a> </td>" +
                 "</tr> </table>");
             test_other_count += 1;
-            test_other_cost += parseFloat(item["price"]);
+            test_other_cost += parseFloat(e_item["price"]);
         }
 
     }
