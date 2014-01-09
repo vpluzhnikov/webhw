@@ -7,6 +7,7 @@
  */
 
 var eos_items = []
+var modified_record = -1;
 var ru_vals = { 'new' : "Новый",
     'upgrade' : "Апгрейд",
     'app' : "Сервер приложения",
@@ -24,6 +25,9 @@ var ru_vals = { 'new' : "Новый",
 
 function editReq(id){
     window.alert("edit " + id);
+//    prepareReqForm(id);
+//    $('#add_req_dialog').arcticmodal();
+
 }
 
 function deleteReq(id){
@@ -59,7 +63,7 @@ function renderEos() {
                 "<td> <label class=\"main_window_data\"> Кол-во: "+item["item_count"]+"</label></td>"+
                 "<td> <label class=\"main_window_data\"> Тип: "+ru_vals[item["platform_type"]]+"</label></td>"+
                 "<td> <label class=\"main_window_data\"> Стоимость "+item["price"]+"$</label></td>"+
-                "<td> <a onclick=\"editReq("+ i +")\" class=\"button is-inverse has-fixed-icon\"><i class=\"fa fa-pencil-square-o\"></i></a> </td>" +
+                "<td> <a onclick=\"prepareReqForm("+ i +")\" class=\"button is-inverse has-fixed-icon\"><i class=\"fa fa-pencil-square-o\"></i></a> </td>" +
                 "<td> <a onclick=\"deleteReq("+ i +")\" class=\"button is-inverse has-fixed-icon\"><i class=\"fa fa-trash-o\"></i></a> </td>" +
                 "</tr> </table>");
             prom_count += 1;
@@ -72,7 +76,7 @@ function renderEos() {
                 "<td> <label class=\"main_window_data\"> Кол-во: "+item["item_count"]+"</label></td>"+
                 "<td> <label class=\"main_window_data\"> Тип: "+ru_vals[item["platform_type"]]+"</label></td>"+
                 "<td> <label class=\"main_window_data\"> Стоимость "+item["price"]+"$</label></td>"+
-                "<td> <a onclick=\"editReq("+ i +")\" class=\"button is-inverse has-fixed-icon\"><i class=\"fa fa-pencil-square-o\"></i></a> </td>" +
+                "<td> <a onclick=\"prepareReqForm("+ i +")\" class=\"button is-inverse has-fixed-icon\"><i class=\"fa fa-pencil-square-o\"></i></a> </td>" +
                 "<td> <a onclick=\"deleteReq("+ i +")\" class=\"button is-inverse has-fixed-icon\"><i class=\"fa fa-trash-o\"></i></a> </td>" +
                 "</tr> </table>");
             test_nt_count += 1;
@@ -85,7 +89,7 @@ function renderEos() {
                 "<td> <label class=\"main_window_data\"> Кол-во: "+item["item_count"]+"</label></td>"+
                 "<td> <label class=\"main_window_data\"> Тип: "+ru_vals[item["platform_type"]]+"</label></td>"+
                 "<td> <label class=\"main_window_data\"> Стоимость "+item["price"]+"$</label></td>"+
-                "<td> <a onclick=\"editReq("+ i +")\" class=\"button is-inverse has-fixed-icon\"><i class=\"fa fa-pencil-square-o\"></i></a> </td>" +
+                "<td> <a onclick=\"prepareReqForm("+ i +")\" class=\"button is-inverse has-fixed-icon\"><i class=\"fa fa-pencil-square-o\"></i></a> </td>" +
                 "<td> <a onclick=\"deleteReq("+ i +")\" class=\"button is-inverse has-fixed-icon\"><i class=\"fa fa-trash-o\"></i></a> </td>" +
                 "</tr> </table>");
             test_other_count += 1;
@@ -93,42 +97,70 @@ function renderEos() {
         }
 
     }
+    var total_cost = prom_cost + test_nt_cost + test_other_cost;
     $("#prom_count").html('Кол-во ' + prom_count);
     $("#prom_cost").html('Стоимость ' + prom_cost +'$');
-    $("#test_nt_count").html('Кол-во ' + prom_count);
-    $("#test_nt_cost").html('Стоимость ' + prom_cost +'$');
-    $("#test_other_count").html('Кол-во ' + prom_count);
-    $("#test_other_cost").html('Стоимость ' + prom_cost +'$');
+    $("#test_nt_count").html('Кол-во ' + test_nt_count);
+    $("#test_nt_cost").html('Стоимость ' + test_nt_cost +'$');
+    $("#test_other_count").html('Кол-во ' + test_other_count);
+    $("#test_other_cost").html('Стоимость ' + test_other_cost +'$');
+    $("#total_cost").html('Общая стоимость ' + total_cost +'$');
 
-//    $("#prom_count").prop('value', 'Кол-во ' + prom_count);
-//    $("#prom_cost").val("Стоимость " + prom_cost +"$");
 }
 
 
-function clearAddForm() {
-    $("#itemtype2").val('new');
-    $("#itemtype1").val('---');
-    $("#itemstatus").val('---');
-    $("#servername").val('-');
-    $("#upgrade_params").hide();
-    $("#cpu_count").val('0');
-    $("#ram_count").val('0');
-    $("#hdd_count").val('0');
-    $("#san_count").val('0');
-    $("#nas_count").val('0');
-    $("#item_count").val('0');
-    $("#ostype").val('---');
-    $("#platform_type").val('---');
-    $("#lan_segment").val('alpha');
-    $("#db_type").val('---');
-    $("#cluster_type").val('none');
-    $("#backup_type").val('no');
-    $("#itemtype1").css({'color' : 'black'});
-    $("#itemstatus").css({'color' : 'black'});
-    $("#servername").css({'color' : 'black'});
-    $("#item_count").css({'color' : 'black'});
-    $("#ostype").css({'color' : 'black'});
-    $("#platform_type").css({'color' : 'black'});
+function prepareReqForm(num_req) {
+    if (num_req == -1 ) {
+        $("#itemtype2").val('new');
+        $("#itemtype1").val('---');
+        $("#itemstatus").val('---');
+        $("#servername").val('-');
+        $("#upgrade_params").hide();
+        $("#cpu_count").val('0');
+        $("#ram_count").val('0');
+        $("#hdd_count").val('0');
+        $("#san_count").val('0');
+        $("#nas_count").val('0');
+        $("#item_count").val('0');
+        $("#ostype").val('---');
+        $("#platform_type").val('---');
+        $("#lan_segment").val('alpha');
+        $("#db_type").val('---');
+        $("#cluster_type").val('none');
+        $("#backup_type").val('no');
+        $("#itemtype1").css({'color':'black'});
+        $("#itemstatus").css({'color':'black'});
+        $("#servername").css({'color':'black'});
+        $("#item_count").css({'color':'black'});
+        $("#ostype").css({'color':'black'});
+        $("#platform_type").css({'color':'black'});
+        $("#add_req_modal").show();
+        $("#edit_req_modal").hide();
+    }
+    if (num_req >= 0) {
+        var req_line = {}
+        req_line = eos_items[num_req];
+        $("#itemtype2").val(req_line["itemtype2"]);
+        $("#itemtype1").val(req_line["itemtype1"]);
+        $("#itemstatus").val(req_line["itemstatus"]);
+        $("#servername").val(req_line["servername"]);
+        $("#cpu_count").val(req_line["cpu_count"]);
+        $("#ram_count").val(req_line["ram_count"]);
+        $("#hdd_count").val(req_line["hdd_count"]);
+        $("#san_count").val(req_line["san_count"]);
+        $("#nas_count").val(req_line["nas_count"]);
+        $("#item_count").val(req_line["item_count"]);
+        $("#ostype").val(req_line["ostype"]);
+        $("#platform_type").val(req_line["platform_type"]);
+        $("#lan_segment").val(req_line["lan_segment"]);
+        $("#db_type").val(req_line["db_type"]);
+        $("#cluster_type").val(req_line["cluster_type"]);
+        $("#backup_type").val(req_line["backup_type"]);
+        $("#edit_req_modal").show();
+        $("#add_req_modal").hide();
+        modified_record = num_req;
+    }
+    $('#add_req_dialog').arcticmodal();
 }
 
 function formCheck() {
@@ -181,26 +213,6 @@ function formCheck() {
 
 $("#load").click(function ()
     {
-//        var url_boc_xlssave = "/boc_xlssave"
-//        gdata = {}
-//        i = 1
-//        for (line in griddata) {
-//            gdata[i] = griddata[line];
-//            i++;
-//        }
-//        $.ajax({
-//            type : 'POST',
-//            url: url_boc_xlssave,
-//            async: false,
-//            dataType: 'json',
-//            data: {"json" : JSON.stringify(griddata) },
-//            success: function(data, status){
-//                error = data.error;
-//                console.log(data);
-//                element = '<input id="xlsfilename" name="xlsfilename" value="'+ data['filename'] +'" type="hidden">'
-//                var input = $('#boc_form').appendTo(document.body).append(element);
-//            }
-//        });
         $("#xls_file").click();
     }
 );
@@ -214,27 +226,30 @@ $("#xls_file").change(function ()
 
 $("#save").click(function ()
     {
-//        var url_boc_xlssave = "/boc_xlssave"
-//        gdata = {}
-//        i = 1
-//        for (line in griddata) {
-//            gdata[i] = griddata[line];
-//            i++;
-//        }
-//        $.ajax({
-//            type : 'POST',
-//            url: url_boc_xlssave,
-//            async: false,
-//            dataType: 'json',
-//            data: {"json" : JSON.stringify(griddata) },
-//            success: function(data, status){
-//                error = data.error;
-//                console.log(data);
+        var url_eos_pdfsave = "/export_to_pdf"
+        eosdata = {}
+        i = 1
+        for (line in eos_items) {
+            eosdata[i] = eos_items[line];
+            i++;
+        }
+        console.log(eosdata);
+        $.ajax({
+            type : 'POST',
+            url: url_eos_pdfsave ,
+            async: false,
+            dataType: 'json',
+            data: {"json" : JSON.stringify(eosdata) },
+            success: function(data, status){
+                error = data.error;
+                console.log(data);
+                document.location.href="get_eos_pdf/"+data['filename'];
 //                element = '<input id="xlsfilename" name="xlsfilename" value="'+ data['filename'] +'" type="hidden">'
 //                var input = $('#boc_form').appendTo(document.body).append(element);
-//            }
-//        });
-        window.alert("save");
+            }
+        });
+
+//        window.alert("save");
     }
 );
 
@@ -265,8 +280,8 @@ $("#save").click(function ()
 //);
 
 $('#add_req').click(function() {
-    clearAddForm();
-    $('#add_req_dialog').arcticmodal();
+    prepareReqForm(-1);
+//    $('#add_req_dialog').arcticmodal();
 });
 
 $("#itemtype2").click(function() {
@@ -308,7 +323,7 @@ $("#itemtype1").click(function() {
             $("#hdd_count").val('100');
             $("#san_count").val('0');
             $("#nas_count").val('0');
-            $("#ostype").val('widows');
+            $("#ostype").val('windows');
             $("#platform_type").val('x86');
         }
         if ($(this).val() == 'lb') {
@@ -419,7 +434,7 @@ $("#db_type").click(function() {
 });
 
 $("#add_req_modal").click(function() {
-    var url_eos_addreq = "/add_req";
+    var url_eos_addreq = "/calc_req";
     var req_line = {};
     if (formCheck()) {
         req_line["itemtype2"] = $("#itemtype2").val();
@@ -438,7 +453,6 @@ $("#add_req_modal").click(function() {
         req_line["db_type"] = $("#db_type").val();
         req_line["cluster_type"] = $("#cluster_type").val();
         req_line["backup_type"] = $("#backup_type").val();
-    console.log(req_line);
     $.ajax({
         type:'POST',
         url:url_eos_addreq,
@@ -455,4 +469,43 @@ $("#add_req_modal").click(function() {
     renderEos();
     $("#close").click();
     }
+});
+
+$("#edit_req_modal").click(function() {
+    var url_eos_addreq = "/calc_req";
+    var req_line = {};
+    if (formCheck()) {
+        req_line["itemtype2"] = $("#itemtype2").val();
+        req_line["itemtype1"] = $("#itemtype1").val();
+        req_line["itemstatus"] = $("#itemstatus").val();
+        req_line["servername"] = $("#servername").val();
+        req_line["cpu_count"] = $("#cpu_count").val();
+        req_line["ram_count"] = $("#ram_count").val();
+        req_line["hdd_count"] = $("#hdd_count").val();
+        req_line["san_count"] = $("#san_count").val();
+        req_line["nas_count"] = $("#nas_count").val();
+        req_line["item_count"] = $("#item_count").val();
+        req_line["ostype"] = $("#ostype").val();
+        req_line["platform_type"] = $("#platform_type").val();
+        req_line["lan_segment"] = $("#lan_segment").val();
+        req_line["db_type"] = $("#db_type").val();
+        req_line["cluster_type"] = $("#cluster_type").val();
+        req_line["backup_type"] = $("#backup_type").val();
+        $.ajax({
+            type:'POST',
+            url:url_eos_addreq,
+            async:false,
+            dataType:'json',
+            data:{"json":JSON.stringify(req_line) },
+            success:function (data, status) {
+                error = data.error;
+//                console.log(data);
+                eos_items[modified_record] = data;
+                console.log(eos_items);
+            }
+        });
+        renderEos();
+        $("#close").click();
+    }
+
 });

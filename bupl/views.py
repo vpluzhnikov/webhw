@@ -1,21 +1,26 @@
 # Create your views here.
 from django.template.context import RequestContext
 import django.utils.simplejson as json
-from django.http import HttpResponse, HttpResponseServerError
+from django.http import HttpResponse, HttpResponseServerError, HttpResponseNotFound
 from django.shortcuts import render_to_response, redirect
-from webhw.settings import MEDIA_URL
 from django.utils.simplejson import dumps, load, loads
+
+from webhw.settings import MEDIA_URL
+from webhw.common import get_session_key, whoami
+from webhw.settings import BOC_WORK_DIR
+
 from bupl.forms import BocForm
 from bupl.models import Projects
 from bupl.xlsfiles import handle_xls_file
-from webhw.common import get_session_key, whoami
-from webhw.settings import BOC_WORK_DIR
 from bupl.boc import BOC, EMPTY, IN_XLS, IN_DB, IN_SESSION
+
 from logging import getLogger
-from eos import calculate_req_line
+from eos import calculate_req_line, export_eos_to_pdf
+from os import path
+import mimetypes
 
 
-
+mimetypes.init()
 logger = getLogger(__name__)
 
 
@@ -30,10 +35,30 @@ def index(request):
 def eos_main(request):
     return render_to_response("new_start.html", {'MEDIA_URL' : MEDIA_URL})
 
-def add_req(request):
+def calc_req(request):
     req_line = loads(request.POST['json'])
-    print calculate_req_line(req_line)
     return HttpResponse(dumps(calculate_req_line(req_line)))
+
+def export_to_pdf(request):
+    eos_items = loads(request.POST['json'])
+    print eos_items
+    return HttpResponse(dumps({'filename' : export_eos_to_pdf(eos_items)}))
+
+def get_eos_pdf(request, filename):
+    try:
+        file_path = path.join(BOC_WORK_DIR, filename + ".pdf")
+        print file_path
+        fsock = open(file_path,"r")
+        file_name = path.basename(file_path)
+        file_size = path.getsize(file_path)
+        print "file size is: " + str(file_size)
+        mime_type_guess = mimetypes.guess_type(file_name)
+        if mime_type_guess is not None:
+            response = HttpResponse(fsock, mimetype=mime_type_guess[0])
+        response['Content-Disposition'] = 'attachment; filename=' + file_name
+    except IOError:
+        response = HttpResponseNotFound()
+    return response
 
 
 def boc_grid_setup(request):

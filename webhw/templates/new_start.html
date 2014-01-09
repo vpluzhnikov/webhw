@@ -23,7 +23,7 @@
 
 </head>
 <body>
-
+<img src="{{ MEDIA_URL }}/images/sb-logo.jpg" align="right" width="50" height="50" >
 <form id="boc_form" enctype="multipart/form-data" method="post">
    <table>
         <tr>
@@ -72,6 +72,7 @@
     <div id="test_other_body">
     </div>
     <hr>
+    <td><a id="total_cost" class="button is-link is-disabled">Общая стоимость 0$</a></td>
 </form>
 
 <div style="display: none;">
@@ -127,7 +128,7 @@
                         <option value="solaris">Solaris</option>
                         <option value="hpux">HP-UX</option>
                         <option value="linux">Linux (RHEL)</option>
-                        <option value="widows">Windows</option>
+                        <option value="windows">Windows</option>
                     </select>
                     <select id="platform_type" name="platform_type">
                         <option value="---">---</option>
@@ -172,6 +173,8 @@
 
 
         <a id="add_req_modal" class="button is-inverse has-fixed-icon"><i class="fa fa-plus"></i></a>
+        <a id="edit_req_modal" class="button is-inverse has-fixed-icon"><i class="fa fa-pencil-square-o"></i></a>
+
     </div>
 </div>
 
