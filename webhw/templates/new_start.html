@@ -36,13 +36,14 @@
 {#        </tr>#}
    </table>
     <input type="file" id="xls_file" style="display: none">
+    <p></p>
     <hr>
     <div id="prom_header">
         <table id="prom_table">
             <tr>
-                <td><a class="button is-link is-disabled">Промышленные среды: </a></td>
-                <td><a id="prom_count" class="button is-link is-disabled">Кол-во 0</a></td>
-                <td><a id="prom_cost" class="button is-link is-disabled">Стоимость 0$</a></td>
+                <td width="30px"><a class="name_in_table">Промышленные среды: </a></td>
+                <td width="10px"><a id="prom_count">Кол-во 0</a></td>
+                <td width="20px"><a id="prom_cost">Стоимость 0$</a></td>
             </tr>
         </table>
         <div id="prom_body">
@@ -52,9 +53,9 @@
     <div id="test_nt_header">
         <table id="test_nt_table">
             <tr>
-                <td><a class="button is-link is-disabled">Среды нагрузочного тестирования: </a></td>
-                <td><a id="test_nt_count" class="button is-link is-disabled">Кол-во 0</a></td>
-                <td><a id="test_nt_cost" class="button is-link is-disabled">Стоимость 0$</a></td>
+                <td width="30px"><a class="name_in_table">Среды нагрузочного тестирования: </a></td>
+                <td width="10px"><a id="test_nt_count">Кол-во 0</a></td>
+                <td width="20px"><a id="test_nt_cost">Стоимость 0$</a></td>
             </tr>
         </table>
         <div id="test_nt_body">
@@ -64,16 +65,16 @@
     <div id="test_other_header">
         <table id="test_other_table">
             <tr>
-                <td><a class="button is-link is-disabled">Прочие тестовые среды: </a></td>
-                <td><a id="test_other_count" class="button is-link is-disabled">Кол-во 0</a></td>
-                <td><a id="test_other_cost" class="button is-link is-disabled">Стоимость 0$</a></td>
+                <td width="30px"><a class="name_in_table">Прочие тестовые среды: </a></td>
+                <td width="10px"><a id="test_other_count">Кол-во 0</a></td>
+                <td width="20px"><a id="test_other_cost">Стоимость 0$</a></td>
             </tr>
         </table>
     </div>
     <div id="test_other_body">
     </div>
     <hr>
-    <a id="total_cost" class="button is-link is-disabled">Общая стоимость 0$</a>
+    <a id="total_cost">Общая стоимость 0$</a>
 </form>
 
 <div style="display: none;">
@@ -98,31 +99,53 @@
                 <option value="test-nt">Тест (НТ)</option>
                 <option value="test-other">Тест (другое)</option>
             </select>
-            <hr>
         </div>
+        <hr>
         <div id="upgrade_params" style="display: none;">
-            <p><label class="label-modal" for="servername">Имя сервера:</label>
-            <input class="textbox-modal" id="servername" type="text" size="10" value="-"> </p>
+
+            <table style="padding-left: 10px; padding-bottom: 5px; padding-top: 5px;">
+                <tr>
+                    <td> <label class="label-modal" for="servername">Имя сервера:</label>  </td>
+                    <td> <input class="textbox-modal" id="servername" type="text" size="10" value="-">  </td>
+                </tr>
+             </table>
             <hr>
         </div>
         <div id="new_params">
-            <p> <label class="label-modal" for="cpu_count">Кол-во CPU:</label>
-                <input class="textbox-modal" id="cpu_count" type="number" size="3" value="0" onkeypress="return isNumberKey(event)">
-                <label class="label-modal" for="ram_count">Кол-во ОЗУ:</label>
-                <input class="textbox-modal" id="ram_count" type="number" size="4" value="0" onkeypress="return isNumberKey(event)">
-                <label class="label-modal" for="hdd_count">Кол-во внутреннего СХД,Гб:</label>
-                <input class="textbox-modal" id="hdd_count" type="number" size="5" value="0" onkeypress="return isNumberKey(event)">
-            </p>
-            <p> <label class="label-modal" for="san_count">Кол-во СХД (SAN),Гб:</label>
-                <input class="textbox-modal" id="san_count" type="number" size="5" value="0" onkeypress="return isNumberKey(event)">
-                <label class="label-modal" for="nas_count">Кол-во СХД (NAS),Гб:</label>
-                <input class="textbox-modal" id="nas_count" type="number" size="5" value="0" onkeypress="return isNumberKey(event)"> </p>
+{#            <p> <label class="label-modal" for="cpu_count">Кол-во CPU:</label>#}
+{#                <input class="textbox-modal" id="cpu_count" type="number" size="3" value="0" onkeypress="return isNumberKey(event)">#}
+{#                <label class="label-modal" for="ram_count">Кол-во ОЗУ:</label>#}
+{#                <input class="textbox-modal" id="ram_count" type="number" size="4" value="0" onkeypress="return isNumberKey(event)">#}
+{#            </p>#}
+            <table class="modal_table">
+                <tr>
+                    <td><label class="label-modal" for="cpu_count">Кол-во CPU:</label> </td>
+                    <td><input class="textbox-modal" id="cpu_count" type="number" size="3" value="0" onkeypress="return isNumberKey(event)"></td>
+                    <td><label class="label-modal" for="hdd_count">Кол-во внутреннего СХД,Гб:</label></td>
+                    <td><input class="textbox-modal" id="hdd_count" type="number" size="5" value="0" onkeypress="return isNumberKey(event)"></td>
+                </tr>
+                <tr>
+                    <td><label class="label-modal" for="ram_count">Кол-во ОЗУ:</label></td>
+                    <td><input class="textbox-modal" id="ram_count" type="number" size="4" value="0" onkeypress="return isNumberKey(event)"></td>
+                    <td><label class="label-modal" for="san_count">Кол-во СХД (SAN),Гб:</label></td>
+                    <td><input class="textbox-modal" id="san_count" type="number" size="5" value="0" onkeypress="return isNumberKey(event)"></td>
+                </tr>
+                <tr>
+                  <td></td>
+                    <td></td>
+                  <td><label class="label-modal" for="nas_count">Кол-во СХД (NAS),Гб:</label></td>
+                  <td><input class="textbox-modal" id="nas_count" type="number" size="5" value="0" onkeypress="return isNumberKey(event)"></td>
+                </tr>
+            </table>
             <hr>
         </div>
         <div id="detailed_params">
-            <p> <label class="label-modal" for="item_count">Кол-во позиций:</label>
-                <input class="textbox-modal" id="item_count" type="number" size="3" value="0" onkeypress="return isNumberKey(event)">
-                <p>
+
+            <table class="modal_table_1">
+            <tr>
+                <td><label class="label-modal" for="item_count">Кол-во позиций:</label></td>
+                <td><input class="textbox-modal" id="item_count" type="number" size="3" value="0" onkeypress="return isNumberKey(event)"></td>
+                <td>
                     <select id="ostype" name="ostype">
                         <option value="---">---</option>
                         <option value="aix">AIX</option>
@@ -131,6 +154,8 @@
                         <option value="linux">Linux (RHEL)</option>
                         <option value="windows">Windows</option>
                     </select>
+                </td>
+                <td>
                     <select id="platform_type" name="platform_type">
                         <option value="---">---</option>
                         <option value="power">IBM Power</option>
@@ -139,42 +164,55 @@
                         <option value="itanium">HP Itanium</option>
                         <option value="x86">Intel x86</option>
                     </select>
-                </p>
-                <p>
-                    <label class="label-modal" for="lan_segment">Сегмент LAN:</label>
-                    <select id="lan_segment" name="lan_segment">
+                </td>
+                </tr>
+            <tr>
+                <td><label class="label-modal" for="lan_segment">Сегмент LAN:</label> </td>
+                <td><select id="lan_segment" name="lan_segment">
                         <option value="alpha">Alpha</option>
                         <option value="sigma">Sigma</option>
                         <option value="tay">Tau</option>
                         <option value="other">Other</option>
                     </select>
-                    <label id="db_type_label" class="label-modal" for="db_type" style="display: none;">Тип СУБД:</label>
-                    <select id="db_type" name="db_type" style="display: none;">
-                        <option value="---">---</option>
-                        <option value="oracle">Oracle DB</option>
-                        <option value="db2">IBM DB2</option>
-                        <option value="mssql">MS SQL</option>
+                </td>
+                <td><label id="db_type_label" class="label-modal" for="db_type" style="display: none;">Тип СУБД:</label> </td>
+                <td><select id="db_type" name="db_type" style="display: none;">
+                    <option value="---">---</option>
+                    <option value="oracle">Oracle DB</option>
+                    <option value="db2">IBM DB2</option>
+                    <option value="mssql">MS SQL</option>
                     </select>
-                </p>
-                <p>
-                    <label class="label-modal" for="cluster_type">Тип кластреизации:</label>
-                    <select id="cluster_type" name="cluster_type">
-                        <option value="none">Нет</option>
-                        <option value="vcs">Территориальная</option>
-                        <option value="app">Уровня приложения</option>
+                </td>
+            </tr>
+            <tr>
+                <td> <label class="label-modal" for="cluster_type">Тип кластреизации:</label></td>
+                <td><select id="cluster_type" name="cluster_type">
+                    <option value="none">Нет</option>
+                    <option value="vcs">Территориальная</option>
+                    <option value="app">Уровня приложения</option>
                     </select>
-                    <label class="label-modal" for="backup_type">Резервное копирование:</label>
-                    <select id="backup_type" name="cluster_type">
-                        <option value="no">Нет</option>
-                        <option value="yes">Да</option>
+                </td>
+{#                <td></td>#}
+{#                <td></td>#}
+{#            </tr>#}
+{#            <tr>#}
+                <td><label class="label-modal" for="backup_type">Резервное копирование:</label></td>
+                <td><select id="backup_type" name="cluster_type">
+                    <option value="no">Нет</option>
+                    <option value="yes">Да</option>
                     </select>
-                </p>
+                </td>
+            </tr>
+            </table>
             <hr>
         </div>
 
 
+
         <a id="add_req_modal" class="button is-inverse has-fixed-icon"><i class="fa fa-plus"></i></a>
         <a id="edit_req_modal" class="button is-inverse has-fixed-icon"><i class="fa fa-pencil-square-o"></i></a>
+
+
 
     </div>
 </div>

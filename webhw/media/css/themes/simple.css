@@ -1,3 +1,56 @@
+
+body {  display:block; width:980px; height:36px; text-align:left;
+    font:12px/18px "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+    overflow: hidden;
+}
+
+table.appended_table {table-layout: fixed ;
+    width: 80%;}
+
+table.modal_table {
+    width: 100%;
+    text-align: right;
+    padding: 5px;}
+
+table.modal_table_1 {
+    padding-left: 7px;
+    padding-bottom: 5px;
+}
+table.modal_table_1 td {
+    margin: 3px;}
+
+#main_params {padding: 7px;   }
+
+#prom_table, #test_nt_table, #test_other_table
+{
+  table-layout: fixed ;
+width: 60%;}
+
+.textbox-modal {width: 110px;}
+
+#lan_segment {width: 113px;}
+#ostype {width: 115px;}
+#platform_type, #db_type {width: 100px;}
+
+#prom_table td, #test_nt_table td, #test_other_table td
+{
+    background: #e7edf0; /* ��� ������ �������� */
+    /*#656d78*/
+    /*#F0F0F0 what was before*/
+    background: -moz-linear-gradient(top, #FFFFFF, #e7edf0); /* Firefox 3.6+ */
+    /* Chrome 1-9, Safari 4-5 */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFFFFF), color-stop(100%,#e7edf0));
+    /* Chrome 10+, Safari 5.1+ */
+    background: -webkit-linear-gradient(top, #FFFFFF, #e7edf0);
+    background: -o-linear-gradient(top, #FFFFFF, #e7edf0); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #FFFFFF, #e7edf0); /* IE10 */
+    background: linear-gradient(top, #FFFFFF, #e7edf0); /* CSS3 */
+
+    font:12px Verdana,sans-serif;
+   padding: 7px;
+    outline:none;
+}
+
 .box-modal {
 	position: relative;
 	width: 500px;
