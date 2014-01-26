@@ -301,6 +301,16 @@ def getReportStyleSheet(font):
         spaceAfter=6),
         alias='h1')
 
+    stylesheet.add(ParagraphStyle(name='SubTitle',
+        parent=stylesheet['Normal'],
+        fontName = font,
+        alignment = TA_CENTER,
+        fontSize=14,
+        leading=18,
+        spaceBefore=12,
+        spaceAfter=6),
+        alias='subtitle')
+
     stylesheet.add(ParagraphStyle(name='Title',
         parent=stylesheet['Normal'],
         fontName = font,
@@ -406,10 +416,16 @@ def export_eos_to_pdf(eos_items):
     prom_cost = 0
     test_nt_cost = 0
     test_cost = 0
+    project_id = eos_items['project_id']
+    project_name = eos_items['project_name']
+    eos_items.pop("project_id", None)
+    eos_items.pop("project_name", None)
 
 #    filename = path.join(BOC_WORK_DIR, str(int(time())) + ".pdf")
-    filename = str(int(time()))
-
+    if project_id == u'0':
+        filename = 'eos_' + str(int(time()))
+    else:
+        filename = 'eos_' + project_id.split(".")[0]
     rl_config.warnOnMissingFontGlyphs = 0
     pdfmetrics.registerFont(ttfonts.TTFont('Arial', ARIAL_FONT_FILELOCATION))
 
@@ -420,9 +436,14 @@ def export_eos_to_pdf(eos_items):
     #REPORT TITLE
     Sblogo = Image(path.join(MEDIA_ROOT,'images/sb-logo.jpg'),1 * cm, 1 * cm)
     Sblogo.hAlign='RIGHT'
-    Title = Paragraph(u'Экспресс-оценка', styles["Heading1"])
+    if project_id == u'0':
+        Title = Paragraph(u'Экспресс-оценка для проекта без номера', styles["Heading1"])
+        SubTitle = Paragraph(u' ', styles["SubTitle"])
+    else:
+        Title = Paragraph(u'Экспресс-оценка для проекта №' + project_id.split(".")[0], styles["Heading1"])
+        SubTitle = Paragraph(project_name, styles["SubTitle"])
 
-    Elements = [Sblogo, Title]
+    Elements = [Sblogo, Title, SubTitle]
 
     for key in eos_items.keys():
         logger.error(eos_items[key])

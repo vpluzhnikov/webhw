@@ -1,15 +1,14 @@
 # Create your views here.
 from django.template.context import RequestContext
-import django.utils.simplejson as json
 from django.http import HttpResponse, HttpResponseServerError, HttpResponseNotFound
 from django.shortcuts import render_to_response, redirect
-from django.utils.simplejson import dumps, load, loads
+from django.utils.simplejson import dumps, loads
 
 from webhw.settings import MEDIA_URL
 from webhw.common import get_session_key, whoami
 from webhw.settings import BOC_WORK_DIR
 
-from bupl.forms import BocForm
+from bupl.forms import BocForm, EosForm
 from bupl.models import Projects
 from bupl.xlsfiles import handle_xls_file
 from bupl.boc import BOC, EMPTY, IN_XLS, IN_DB, IN_SESSION
@@ -33,7 +32,8 @@ def index(request):
     return render_to_response("example3-editing.html", {'MEDIA_URL' : MEDIA_URL})
 
 def eos_main(request):
-    return render_to_response("new_start.html", {'MEDIA_URL' : MEDIA_URL})
+    form = EosForm()
+    return render_to_response("new_start.html", {'form': form, 'MEDIA_URL' : MEDIA_URL})
 
 def calc_req(request):
     req_line = loads(request.POST['json'])
@@ -123,12 +123,11 @@ def boc_get_prj_name(request):
     try:
         project = Projects.objects.get(prj_number = project_id)
         if project:
-            return HttpResponse(dumps({'project_name' : project.prj_name, 'customer' : project.customer,
-                                       'manager' : project.manager}))
+            return HttpResponse(dumps({'project_name' : project.prj_name}))
         else:
-            return HttpResponse(dumps({'project_name' : '', 'customer' : '', 'manager' : ''}))
+            return HttpResponse(dumps({'project_name' : ''}))
     except:
-        return HttpResponse(dumps({'project_name' : '', 'customer' : '', 'manager' : ''}))
+        return HttpResponse(dumps({'project_name' : ''}))
 
 def boc_grid_form(request):
     """

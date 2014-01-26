@@ -20,3 +20,14 @@ class BocForm(forms.Form):
         widget=forms.TextInput(attrs={'size':'30', 'readonly':'readonly'}), required=False)
     manager = forms.CharField(label='Руководитель проекта',
         widget=forms.TextInput(attrs={'size':'30', 'readonly':'readonly'}), required=False)
+
+class EosForm(forms.Form):
+    PRJLIST = []
+    AllProjects = Projects.objects.values('prj_number').distinct()
+
+    PRJLIST.append([0, u'Другой'])
+    for prjnum in AllProjects:
+        PRJLIST.append([prjnum['prj_number'] , str(prjnum['prj_number']).split(".")[0]])
+    prjselect = forms.ChoiceField(choices=PRJLIST, label='Номер проекта:', required=False)
+    prjname = forms.CharField(label='Название проекта',
+        widget=forms.TextInput(attrs={'size':'70', 'readonly':'readonly'}), required=False)

@@ -233,6 +233,8 @@ $("#save").click(function ()
             eosdata[i] = eos_items[line];
             i++;
         }
+        eosdata['project_id'] = $("#id_prjselect").val();
+        eosdata['project_name'] = $("#id_prjname").val();
         console.log(eosdata);
         $.ajax({
             type : 'POST',
@@ -508,4 +510,21 @@ $("#edit_req_modal").click(function() {
         $("#close").click();
     }
 
+
+
 });
+
+$("#id_prjselect").change(function ()
+{
+    var url_get_prj_name = "/boc_get_prj_name"
+    $.ajax({
+        url: url_get_prj_name,
+        async: false,
+        dataType: 'json',
+        data: { "project_id" : $("#id_prjselect").val() },
+        success: function(data, status){
+            $("#id_prjname").val(data.project_name);
+        }
+    });
+}
+);
