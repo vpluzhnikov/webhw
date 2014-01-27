@@ -116,6 +116,7 @@ function prepareReqForm(num_req) {
         $("#itemstatus").val('---');
         $("#servername").val('-');
         $("#upgrade_params").hide();
+        $("#new_params").show();
         $("#cpu_count").val('0');
         $("#ram_count").val('0');
         $("#hdd_count").val('0');
@@ -123,11 +124,17 @@ function prepareReqForm(num_req) {
         $("#nas_count").val('0');
         $("#item_count").val('0');
         $("#ostype").val('---');
+        $("#ostype").show();
         $("#platform_type").val('---');
+        $("#platform_type").show();
         $("#lan_segment").val('alpha');
         $("#db_type").val('---');
+        $("#db_type").hide();
+        $("#db_type_label").hide();
         $("#cluster_type").val('none');
+        $("#cluster_type").show();
         $("#backup_type").val('no');
+        $("#backup_type").show();
         $("#itemtype1").css({'color':'black'});
         $("#itemstatus").css({'color':'black'});
         $("#servername").css({'color':'black'});
@@ -186,13 +193,51 @@ function formCheck() {
     {
         $("#servername").css({'color' : 'black'});
     }
-    if ($("#item_count").val() == '0'){
+    if (parseInt($("#item_count").val()) <= 0) {
         $("#item_count").css({'color' : 'red'});
         formValid = 0;
     } else
     {
         $("#item_count").css({'color' : 'black'});
     }
+    if (parseInt($("#cpu_count").val()) < 0) {
+        $("#cpu_count").css({'color' : 'red'});
+        formValid = 0;
+    } else
+    {
+        $("#cpu_count").css({'color' : 'black'});
+    }
+    if (parseInt($("#ram_count").val()) < 0) {
+        $("#ram_count").css({'color' : 'red'});
+        formValid = 0;
+    } else
+    {
+        $("#ram_count").css({'color' : 'black'});
+    }
+    if (parseInt($("#hdd_count").val()) < 0) {
+        $("#hdd_count").css({'color' : 'red'});
+        formValid = 0;
+    } else
+    {
+        $("#hdd_count").css({'color' : 'black'});
+    }
+    if (parseInt($("#san_count").val()) < 0) {
+        $("#san_count").css({'color' : 'red'});
+        formValid = 0;
+    } else
+    {
+        $("#san_count").css({'color' : 'black'});
+    }
+    if (parseInt($("#nas_count").val()) < 0) {
+        $("#nas_count").css({'color' : 'red'});
+        formValid = 0;
+    } else
+    {
+        $("#nas_count").css({'color' : 'black'});
+    }
+
+
+
     if (($("#ostype").val() == '---') && !(($("#itemtype1").val() == 'dp')||($("#itemtype1").val() == 'lb'))) {
         $("#ostype").css({'color' : 'red'});
         formValid = 0;
@@ -286,7 +331,7 @@ $('#add_req').click(function() {
 //    $('#add_req_dialog').arcticmodal();
 });
 
-$("#itemtype2").click(function() {
+$("#itemtype2").change(function() {
     if ($(this).val() == 'new'){
         $("#upgrade_params").fadeOut(300);
     } else {
@@ -295,20 +340,30 @@ $("#itemtype2").click(function() {
 
 });
 
-$("#itemtype1").click(function() {
+$("#itemtype1").change(function() {
     if ($("#itemtype2").val() == 'new') {
         if ($(this).val() == 'db') {
             $("#db_type_label").fadeIn(300);
             $("#db_type").fadeIn(300);
+            $("#new_params").fadeIn(300);
             $("#cpu_count").val('4');
             $("#ram_count").val('32');
             $("#hdd_count").val('300');
             $("#ostype").val('aix');
             $("#platform_type").val('power');
+
+            $("#ostype").show();
+            $("#platform_type").show();
+            $("#cluster_type").show();
+            $("#backup_type").show();
+            $("#cluster_type_label").show();
+            $("#backup_type_label").show();
+
         }
         if ($(this).val() == 'app') {
             $("#db_type_label").fadeOut(300);
             $("#db_type").fadeOut(300);
+            $("#new_params").fadeIn(300);
             $("#cpu_count").val('6');
             $("#ram_count").val('48');
             $("#hdd_count").val('100');
@@ -316,10 +371,19 @@ $("#itemtype1").click(function() {
             $("#nas_count").val('0');
             $("#ostype").val('linux');
             $("#platform_type").val('x86');
+
+            $("#ostype").show();
+            $("#platform_type").show();
+            $("#cluster_type").show();
+            $("#backup_type").show();
+            $("#cluster_type_label").show();
+            $("#backup_type_label").show();
+
         }
         if ($(this).val() == 'term') {
             $("#db_type_label").fadeOut(300);
             $("#db_type").fadeOut(300);
+            $("#new_params").fadeIn(300);
             $("#cpu_count").val('4');
             $("#ram_count").val('24');
             $("#hdd_count").val('100');
@@ -327,10 +391,19 @@ $("#itemtype1").click(function() {
             $("#nas_count").val('0');
             $("#ostype").val('windows');
             $("#platform_type").val('x86');
+
+            $("#ostype").show();
+            $("#platform_type").show();
+            $("#cluster_type").show();
+            $("#backup_type").show();
+            $("#cluster_type_label").show();
+            $("#backup_type_label").show();
+
         }
         if ($(this).val() == 'lb') {
             $("#db_type_label").fadeOut(300);
             $("#db_type").fadeOut(300);
+            $("#new_params").fadeOut(300);
             $("#cpu_count").val('-');
             $("#ram_count").val('-');
             $("#hdd_count").val('-');
@@ -340,10 +413,20 @@ $("#itemtype1").click(function() {
             $("#platform_type").val('---');
             $("#cluster_type").val('none');
             $("#backup_type").val('no');
+
+            $("#ostype").hide();
+            $("#platform_type").hide();
+            $("#cluster_type").hide();
+            $("#backup_type").hide();
+            $("#cluster_type_label").hide();
+            $("#backup_type_label").hide();
+
+
         }
         if ($(this).val() == 'dp') {
             $("#db_type_label").fadeOut(300);
             $("#db_type").fadeOut(300);
+            $("#new_params").fadeOut(300);
             $("#cpu_count").val('-');
             $("#ram_count").val('-');
             $("#hdd_count").val('-');
@@ -353,11 +436,19 @@ $("#itemtype1").click(function() {
             $("#platform_type").val('---');
             $("#cluster_type").val('none');
             $("#backup_type").val('no');
+
+            $("#ostype").hide();
+            $("#platform_type").hide();
+            $("#cluster_type").hide();
+            $("#backup_type").hide();
+            $("#cluster_type_label").hide();
+            $("#backup_type_label").hide();
+
         }
     }
 });
 
-$("#itemstatus").click(function() {
+$("#itemstatus").change(function() {
     if ($("#itemtype2").val() == 'new') {
         if ($(this).val() == 'prom') {
             if ($("#itemtype1").val() == 'db') {
@@ -392,43 +483,70 @@ $("#itemstatus").click(function() {
     }
 });
 
-$("#ostype").click(function() {
+$("#ostype").change(function() {
     if ($(this).val() == 'aix') {
         $("#platform_type").val('power');
+        if ($("#db_type").val() == 'mssql') {
+            $("#db_type").val('---');
+        }
     }
     if ($(this).val() == 'solaris') {
         $("#platform_type").val('t_series');
+        if ($("#db_type").val() == 'mssql') {
+            $("#db_type").val('---');
+        }
     }
     if ($(this).val() == 'hpux') {
         $("#platform_type").val('itanium');
+        if ($("#db_type").val() == 'mssql') {
+            $("#db_type").val('---');
+        }
     }
     if ($(this).val() == 'linux') {
         $("#platform_type").val('x86');
+        if ($("#db_type").val() == 'mssql') {
+            $("#db_type").val('---');
+        }
     }
     if ($(this).val() == 'windows') {
         $("#platform_type").val('x86');
     }
 });
 
-$("#platform_type").click(function() {
+$("#platform_type").change(function() {
     if ($(this).val() == 'power') {
         $("#ostype").val('aix');
+        if ($("#db_type").val() == 'mssql') {
+            $("#db_type").val('---');
+        }
     }
     if ($(this).val() == 't_series') {
         $("#ostype").val('solaris');
+        if ($("#db_type").val() == 'mssql') {
+            $("#db_type").val('---');
+        }
     }
     if ($(this).val() == 'm_series') {
         $("#ostype").val('solaris');
+        if ($("#db_type").val() == 'mssql') {
+            $("#db_type").val('---');
+        }
     }
     if ($(this).val() == 'itanium') {
         $("#ostype").val('hpux');
+        if ($("#db_type").val() == 'mssql') {
+            $("#db_type").val('---');
+        }
     }
     if ($(this).val() == 'x86') {
         $("#ostype").val('linux');
+        if ($("#db_type").val() == 'mssql') {
+            $("#db_type").val('---');
+        }
     }
 });
 
-$("#db_type").click(function() {
+$("#db_type").change(function() {
     if ($(this).val() == 'mssql') {
         $("#ostype").val('windows');
         $("#platform_type").val('x86');
