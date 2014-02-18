@@ -1,7 +1,7 @@
 
 body {  display:block; width:980px; height:36px; text-align:left;
     font:12px/18px "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
-    overflow: hidden;
+    overflow: scroll;
 }
 
 table.appended_table {table-layout: fixed ;
@@ -26,11 +26,10 @@ table.modal_table_1 td {
   table-layout: fixed ;
 width: 60%;}
 
-.textbox-modal {width: 110px;}
-
 #lan_segment {width: 113px;}
 #ostype {width: 115px;}
 #platform_type, #db_type {width: 100px;}
+
 
 #prom_table td, #test_nt_table td, #test_other_table td
 {
@@ -53,7 +52,7 @@ width: 60%;}
 
 .box-modal {
 	position: relative;
-	width: 500px;
+	/*width: 500px;*/
 	padding: 16px;
 	background: #fff;
 	color: #3c3c3c;
@@ -63,3 +62,9 @@ width: 60%;}
 }
 .box-modal_close { position: absolute; right: 10px; top: 6px; font-size: 11px; line-height: 15px; color: #999; cursor: pointer; }
 .box-modal_close:hover { color: #666; }
+
+.img-center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

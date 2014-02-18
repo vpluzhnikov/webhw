@@ -5,13 +5,13 @@
  * Time: 15:19
  * To change this template use File | Settings | File Templates.
  */
-
-var eos_items = []
+var eos_items = [];
 var modified_record = -1;
 var ru_vals = { 'new' : "Новый",
     'upgrade' : "Апгрейд",
     'app' : "Сервер приложения",
     'db' : "Сервер СУБД",
+    'dbarch' : "Сервер СУБД (архивная)",
     'term' : "Терминальный сервер",
     'dp' : "IBM DataPower",
     'lb' : "Балансировщик",
@@ -21,7 +21,7 @@ var ru_vals = { 'new' : "Новый",
     'itanium' : "HP Itanium",
     'x86' : "Intel x86",
     '---' : "---"
-}
+};
 
 function editReq(id){
     window.alert("edit " + id);
@@ -258,47 +258,73 @@ function formCheck() {
 
 $("#load").click(function ()
     {
-        $("#xls_file").click();
+        $("#id_xls_file").click();
     }
 );
 
-$("#xls_file").change(function ()
+$("#id_xls_file").change(function ()
 {
-    console.log($("#xls_file").val());
+    console.log($("#id_xls_file").val());
+    $("#load_img").show();
     $("#boc_form").submit();
 }
 );
 
 $("#save").click(function ()
     {
-        var url_eos_pdfsave = "/export_to_pdf"
-        eosdata = {}
-        i = 1
-        for (line in eos_items) {
-            eosdata[i] = eos_items[line];
-            i++;
-        }
-        eosdata['project_id'] = $("#id_prjselect").val();
-        eosdata['project_name'] = $("#id_prjname").val();
-        console.log(eosdata);
+
+        var url_get_prj_list = "/get_prj_list"
         $.ajax({
-            type : 'POST',
-            url: url_eos_pdfsave ,
-            async: false,
-            dataType: 'json',
-            data: {"json" : JSON.stringify(eosdata) },
-            success: function(data, status){
-                error = data.error;
+            url:url_get_prj_list ,
+            async:false,
+            dataType:'json',
+            success:function (data, status) {
                 console.log(data);
-                document.location.href="get_eos_pdf/"+data['filename'];
-//                element = '<input id="xlsfilename" name="xlsfilename" value="'+ data['filename'] +'" type="hidden">'
-//                var input = $('#boc_form').appendTo(document.body).append(element);
+                for (var i=0;i<data.prjcount;i++) {
+                    $('#prjselect').append('<option value='+data[i]+'>'+data[i]+'</option>');
+                }
+
             }
         });
 
-//        window.alert("save");
+
+        $('#prjselect_dialog').arcticmodal();
+
     }
 );
+
+$("#prj_confirm").click(function ()
+{
+    $("#close_prjselect_dialog").click();
+
+    var url_eos_pdfsave = "/export_to_pdf"
+    eosdata = {}
+    i = 1
+    for (line in eos_items) {
+        eosdata[i] = eos_items[line];
+        i++;
+    }
+    eosdata['project_id'] = $("#prjnum").val();
+    eosdata['project_name'] = $("#prjname").val();
+    console.log(eosdata);
+    $.ajax({
+        type : 'POST',
+        url: url_eos_pdfsave ,
+        async: false,
+        dataType: 'json',
+        data: {"json" : JSON.stringify(eosdata) },
+        success: function(data, status){
+            error = data.error;
+            console.log(data);
+            document.location.href="get_eos_pdf/"+data['filename'];
+//                element = '<input id="xlsfilename" name="xlsfilename" value="'+ data['filename'] +'" type="hidden">'
+//                var input = $('#boc_form').appendTo(document.body).append(element);
+        }
+    });
+
+}
+    );
+
 
 //$("#add_req").click(function ()
 //    {
@@ -342,7 +368,7 @@ $("#itemtype2").change(function() {
 
 $("#itemtype1").change(function() {
     if ($("#itemtype2").val() == 'new') {
-        if ($(this).val() == 'db') {
+        if (($(this).val() == 'db') ||($(this).val() == 'dbarch'))  {
             $("#db_type_label").fadeIn(300);
             $("#db_type").fadeIn(300);
             $("#new_params").fadeIn(300);
@@ -632,17 +658,60 @@ $("#edit_req_modal").click(function() {
 
 });
 
-$("#id_prjselect").change(function ()
+$("#prjselect").change(function ()
 {
     var url_get_prj_name = "/boc_get_prj_name"
     $.ajax({
         url: url_get_prj_name,
         async: false,
         dataType: 'json',
-        data: { "project_id" : $("#id_prjselect").val() },
+        data: { "project_id" : $("#prjselect").val() },
         success: function(data, status){
-            $("#id_prjname").val(data.project_name);
+            $("#prjname").val(data.project_name);
+            $("#prjnum").val(data.project_id);
+            if ($("#prjnum").val() == "") {
+                $("#prjnum").prop("readonly",false);
+                $("#prjname").prop("readonly",false);
+            } else
+            {
+                $("#prjnum").prop("readonly",true);
+                $("#prjname").prop("readonly",true);
+            }
+
         }
     });
 }
+);
+
+$("#boc_form").ready(function ()
+    {
+        $("#load_img").hide();
+        $("#id_xls_file").hide();
+        var url_get_loaded_eos = "/get_loaded_eos"
+        $.ajax({
+            url:url_get_loaded_eos,
+            async:false,
+            dataType:'json',
+            success:function (data, status) {
+                console.log(data);
+                if (data.prjnum != null || data.prjnum != undefined) {
+                    $("#id_prjselect").val(data.prjnum);
+                    var url_get_prj_name = "/boc_get_prj_name"
+                    $.ajax({
+                        url: url_get_prj_name,
+                        async: false,
+                        dataType: 'json',
+                        data: { "project_id" : $("#id_prjselect").val() },
+                        success: function(data, status){
+                            $("#id_prjname").val(data.project_name);
+                        }
+                    });
+                }
+
+            }
+        });
+
+
+    }
+
 );

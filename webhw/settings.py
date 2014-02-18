@@ -14,8 +14,8 @@ UPLOAD_DIR = PROJECT_DIR + '/bocuploads/'
 
 FILE_UPLOAD_MAX_MEMORY_SIZE = '104857600'
 ARIAL_FONT_FILELOCATION = '/Users/vs/dev/webhw/locale/fonts/Arial.ttf'
-#FILE_UPLOAD_HANDLERS = ('webhw.upload_handlers.UploadProgressCachedHandler', ) +\
-#                       global_settings.FILE_UPLOAD_HANDLERS
+FILE_UPLOAD_HANDLERS = ('webhw.upload_handlers.UploadProgressCachedHandler', ) +\
+                       global_settings.FILE_UPLOAD_HANDLERS
 
 
 ADMINS = (

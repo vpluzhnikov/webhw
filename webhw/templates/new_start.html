@@ -25,7 +25,7 @@
 <body>
 <img src="{{ MEDIA_URL }}/images/sb-logo.jpg" align="right" width="50" height="50" >
 <form id="boc_form" enctype="multipart/form-data" method="post">
-   <table>
+    <table>
         <tr>
             <td> <a id="load" class="button is-inverse has-icon-spacing"><i class="fa fa-upload"></i> Импорт</a> </td>
             <td> <a id="save" class="button is-inverse has-icon-spacing"><i class="fa fa-download"></i> Экспорт</a> </td>
@@ -37,7 +37,7 @@
    </table>
     {{ form.as_table }}
 
-    <input type="file" id="xls_file" style="display: none">
+{#    <input type="file" id="xls_file" style="display: none">#}
     <p></p>
     <hr>
     <div id="prom_header">
@@ -90,6 +90,7 @@
             <select id="itemtype1" name="itemtype1">
                 <option value="---">---</option>
                 <option value="db">Сервер СУБД</option>
+                <option value="dbarch">Сервер архивной СУБД</option>
                 <option value="app">Сервер приложения</option>
                 <option value="term">Терминальный сервер</option>
                 <option value="lb">Балансировщик</option>
@@ -123,12 +124,13 @@
                 <tr>
                     <td><label class="label-modal" for="cpu_count">Кол-во CPU:</label> </td>
                     <td><input class="textbox-modal" id="cpu_count" type="number" size="3" value="0" onkeypress="return isNumberKey(event)"></td>
-                    <td><label class="label-modal" for="hdd_count">Кол-во внутреннего СХД,Гб:</label></td>
-                    <td><input class="textbox-modal" id="hdd_count" type="number" size="5" value="0" onkeypress="return isNumberKey(event)"></td>
+                    <td><label class="label-modal" for="ram_count">Кол-во ОЗУ,Гб:</label></td>
+                    <td><input class="textbox-modal" id="ram_count" type="number" size="4" value="0" onkeypress="return isNumberKey(event)"></td>
                 </tr>
                 <tr>
-                    <td><label class="label-modal" for="ram_count">Кол-во ОЗУ:</label></td>
-                    <td><input class="textbox-modal" id="ram_count" type="number" size="4" value="0" onkeypress="return isNumberKey(event)"></td>
+
+                    <td><label class="label-modal" for="hdd_count">Внутреннее СХД,Гб:</label></td>
+                    <td><input class="textbox-modal" id="hdd_count" type="number" size="5" value="0" onkeypress="return isNumberKey(event)"></td>
                     <td><label class="label-modal" for="san_count">Кол-во СХД (SAN),Гб:</label></td>
                     <td><input class="textbox-modal" id="san_count" type="number" size="5" value="0" onkeypress="return isNumberKey(event)"></td>
                 </tr>
@@ -174,7 +176,7 @@
                         <option value="alpha">Alpha</option>
                         <option value="sigma">Sigma</option>
                         <option value="tay">Tau</option>
-                        <option value="other">Other</option>
+                        <option value="other">Другой</option>
                     </select>
                 </td>
                 <td><label id="db_type_label" class="label-modal" for="db_type" style="display: none;">Тип СУБД:</label> </td>
@@ -218,6 +220,42 @@
 
     </div>
 </div>
+
+
+<div style="display: none;">
+    <div class="box-modal" id="prjselect_dialog">
+        <div id="close_prjselect_dialog" class="box-modal_close arcticmodal-close">закрыть</div>
+        <label class="label-modal">Инфоамация о проекте</label>
+        <table>
+            <tr>
+                <td>
+                    <label for="prjselect" class="label-modal">Портфель проектов:</label>
+                </td>
+                <td>
+                    <select id="prjselect" name="prjselect">
+                    </select>
+                </td>
+                <td>
+                    <label for="prjnum" class="label-modal">Номер проекта:</label>
+                </td>
+                <td>
+                <input class="textbox-project-modal" id="prjnum" type="number" size="6" onkeypress="return isNumberKey(event)">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <input class="prjname-modal" id="prjname">
+                </td>
+                <td> </td>
+                <td>
+                    <a id="prj_confirm" class="button is-inverse has-fixed-icon"><i class="fa fa-check"></i></a>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+<img class="img-center" src="{{ MEDIA_URL }}/images/loading.gif" id="load_img" width="100" height="100" style="display: none">
 
 
 <script src="{{ MEDIA_URL }}/js/eos.js"></script>

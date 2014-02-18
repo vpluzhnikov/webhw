@@ -3,13 +3,16 @@ __author__ = 'vs'
 
 from logging import getLogger
 from bupl.models import Prices
+
 from decimal import *
 from webhw.settings import ARIAL_FONT_FILELOCATION, BOC_WORK_DIR, MEDIA_ROOT
+
 from time import time
 from os import path
 
-
+from xlrd import open_workbook
 from io import BytesIO
+
 from reportlab.lib.units import cm
 from reportlab.pdfbase import ttfonts, pdfmetrics
 from reportlab.lib.styles import ParagraphStyle, StyleSheet1
@@ -27,6 +30,7 @@ ru_vals = { 'new' : u'Новый',
             'upgrade' : u'Апгрейд',
             'app' : u'Сервер приложения',
             'db' : u'Сервер СУБД',
+            'dbarch' : u'Сервер СУБД (архивная)',
             'term' : u'Терминальный сервер',
             'dp' : u'IBM DataPower',
             'lb' : u'Балансировщик',
@@ -39,6 +43,28 @@ ru_vals = { 'new' : u'Новый',
             'prom' : u'Пром',
             'test-nt' : u'Тест (НТ)',
             'test-other' : u'Тест (Другое)',
+}
+
+xls_vals = { 'prjrow' : 2,
+             'prjcell' : 4,
+             'eos_start_row' : 10,
+             'itemtype1_col' : 14,
+             'itemname_col' : 4,
+             'servername_col': 6,
+             'cpucount_col' : 7,
+             'ramcount_col' : 8,
+             'hddcount_col' : 9,
+             'sancount_col' : 10,
+             'nascount_col' : 11,
+             'itemcount_col' : 5,
+             'platformtype_col' : 13,
+             'ostype_col' : 15,
+             'swaddons_col' : 16,
+             'itemstatus_col' : 3,
+             'lansegment_col' : 17,
+             'dbtype_col' : 16,
+             'clustype_col' : 18,
+             'backuptype_col' : 19,
 }
 
 logger = getLogger(__name__)
@@ -63,7 +89,7 @@ def calculate_req_line(req_line):
 
         if (not error_flag) and (req_line['itemtype2'] == u'new') and\
            ((req_line['itemtype1'] == u'app') or (req_line['itemtype1'] == u'term') or
-            (req_line['itemtype1'] == u'db')) and\
+            (req_line['itemtype1'] == u'db') or (req_line['itemtype1'] == u'dbarch') ) and\
            ((req_line['ostype'] == u'windows') or (req_line['ostype'] == u'linux')):
             if (int(req_line['cpu_count']) <= 16):
                 line_price += Prices.objects.get(hw_type='x86_ent').price * int(req_line['cpu_count']) *\
@@ -96,7 +122,8 @@ def calculate_req_line(req_line):
         #Calculation for new AIX, HPUX and Solaris systems
 
         if (not error_flag) and (req_line['itemtype2'] == u'new') and\
-           ((req_line['itemtype1'] == u'app') or (req_line['itemtype1'] == u'db')) and\
+           ((req_line['itemtype1'] == u'app') or (req_line['itemtype1'] == u'db') or
+            (req_line['itemtype1'] == u'dbarch')) and \
            ((req_line['ostype'] == u'aix') or (req_line['ostype'] == u'solaris') or (req_line['ostype'] == u'hpux')):
             if (int(req_line['cpu_count']) <= 64) and (req_line['ostype'] == u'hpux'):
                 line_price += Prices.objects.get(hw_type='ia_mid').price * int(req_line['cpu_count']) * \
@@ -122,16 +149,21 @@ def calculate_req_line(req_line):
                 if (req_line['ostype'] == u'solaris'):
                     line_price += Prices.objects.get(hw_type='m_hiend').price * int(req_line['cpu_count']) *\
                                   int(req_line['item_count'])
-            if (req_line['itemstatus'] == u'prom') and not (req_line['ostype'] == u'hpux'):
-                line_price += Prices.objects.get(hw_type='symantec_lic').price * int(req_line['cpu_count']) *\
-                              int(req_line['item_count'])
-                line_price += Prices.objects.get(hw_type='symantec_support').price *\
-                              int(req_line['cpu_count']) * int(req_line['item_count']) * 3
-                if (req_line['backup_type'] == u'yes') and (int(req_line['san_count']) > 2000):
+            if (req_line['itemstatus'] == u'prom'):
+                if not (req_line['ostype'] == u'hpux'):
+                    line_price += Prices.objects.get(hw_type='symantec_lic').price * int(req_line['cpu_count']) *\
+                                  int(req_line['item_count'])
+                    line_price += Prices.objects.get(hw_type='symantec_support').price *\
+                                  int(req_line['cpu_count']) * int(req_line['item_count']) * 3
+                if (req_line['backup_type'] == u'yes') and (int(req_line['san_count']) > 2000) and \
+                   not (req_line['itemtype1'] == u'dbarch'):
                     line_price += Prices.objects.get(hw_type='san_stor_full').price *\
                                   int(req_line['san_count']) * int(req_line['item_count'])
-                else:
+                elif (req_line['backup_type'] == u'no') and not (req_line['itemtype1'] == u'dbarch'):
                     line_price += Prices.objects.get(hw_type='san_stor_repl').price *\
+                                  int(req_line['san_count']) * int(req_line['item_count'])
+                elif (req_line['itemtype1'] == u'dbarch'):
+                    line_price += Prices.objects.get(hw_type='san_stor_vmware').price *\
                                   int(req_line['san_count']) * int(req_line['item_count'])
             elif (req_line['itemstatus'] == u'test-nt'):
                 line_price += Prices.objects.get(hw_type='san_stor_hiend').price *\
@@ -178,7 +210,7 @@ def calculate_req_line(req_line):
             if (req_line['itemtype1'] == u'db') and (req_line['itemstatus'] == u'prom'):
                 line_price += Prices.objects.get(hw_type='san_stor_repl').price * int(req_line['san_count']) *\
                               int(req_line['item_count'])
-            elif (req_line['itemtype1'] == u'Сервер СУБД') and (req_line['itemstate'] == u'тест(НТ)'):
+            elif (req_line['itemtype1'] == u'db') and (req_line['itemstate'] == u'тест(НТ)'):
                 line_price += Prices.objects.get(hw_type='san_stor_hiend').price * int(req_line['san_count']) *\
                               int(req_line['item_count'])
             else:
@@ -188,7 +220,8 @@ def calculate_req_line(req_line):
         #Calculation for AIX, HPUX and Solaris upgrades
 
         if (not error_flag) and (req_line['itemtype2'] == u'upgrade') and\
-           ((req_line['itemtype1'] == u'app') or (req_line['itemtype1'] == u'db')) and\
+           ((req_line['itemtype1'] == u'app') or (req_line['itemtype1'] == u'db') or\
+            (req_line['itemtype1'] == u'dbarch')) and\
            ((req_line['ostype'] == u'aix') or (req_line['ostype'] == u'solaris') or (req_line['ostype'] == u'hpux')):
             if (Prices.objects.get(hw_type='upg_ppc_mid').price > Prices.objects.get(hw_type='upg_ppc_hiend').price):
                 aix_cpu_price = Prices.objects.get(hw_type='upg_ppc_mid').price
@@ -211,14 +244,18 @@ def calculate_req_line(req_line):
                                   int(req_line['item_count'])
                     line_price += Prices.objects.get(hw_type='symantec_support').price *\
                                   int(req_line['cpu_count']) * int(req_line['item_count']) * 3
-                if (req_line['backup_type'] == u'yes'):
+                if (req_line['backup_type'] == u'yes') and not (req_line['itemtype1'] == u'dbarch'):
                     line_price += Prices.objects.get(hw_type='san_stor_full').price *\
                                   int(req_line['san_count']) * int(req_line['item_count'])
                     line_price += Prices.objects.get(hw_type='san_stor_full').price *\
                                   int(req_line['san_count']) * int(req_line['item_count'])
-                else:
+                elif (req_line['backup_type'] == u'no') and not (req_line['itemtype1'] == u'dbarch'):
                     line_price += Prices.objects.get(hw_type='san_stor_repl').price *\
                                   int(req_line['san_count']) * int(req_line['item_count'])
+                elif (req_line['itemtype1'] == u'dbarch'):
+                    line_price += Prices.objects.get(hw_type='san_stor_vmware').price *\
+                                  int(req_line['san_count']) * int(req_line['item_count'])
+
             if (req_line['itemstatus'] == u'test-nt'):
                 line_price += Prices.objects.get(hw_type='san_stor_hiend').price *\
                               int(req_line['san_count']) * int(req_line['item_count'])
@@ -263,6 +300,87 @@ def calculate_req_line(req_line):
 
         logger.error("--------- ENDED ----------")
         return req_line
+
+
+def eos_xls_check(xls_filename):
+    if not ('xlsx' in xls_filename)  and ('xls' in xls_filename):
+        try:
+            xls_workbook = open_workbook(xls_filename)
+            xls_worksheet = xls_workbook.sheet_by_name(u'Технические требования')
+        except:
+            return False
+        if xls_workbook:
+            return True
+        else:
+            return False
+    else:
+        return False
+
+
+def xls_print_content(xls_filename):
+    """
+    Print all content from worksheet (for testing only)
+    """
+    try:
+        xls_workbook = open_workbook(xls_filename)
+        xls_worksheet = xls_workbook.sheet_by_name(u'Технические требования')
+    except:
+        return False
+    num_rows = xls_worksheet.nrows - 1
+    num_cells = xls_worksheet.ncols - 1
+    curr_row = -1
+    while curr_row < num_rows:
+        curr_row += 1
+        row = xls_worksheet.row(curr_row)
+        logger.info("Row - %s" % curr_row)
+#        print 'Row:', curr_row
+        curr_cell = -1
+        while curr_cell < num_cells:
+            curr_cell += 1
+            # Cell Types: 0=Empty, 1=Text, 2=Number, 3=Date, 4=Boolean, 5=Error, 6=Blank
+            cell_type = xls_worksheet.cell_type(curr_row, curr_cell)
+            cell_value = xls_worksheet.cell_value(curr_row, curr_cell)
+#            print '	', cell_type, ':', cell_value
+            logger.info("%s  -  %s : %s" % (curr_cell, cell_type, cell_value))
+
+
+def load_eos_from_xls(xls_file):
+    EOS_VALS = {}
+    if eos_xls_check(xls_file):
+#        xls_print_content(xls_file)
+        try:
+            xls_workbook = open_workbook(xls_file)
+            xls_worksheet = xls_workbook.sheet_by_name(u'Технические требования')
+        except:
+            return None
+
+        EOS_VALS['prjnum'] = xls_worksheet.cell_value(xls_vals['prjrow'], xls_vals['prjcell'])
+        num_rows = xls_worksheet.nrows - 1
+        curr_row = xls_vals['eos_start_row']
+        req_count = 0
+        while curr_row <= num_rows:
+            req_count += 1
+            EOS_VALS['itemtype1_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['itemtype1_col'])
+            EOS_VALS['itemname_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['itemname_col'])
+            EOS_VALS['servername_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['servername_col'])
+            EOS_VALS['cpucount_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['cpucount_col'])
+            EOS_VALS['ramcount_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['ramcount_col'])
+            EOS_VALS['hddcount_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['hddcount_col'])
+            EOS_VALS['sancount_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['sancount_col'])
+            EOS_VALS['nascount_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['nascount_col'])
+            EOS_VALS['itemcount_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['itemcount_col'])
+            EOS_VALS['platformtype_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['platformtype_col'])
+            EOS_VALS['ostype_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['ostype_col'])
+            EOS_VALS['swaddons_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['swaddons_col'])
+            EOS_VALS['itemstatus_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['itemstatus_col'])
+            EOS_VALS['lansegment_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['lansegment_col'])
+            EOS_VALS['req_dbtype_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['dbtype_col'])
+            EOS_VALS['clustype_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['clustype_col'])
+            EOS_VALS['backuptype_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['backuptype_col'])
+            curr_row += 1
+        return EOS_VALS
+    else:
+        return None
 
 
 def getReportStyleSheet(font):

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Create your views here.
 from django.template.context import RequestContext
 from django.http import HttpResponse, HttpResponseServerError, HttpResponseNotFound
@@ -5,16 +6,16 @@ from django.shortcuts import render_to_response, redirect
 from django.utils.simplejson import dumps, loads
 
 from webhw.settings import MEDIA_URL
-from webhw.common import get_session_key, whoami
+from webhw.common import get_session_key, whoami, get_client_ip
 from webhw.settings import BOC_WORK_DIR
+from webhw.xlsfiles import handle_xls_file
 
 from bupl.forms import BocForm, EosForm
 from bupl.models import Projects
-from bupl.xlsfiles import handle_xls_file
 from bupl.boc import BOC, EMPTY, IN_XLS, IN_DB, IN_SESSION
 
 from logging import getLogger
-from eos import calculate_req_line, export_eos_to_pdf
+from eos import calculate_req_line, export_eos_to_pdf, load_eos_from_xls
 from os import path
 import mimetypes
 
@@ -32,17 +33,73 @@ def index(request):
     return render_to_response("example3-editing.html", {'MEDIA_URL' : MEDIA_URL})
 
 def eos_main(request):
-    form = EosForm()
-    return render_to_response("new_start.html", {'form': form, 'MEDIA_URL' : MEDIA_URL})
+
+    if request.method == 'POST':
+        form = EosForm(request.POST, request.FILES)
+        if form.is_valid():
+            UF_FORM = form.cleaned_data
+        if 'X-Progress-ID' in request.GET:
+            request.session['X-Progress-ID'] = request.GET['X-Progress-ID']
+        logger.info("Starting file  %s proccessing in %s for user from %s" % (request.FILES['xls_file'].name, whoami(),
+                                                                              get_client_ip(request)))
+        fileattr = handle_xls_file(request.FILES['xls_file'], get_session_key(request) + '_' +
+                                                          request.FILES['xls_file'].name)
+        if not fileattr == None:
+            request.session['xlsfilepath'] = fileattr['filename']
+            logger.info("Sucsessfully handeled file  %s in %s" % (request.FILES['xls_file'].name, whoami()))
+            request.session['eos_data'] = load_eos_from_xls(fileattr['filename'])
+            return redirect('/')
+        else:
+            logger.info("File type %s is not good, reported from %s" % (request.FILES['xls_file'].name, whoami()))
+            return HttpResponse('Bad file type or file corrupted')
+    else:
+        logger.info("Empty upload form prepared from %s for user from %s, "
+                "session id %s" % (whoami(), get_client_ip(request), get_session_key(request)))
+        form = EosForm()
+#        return render_to_response('confupload_form.html', {'form': form, 'MEDIA_URL' : MEDIA_URL},
+#            context_instance=RequestContext(request))
+        return render_to_response("new_start.html", {'form': form, 'MEDIA_URL' : MEDIA_URL},
+            context_instance=RequestContext(request))
+
+
+def get_loaded_eos(request):
+    if 'eos_data' in request.session.keys():
+        if request.session['eos_data'] <> []:
+            EOS_DATA = request.session['eos_data']
+            request.session['eos_data'] = {}
+            return HttpResponse(dumps(EOS_DATA))
+
+
+def get_prj_list(request):
+    """
+    Returns a JSON with project details to client
+    """
+    try:
+        PROJECTS_DICT = {}
+        AllProjects = Projects.objects.values('prj_number').order_by('prj_number').distinct()
+        PROJECTS_DICT["0"] = u'Другой'
+        prjcount = 0
+        for prj in AllProjects:
+            prjnum = str(prj['prj_number']).split(".")[0]
+            PROJECTS_DICT[prjcount] = prjnum
+            prjcount += 1
+        PROJECTS_DICT['prjcount'] = prjcount
+        return HttpResponse(dumps(PROJECTS_DICT))
+    except:
+        return HttpResponse(dumps({}))
+
+
 
 def calc_req(request):
     req_line = loads(request.POST['json'])
     return HttpResponse(dumps(calculate_req_line(req_line)))
 
+
 def export_to_pdf(request):
     eos_items = loads(request.POST['json'])
     print eos_items
     return HttpResponse(dumps({'filename' : export_eos_to_pdf(eos_items)}))
+
 
 def get_eos_pdf(request, filename):
     try:
@@ -59,7 +116,6 @@ def get_eos_pdf(request, filename):
     except IOError:
         response = HttpResponseNotFound()
     return response
-
 
 def boc_grid_setup(request):
     """
@@ -96,7 +152,6 @@ def boc_xlssave(request):
     except:
         return HttpResponse(dumps({'error' : 'Unknown error'}))
 
-
 def boc_grid_calc(request):
     """
     Returns a JSON with calculated grid data or errors to client
@@ -123,11 +178,12 @@ def boc_get_prj_name(request):
     try:
         project = Projects.objects.get(prj_number = project_id)
         if project:
-            return HttpResponse(dumps({'project_name' : project.prj_name}))
+            return HttpResponse(dumps({'project_name' : project.prj_name, 'project_id' :
+                str(project_id).split(",")[0]}))
         else:
             return HttpResponse(dumps({'project_name' : ''}))
     except:
-        return HttpResponse(dumps({'project_name' : ''}))
+        return HttpResponse(dumps({'project_name' : '', 'project_id' : ''}))
 
 def boc_grid_form(request):
     """
@@ -170,6 +226,3 @@ def boc_grid_form(request):
 
         return render_to_response('boc_grid.html', {'form': form, 'MEDIA_URL' : MEDIA_URL},
             context_instance=RequestContext(request))
-
-
-

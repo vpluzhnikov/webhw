@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from bupl.views import index, boc_grid_setup, boc_grid_form, boc_get_prj_name, boc_grid_calc, boc_xlssave, eos_main,\
-    calc_req, export_to_pdf, get_eos_pdf
+    calc_req, export_to_pdf, get_eos_pdf, get_loaded_eos, get_prj_list
 from webhw import settings
 
 # Uncomment the next two lines to enable the admin:
@@ -14,6 +14,8 @@ urlpatterns = patterns('',
     url(r'^$', eos_main),
     url(r'^calc_req$', calc_req),
     url(r'^export_to_pdf$', export_to_pdf),
+    url(r'^get_loaded_eos$', get_loaded_eos),
+    url(r'^get_prj_list$', get_prj_list),
     url(r'^get_eos_pdf/(?P<filename>\w+)$', get_eos_pdf),
 #url(r'^articles/(?P<year>\d{4})/$', 'news.views.year_archive'),
     #    url(r'^boc_setup$', boc_main),
