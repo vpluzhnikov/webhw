@@ -354,30 +354,124 @@ def load_eos_from_xls(xls_file):
         except:
             return None
 
-        EOS_VALS['prjnum'] = xls_worksheet.cell_value(xls_vals['prjrow'], xls_vals['prjcell'])
+        EOS_VALS['prjnum'] = str(xls_worksheet.cell_value(xls_vals['prjrow'], xls_vals['prjcell'])).split(".")[0]
         num_rows = xls_worksheet.nrows - 1
         curr_row = xls_vals['eos_start_row']
         req_count = 0
         while curr_row <= num_rows:
             req_count += 1
-            EOS_VALS['itemtype1_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['itemtype1_col'])
+            xls_value = xls_worksheet.cell_value(curr_row, xls_vals['itemtype1_col'])
+            if xls_value == u'Сервер БД':
+                EOS_VALS['itemtype1_'+str(req_count)]='db'
+            elif xls_value ==  u'Сервер приложений':
+                EOS_VALS['itemtype1_'+str(req_count)]='app'
+            elif xls_value ==  u'TS':
+                EOS_VALS['itemtype1_'+str(req_count)]='term'
+            elif xls_value ==  u'Прочее':
+                EOS_VALS['itemtype1_'+str(req_count)]='other'
+
             EOS_VALS['itemname_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['itemname_col'])
+
             EOS_VALS['servername_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['servername_col'])
-            EOS_VALS['cpucount_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['cpucount_col'])
-            EOS_VALS['ramcount_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['ramcount_col'])
-            EOS_VALS['hddcount_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['hddcount_col'])
-            EOS_VALS['sancount_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['sancount_col'])
-            EOS_VALS['nascount_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['nascount_col'])
-            EOS_VALS['itemcount_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['itemcount_col'])
-            EOS_VALS['platformtype_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['platformtype_col'])
-            EOS_VALS['ostype_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['ostype_col'])
+            if EOS_VALS['servername_'+str(req_count)] == '':
+                EOS_VALS['itemtype2_'+str(req_count)] = 'new'
+            else:
+                EOS_VALS['itemtype2_'+str(req_count)] = 'upgrade'
+
+            EOS_VALS['cpucount_'+str(req_count)]=\
+            str(xls_worksheet.cell_value(curr_row, xls_vals['cpucount_col'])).split(".")[0]
+            EOS_VALS['ramcount_'+str(req_count)]=\
+            str(xls_worksheet.cell_value(curr_row, xls_vals['ramcount_col'])).split(".")[0]
+            EOS_VALS['hddcount_'+str(req_count)]=\
+            str(xls_worksheet.cell_value(curr_row, xls_vals['hddcount_col'])).split(".")[0]
+            EOS_VALS['sancount_'+str(req_count)]=\
+            str(xls_worksheet.cell_value(curr_row, xls_vals['sancount_col'])).split(".")[0]
+            EOS_VALS['nascount_'+str(req_count)]=\
+            str(xls_worksheet.cell_value(curr_row, xls_vals['nascount_col'])).split(".")[0]
+            EOS_VALS['itemcount_'+str(req_count)]=\
+            str(xls_worksheet.cell_value(curr_row, xls_vals['itemcount_col'])).split(".")[0]
+
+            xls_value = xls_worksheet.cell_value(curr_row, xls_vals['platformtype_col'])
+            if xls_value == u'x86':
+                EOS_VALS['platformtype_'+str(req_count)]='x86'
+            elif xls_value == u'Power':
+                EOS_VALS['platformtype_'+str(req_count)]='power'
+            elif xls_value == u'SPARC T':
+                EOS_VALS['platformtype_'+str(req_count)]='t_series'
+            elif xls_value == u'SPARC 64':
+                EOS_VALS['platformtype_'+str(req_count)]='m_series'
+            elif xls_value == u'Itanium':
+                EOS_VALS['platformtype_'+str(req_count)]='itanium'
+            elif xls_value == u'DataPower':
+                EOS_VALS['platformtype_'+str(req_count)]='---'
+                EOS_VALS['itemtype1_'+str(req_count)]='dp'
+            elif xls_value == u'Alteon':
+                EOS_VALS['platformtype_'+str(req_count)]='---'
+                EOS_VALS['itemtype1_'+str(req_count)]='lb'
+            elif xls_value == u'Другое':
+                EOS_VALS['platformtype_'+str(req_count)]='---'
+
+            xls_value = xls_worksheet.cell_value(curr_row, xls_vals['ostype_col'])
+            if u'aix' in  xls_value.lower():
+                EOS_VALS['ostype_'+str(req_count)]='aix'
+            elif u'solaris' in  xls_value.lower():
+                EOS_VALS['ostype_'+str(req_count)]='solaris'
+            elif (u'linux' in  xls_value.lower()) or (u'rhel' in  xls_value.lower()) or \
+                 (u'sles' in  xls_value.lower()):
+                EOS_VALS['ostype_'+str(req_count)]='linux'
+            elif u'win' in  xls_value.lower():
+                EOS_VALS['ostype_'+str(req_count)]='windows'
+            elif (u'hp' in  xls_value.lower()) and (u'ux' in  xls_value.lower()):
+                EOS_VALS['ostype_'+str(req_count)]='hpux'
+            else:
+                if not(EOS_VALS['platformtype_'+str(req_count)] == '---'):
+                    if EOS_VALS['platformtype_'+str(req_count)] == 'itanium':
+                        EOS_VALS['ostype_'+str(req_count)]='hpux'
+                    elif EOS_VALS['platformtype_'+str(req_count)] == 'power':
+                        EOS_VALS['ostype_'+str(req_count)]='aix'
+                    elif (EOS_VALS['platformtype_'+str(req_count)] == 't_series') or \
+                         (EOS_VALS['platformtype_'+str(req_count)] == 'm_series'):
+                        EOS_VALS['ostype_'+str(req_count)]='solaris'
+                    elif EOS_VALS['platformtype_'+str(req_count)] == 'x86':
+                        EOS_VALS['ostype_'+str(req_count)]='linux'
+
             EOS_VALS['swaddons_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['swaddons_col'])
-            EOS_VALS['itemstatus_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['itemstatus_col'])
-            EOS_VALS['lansegment_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['lansegment_col'])
+
+            xls_value = xls_worksheet.cell_value(curr_row, xls_vals['itemstatus_col'])
+            if xls_value == u'ПРОМ':
+                EOS_VALS['itemstatus_'+str(req_count)] = 'prom'
+            elif xls_value == u'НТ':
+                EOS_VALS['itemstatus_'+str(req_count)] = 'test-nt'
+            else:
+                EOS_VALS['itemstatus_'+str(req_count)] = 'test-other'
+
+            xls_value = xls_worksheet.cell_value(curr_row, xls_vals['lansegment_col'])
+            if xls_value == u'ALPHA':
+                EOS_VALS['lansegment_'+str(req_count)] = 'alpha'
+            elif xls_value == u'SIGMA':
+                EOS_VALS['lansegment_'+str(req_count)] = 'sigma'
+            elif xls_value == u'TAU':
+                EOS_VALS['lansegment_'+str(req_count)] = 'tay'
+            else:
+                EOS_VALS['lansegment_'+str(req_count)] = 'other'
+
             EOS_VALS['req_dbtype_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['dbtype_col'])
-            EOS_VALS['clustype_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['clustype_col'])
-            EOS_VALS['backuptype_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['backuptype_col'])
+
+            xls_value = xls_worksheet.cell_value(curr_row, xls_vals['clustype_col'])
+            if (xls_value == 'ТР') or (xls_value == 'ЛОК'):
+                EOS_VALS['clustype_'+str(req_count)] = 'vcs'
+            elif xls_value == 'На уровне приложения':
+                EOS_VALS['clustype_'+str(req_count)] = 'app'
+            else:
+                EOS_VALS['clustype_'+str(req_count)] = 'none'
+
+            xls_value = xls_worksheet.cell_value(curr_row, xls_vals['backuptype_col'])
+            if xls_value == u'НЕТ':
+                EOS_VALS['backuptype_'+str(req_count)] = 'no'
+            else:
+                EOS_VALS['backuptype_'+str(req_count)] = 'yes'
             curr_row += 1
+        EOS_VALS['req_count'] = req_count
         return EOS_VALS
     else:
         return None
@@ -534,7 +628,7 @@ def export_eos_to_pdf(eos_items):
     prom_cost = 0
     test_nt_cost = 0
     test_cost = 0
-    project_id = eos_items['project_id']
+    project_id = str(eos_items['project_id'])
     project_name = eos_items['project_name']
     eos_items.pop("project_id", None)
     eos_items.pop("project_name", None)
@@ -543,12 +637,12 @@ def export_eos_to_pdf(eos_items):
     if project_id == u'0':
         filename = 'eos_' + str(int(time()))
     else:
-        filename = 'eos_' + project_id.split(".")[0]
+        filename = 'eos_' + project_id
+#        ).split(".")[0]
     rl_config.warnOnMissingFontGlyphs = 0
     pdfmetrics.registerFont(ttfonts.TTFont('Arial', ARIAL_FONT_FILELOCATION))
 
 #    buffer = BytesIO()
-
     doc = SimpleDocTemplate(path.join(BOC_WORK_DIR, filename + ".pdf"), rightMargin=1*cm,leftMargin=1*cm, topMargin=1*cm, bottomMargin=1*cm)
     styles = getReportStyleSheet('Arial')
     #REPORT TITLE
@@ -558,10 +652,11 @@ def export_eos_to_pdf(eos_items):
         Title = Paragraph(u'Экспресс-оценка для проекта без номера', styles["Heading1"])
         SubTitle = Paragraph(u' ', styles["SubTitle"])
     else:
-        Title = Paragraph(u'Экспресс-оценка для проекта №' + project_id.split(".")[0], styles["Heading1"])
+        Title = Paragraph(u'Экспресс-оценка для проекта №' + project_id, styles["Heading1"])
         SubTitle = Paragraph(project_name, styles["SubTitle"])
 
     Elements = [Sblogo, Title, SubTitle]
+    logger.error("FINNNNISSHHHH")
 
     for key in eos_items.keys():
         logger.error(eos_items[key])
@@ -697,7 +792,6 @@ def export_eos_to_pdf(eos_items):
         Elements.append(Paragraph(u'Прочих сред тестирования нет', styles["Heading3"]))
 
     doc.build(Elements)
-
 #    response.write(buffer.getvalue())
 #    buffer.close()
     return filename

@@ -80,7 +80,7 @@ def get_prj_list(request):
         PROJECTS_DICT["0"] = u'Другой'
         prjcount = 0
         for prj in AllProjects:
-            prjnum = str(prj['prj_number']).split(".")[0]
+            prjnum = prj['prj_number']
             PROJECTS_DICT[prjcount] = prjnum
             prjcount += 1
         PROJECTS_DICT['prjcount'] = prjcount
@@ -97,6 +97,7 @@ def calc_req(request):
 
 def export_to_pdf(request):
     eos_items = loads(request.POST['json'])
+    print 'export ---------'
     print eos_items
     return HttpResponse(dumps({'filename' : export_eos_to_pdf(eos_items)}))
 
@@ -179,7 +180,7 @@ def boc_get_prj_name(request):
         project = Projects.objects.get(prj_number = project_id)
         if project:
             return HttpResponse(dumps({'project_name' : project.prj_name, 'project_id' :
-                str(project_id).split(",")[0]}))
+                project_id}))
         else:
             return HttpResponse(dumps({'project_name' : ''}))
     except:

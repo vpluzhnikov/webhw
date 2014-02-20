@@ -279,9 +279,16 @@ $("#save").click(function ()
             async:false,
             dataType:'json',
             success:function (data, status) {
-                console.log(data);
+//                console.log(data);
+                curr_project = $('#prjnum').val()
+                curr_project_name = $('#prjname').val()
+
                 for (var i=0;i<data.prjcount;i++) {
                     $('#prjselect').append('<option value='+data[i]+'>'+data[i]+'</option>');
+                }
+                if (curr_project != '') {
+                    $('#prjselect').val(curr_project);
+                    $('#prjname').val(curr_project_name);
                 }
 
             }
@@ -688,6 +695,9 @@ $("#boc_form").ready(function ()
         $("#load_img").hide();
         $("#id_xls_file").hide();
         var url_get_loaded_eos = "/get_loaded_eos"
+        var url_eos_addreq = "/calc_req";
+
+
         $.ajax({
             url:url_get_loaded_eos,
             async:false,
@@ -695,18 +705,59 @@ $("#boc_form").ready(function ()
             success:function (data, status) {
                 console.log(data);
                 if (data.prjnum != null || data.prjnum != undefined) {
-                    $("#id_prjselect").val(data.prjnum);
+                    $("#prjselect").val(data.prjnum);
+                    $("#prjnum").val(data.prjnum);
                     var url_get_prj_name = "/boc_get_prj_name"
                     $.ajax({
                         url: url_get_prj_name,
                         async: false,
                         dataType: 'json',
-                        data: { "project_id" : $("#id_prjselect").val() },
+                        data: { "project_id" : $("#prjnum").val() },
                         success: function(data, status){
-                            $("#id_prjname").val(data.project_name);
+                            $("#prjname").val(data.project_name);
                         }
                     });
                 }
+
+                for (var i = 1; i < data.req_count+1; ++i) {
+                    req_line = {}
+                    req_line["itemtype2"] = data["itemtype2_"+i];
+                    req_line["itemtype1"] = data["itemtype1_"+i];
+                    req_line["itemstatus"] = data["itemstatus_"+i];
+                    req_line["servername"] = data["servername_"+i];
+                    req_line["cpu_count"] = data["cpucount_"+i];
+                    req_line["ram_count"] = data["ramcount_"+i];
+                    req_line["hdd_count"] = data["hddcount_"+i];
+                    req_line["san_count"] = data["sancount_"+i];
+                    req_line["nas_count"] = data["nascount_"+i];
+                    req_line["item_count"] = data["itemcount_"+i];
+                    req_line["ostype"] = data["ostype_"+i];
+                    req_line["platform_type"] = data["platformtype_"+i];
+                    req_line["lan_segment"] = data["lansegment_"+i];
+                    req_line["db_type"] = "";
+                    req_line["cluster_type"] = data["clustype_"+i];
+                    req_line["backup_type"] = data["backuptype_"+i];
+
+                    console.log(req_line);
+
+                    $.ajax({
+                        type:'POST',
+                        url:url_eos_addreq,
+                        async:false,
+                        dataType:'json',
+                        data:{"json":JSON.stringify(req_line) },
+                        success:function (data, status) {
+                            error = data.error;
+                            console.log(data);
+                            eos_items.push(data);
+                            console.log(eos_items);
+                        }
+                    });
+
+//                    eos_items.push(req_line);
+                }
+                console.log(eos_items);
+                renderEos();
 
             }
         });
