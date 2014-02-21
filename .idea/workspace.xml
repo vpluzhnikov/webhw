@@ -3,9 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="16d88876-88d8-4668-91b5-3c169be72a6c" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bupl/eos.py" afterPath="$PROJECT_DIR$/bupl/eos.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bupl/views.py" afterPath="$PROJECT_DIR$/bupl/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webhw/media/js/eos.js" afterPath="$PROJECT_DIR$/webhw/media/js/eos.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webhw/settings.py" afterPath="$PROJECT_DIR$/webhw/settings.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webhw/urls.py" afterPath="$PROJECT_DIR$/webhw/urls.py" />
     </list>
     <ignored path="webhw.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,7 +29,7 @@
       <file leaf-file-name="new_start.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/webhw/templates/new_start.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="87" column="38" selection-start="3806" selection-end="3813" vertical-scroll-proportion="-7.9166665">
+            <state line="87" column="38" selection-start="3806" selection-end="3813" vertical-scroll-proportion="-52.916668">
               <folding>
                 <element signature="n#style#0;n#img#1;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
@@ -36,10 +37,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="eos.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="eos.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/webhw/media/js/eos.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="714" column="57" selection-start="24547" selection-end="24547" vertical-scroll-proportion="0.5472837">
+            <state line="325" column="39" selection-start="11933" selection-end="11933" vertical-scroll-proportion="-16.961538">
               <folding />
             </state>
           </provider>
@@ -48,16 +49,25 @@
       <file leaf-file-name="urls.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/webhw/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="35" selection-start="619" selection-end="619" vertical-scroll-proportion="0.0">
+            <state line="26" column="96" selection-start="1220" selection-end="1220" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bupl/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="182" column="26" selection-start="6763" selection-end="6773" vertical-scroll-proportion="0.0">
+            <state line="50" column="33" selection-start="2157" selection-end="2157" vertical-scroll-proportion="0.5588235">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="settings.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/webhw/settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="67" column="17" selection-start="2404" selection-end="2404" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -118,15 +128,15 @@
         <option value="$PROJECT_DIR$/webhw/templates/boc_grid.html" />
         <option value="$PROJECT_DIR$/pdfhandler.py" />
         <option value="$PROJECT_DIR$/webhw/media/css/examples.css" />
-        <option value="$PROJECT_DIR$/webhw/settings.py" />
         <option value="$PROJECT_DIR$/bupl/forms.py" />
-        <option value="$PROJECT_DIR$/webhw/urls.py" />
         <option value="$PROJECT_DIR$/webhw/media/css/popup.css" />
         <option value="$PROJECT_DIR$/webhw/templates/new_start.html" />
         <option value="$PROJECT_DIR$/webhw/media/css/themes/simple.css" />
-        <option value="$PROJECT_DIR$/bupl/views.py" />
         <option value="$PROJECT_DIR$/bupl/eos.py" />
+        <option value="$PROJECT_DIR$/webhw/urls.py" />
+        <option value="$PROJECT_DIR$/webhw/settings.py" />
         <option value="$PROJECT_DIR$/webhw/media/js/eos.js" />
+        <option value="$PROJECT_DIR$/bupl/views.py" />
       </list>
     </option>
   </component>
@@ -597,7 +607,11 @@
       <created>1392749342197</created>
       <updated>1392749342197</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Full support for xls imports">
+      <created>1392931241541</created>
+      <updated>1392931241541</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -659,7 +673,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Minor bug fixes and preliminary support for xls imports" />
+    <option name="LAST_COMMIT_MESSAGE" value="Full support for xls imports" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -691,6 +705,7 @@
     <MESSAGE value="Added pjoject identificator to eos_form and pdf output" />
     <MESSAGE value="Minor bug fixes" />
     <MESSAGE value="Minor bug fixes and preliminary support for xls imports" />
+    <MESSAGE value="Full support for xls imports" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -704,13 +719,6 @@
     <entry file="file://$PROJECT_DIR$/webhw/xlsfiles.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="14" column="35" selection-start="371" selection-end="371" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webhw/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="62" selection-start="477" selection-end="477" vertical-scroll-proportion="0.43032786">
           <folding />
         </state>
       </provider>
@@ -769,29 +777,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/webhw/templates/new_start.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="87" column="38" selection-start="3806" selection-end="3813" vertical-scroll-proportion="-7.9166665">
-          <folding>
-            <element signature="n#style#0;n#img#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webhw/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="35" selection-start="619" selection-end="619" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bupl/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="182" column="26" selection-start="6763" selection-end="6773" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/bupl/eos.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="391" column="12" selection-start="21034" selection-end="21034" vertical-scroll-proportion="0.0">
@@ -799,9 +784,39 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/webhw/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="96" selection-start="1220" selection-end="1220" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webhw/templates/new_start.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="87" column="38" selection-start="3806" selection-end="3813" vertical-scroll-proportion="-52.916668">
+          <folding>
+            <element signature="n#style#0;n#img#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webhw/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="67" column="17" selection-start="2404" selection-end="2404" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/webhw/media/js/eos.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="714" column="57" selection-start="24547" selection-end="24547" vertical-scroll-proportion="0.5472837">
+        <state line="325" column="39" selection-start="11933" selection-end="11933" vertical-scroll-proportion="-16.961538">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bupl/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="50" column="33" selection-start="2157" selection-end="2157" vertical-scroll-proportion="0.5588235">
           <folding />
         </state>
       </provider>

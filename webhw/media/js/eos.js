@@ -273,7 +273,7 @@ $("#id_xls_file").change(function ()
 $("#save").click(function ()
     {
 
-        var url_get_prj_list = "/get_prj_list"
+        var url_get_prj_list = "/eos/get_prj_list"
         $.ajax({
             url:url_get_prj_list ,
             async:false,
@@ -304,7 +304,7 @@ $("#prj_confirm").click(function ()
 {
     $("#close_prjselect_dialog").click();
 
-    var url_eos_pdfsave = "/export_to_pdf"
+    var url_eos_pdfsave = "/eos/export_to_pdf"
     eosdata = {}
     i = 1
     for (line in eos_items) {
@@ -323,7 +323,7 @@ $("#prj_confirm").click(function ()
         success: function(data, status){
             error = data.error;
             console.log(data);
-            document.location.href="get_eos_pdf/"+data['filename'];
+            document.location.href="eos/get_eos_pdf/"+data['filename'];
 //                element = '<input id="xlsfilename" name="xlsfilename" value="'+ data['filename'] +'" type="hidden">'
 //                var input = $('#boc_form').appendTo(document.body).append(element);
         }
@@ -587,7 +587,7 @@ $("#db_type").change(function() {
 });
 
 $("#add_req_modal").click(function() {
-    var url_eos_addreq = "/calc_req";
+    var url_eos_addreq = "/eos/calc_req";
     var req_line = {};
     if (formCheck()) {
         req_line["itemtype2"] = $("#itemtype2").val();
@@ -667,7 +667,7 @@ $("#edit_req_modal").click(function() {
 
 $("#prjselect").change(function ()
 {
-    var url_get_prj_name = "/boc_get_prj_name"
+    var url_get_prj_name = "/eos/boc_get_prj_name"
     $.ajax({
         url: url_get_prj_name,
         async: false,
@@ -694,8 +694,8 @@ $("#boc_form").ready(function ()
     {
         $("#load_img").hide();
         $("#id_xls_file").hide();
-        var url_get_loaded_eos = "/get_loaded_eos"
-        var url_eos_addreq = "/calc_req";
+        var url_get_loaded_eos = "/eos/get_loaded_eos"
+        var url_eos_addreq = "/eos/calc_req";
 
 
         $.ajax({
@@ -707,7 +707,7 @@ $("#boc_form").ready(function ()
                 if (data.prjnum != null || data.prjnum != undefined) {
                     $("#prjselect").val(data.prjnum);
                     $("#prjnum").val(data.prjnum);
-                    var url_get_prj_name = "/boc_get_prj_name"
+                    var url_get_prj_name = "/eos/boc_get_prj_name"
                     $.ajax({
                         url: url_get_prj_name,
                         async: false,

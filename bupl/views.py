@@ -48,7 +48,7 @@ def eos_main(request):
             request.session['xlsfilepath'] = fileattr['filename']
             logger.info("Sucsessfully handeled file  %s in %s" % (request.FILES['xls_file'].name, whoami()))
             request.session['eos_data'] = load_eos_from_xls(fileattr['filename'])
-            return redirect('/')
+            return redirect('/eos')
         else:
             logger.info("File type %s is not good, reported from %s" % (request.FILES['xls_file'].name, whoami()))
             return HttpResponse('Bad file type or file corrupted')
