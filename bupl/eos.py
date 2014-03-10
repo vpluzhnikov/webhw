@@ -34,6 +34,7 @@ ru_vals = { 'new' : u'Новый',
             'term' : u'Терминальный сервер',
             'dp' : u'IBM DataPower',
             'lb' : u'Балансировщик',
+            'other' : u'Другое',
             'power' : u'IBM Power',
             't_series' : u'Oracle T-series',
             'm_series' : u'Oracle M-series',
@@ -78,8 +79,8 @@ def calculate_req_line(req_line):
     error_flag = False
     line_price = 0
     if req_line.keys() > 0:
-        logger.error("--------- BEFORE")
-        logger.error(req_line)
+#        logger.error("--------- BEFORE")
+#        logger.error(req_line)
 
         #---------------------------------------------
         #Calculation for new systems only
@@ -89,8 +90,9 @@ def calculate_req_line(req_line):
 
         if (not error_flag) and (req_line['itemtype2'] == u'new') and\
            ((req_line['itemtype1'] == u'app') or (req_line['itemtype1'] == u'term') or
-            (req_line['itemtype1'] == u'db') or (req_line['itemtype1'] == u'dbarch') ) and\
-           ((req_line['ostype'] == u'windows') or (req_line['ostype'] == u'linux')):
+            (req_line['itemtype1'] == u'db') or (req_line['itemtype1'] == u'dbarch') or
+            (req_line['itemtype1'] == u'other')) and ((req_line['ostype'] == u'windows') or
+                                                      (req_line['ostype'] == u'linux')):
             if (int(req_line['cpu_count']) <= 16):
                 line_price += Prices.objects.get(hw_type='x86_ent').price * int(req_line['cpu_count']) *\
                               int(req_line['item_count'])
@@ -123,7 +125,7 @@ def calculate_req_line(req_line):
 
         if (not error_flag) and (req_line['itemtype2'] == u'new') and\
            ((req_line['itemtype1'] == u'app') or (req_line['itemtype1'] == u'db') or
-            (req_line['itemtype1'] == u'dbarch')) and \
+            (req_line['itemtype1'] == u'dbarch') or (req_line['itemtype1'] == u'other')) and \
            ((req_line['ostype'] == u'aix') or (req_line['ostype'] == u'solaris') or (req_line['ostype'] == u'hpux')):
             if (int(req_line['cpu_count']) <= 64) and (req_line['ostype'] == u'hpux'):
                 line_price += Prices.objects.get(hw_type='ia_mid').price * int(req_line['cpu_count']) * \
@@ -191,8 +193,8 @@ def calculate_req_line(req_line):
 
         if (not error_flag) and (req_line['itemtype2'] == u'upgrade') and\
            ((req_line['itemtype1'] == u'app') or (req_line['itemtype1'] == u'term') or\
-            (req_line['itemtype1'] == u'db')) and ((req_line['ostype'] == u'windows') or\
-                                                   (req_line['ostype'] == u'linux')):
+            (req_line['itemtype1'] == u'db')  or (req_line['itemtype1'] == u'other')) and \
+           ((req_line['ostype'] == u'windows') or (req_line['ostype'] == u'linux')):
             if (Prices.objects.get(hw_type='x86_ent').price > Prices.objects.get(hw_type='x86_mid').price):
                 cpu_price = Prices.objects.get(hw_type='x86_ent').price
             else:
@@ -219,9 +221,11 @@ def calculate_req_line(req_line):
 
         #Calculation for AIX, HPUX and Solaris upgrades
 
+#        logger.error('LOGGER')
+#        logger.error(line_price)
         if (not error_flag) and (req_line['itemtype2'] == u'upgrade') and\
            ((req_line['itemtype1'] == u'app') or (req_line['itemtype1'] == u'db') or\
-            (req_line['itemtype1'] == u'dbarch')) and\
+            (req_line['itemtype1'] == u'dbarch') or (req_line['itemtype1'] == u'other')) and\
            ((req_line['ostype'] == u'aix') or (req_line['ostype'] == u'solaris') or (req_line['ostype'] == u'hpux')):
             if (Prices.objects.get(hw_type='upg_ppc_mid').price > Prices.objects.get(hw_type='upg_ppc_hiend').price):
                 aix_cpu_price = Prices.objects.get(hw_type='upg_ppc_mid').price
@@ -253,13 +257,18 @@ def calculate_req_line(req_line):
                     line_price += Prices.objects.get(hw_type='san_stor_repl').price *\
                                   int(req_line['san_count']) * int(req_line['item_count'])
                 elif (req_line['itemtype1'] == u'dbarch'):
+                    logger.error('LOGGER')
+                    logger.error(line_price)
+                    logger.error(Prices.objects.get(hw_type='san_stor_vmware').price)
+                    logger.error(int(req_line['san_count']) * int(req_line['item_count']))
                     line_price += Prices.objects.get(hw_type='san_stor_vmware').price *\
                                   int(req_line['san_count']) * int(req_line['item_count'])
+                    logger.error(line_price)
 
             if (req_line['itemstatus'] == u'test-nt'):
                 line_price += Prices.objects.get(hw_type='san_stor_hiend').price *\
                               int(req_line['san_count']) * int(req_line['item_count'])
-            else:
+            elif (req_line['itemstatus'] == u'test-other'):
                 line_price += Prices.objects.get(hw_type='san_stor_mid').price *\
                               int(req_line['san_count']) * int(req_line['item_count'])
             line_price += Prices.objects.get(hw_type='nas_stor').price * int(req_line['nas_count']) *\
@@ -269,7 +278,7 @@ def calculate_req_line(req_line):
         # Common position for new systems and upgrades
         # ---------------------------------------------
 
-        #Calculation for windows licence (new systems and upgrade)
+        #Calculation for windows license (new systems and upgrade)
         if (req_line['ostype'] == u'windows'):
             line_price += Prices.objects.get(hw_type='ms_lic').price * int(req_line['cpu_count'])\
                           * int(req_line['item_count'])
@@ -286,9 +295,6 @@ def calculate_req_line(req_line):
                           (int(req_line['hdd_count']) + int(req_line['nas_count']) + int(req_line['san_count'])) *\
                           int(req_line['item_count'])
 
-        logger.error("--------- AFTER")
-        logger.error(req_line)
-        logger.error(error_flag)
 
         if ('price' in req_line.keys()) and (req_line['price'] <> u'Ошибка данных') and (not error_flag) and\
            (line_price <> 0):
@@ -297,8 +303,11 @@ def calculate_req_line(req_line):
             req_line['price'] = 'Ошибка данных'
             req_line['error'] = '1'
 
-
-        logger.error("--------- ENDED ----------")
+#        logger.error("--------- AFTER")
+#        logger.error(req_line)
+#        logger.error(error_flag)
+#
+#        logger.error("--------- ENDED ----------")
         return req_line
 
 
@@ -380,16 +389,28 @@ def load_eos_from_xls(xls_file):
 
             EOS_VALS['cpucount_'+str(req_count)]=\
             str(xls_worksheet.cell_value(curr_row, xls_vals['cpucount_col'])).split(".")[0]
+            if EOS_VALS['cpucount_'+str(req_count)] == '':
+                EOS_VALS['cpucount_'+str(req_count)] = 0
             EOS_VALS['ramcount_'+str(req_count)]=\
             str(xls_worksheet.cell_value(curr_row, xls_vals['ramcount_col'])).split(".")[0]
+            if EOS_VALS['ramcount_'+str(req_count)] == '':
+                EOS_VALS['ramcount_'+str(req_count)] = 0
             EOS_VALS['hddcount_'+str(req_count)]=\
             str(xls_worksheet.cell_value(curr_row, xls_vals['hddcount_col'])).split(".")[0]
+            if EOS_VALS['hddcount_'+str(req_count)] == '':
+                EOS_VALS['hddcount_'+str(req_count)] = 0
             EOS_VALS['sancount_'+str(req_count)]=\
             str(xls_worksheet.cell_value(curr_row, xls_vals['sancount_col'])).split(".")[0]
+            if EOS_VALS['sancount_'+str(req_count)] == '':
+                EOS_VALS['sancount_'+str(req_count)] = 0
             EOS_VALS['nascount_'+str(req_count)]=\
             str(xls_worksheet.cell_value(curr_row, xls_vals['nascount_col'])).split(".")[0]
+            if EOS_VALS['nascount_'+str(req_count)] == '':
+                EOS_VALS['nascount_'+str(req_count)] = 0
             EOS_VALS['itemcount_'+str(req_count)]=\
             str(xls_worksheet.cell_value(curr_row, xls_vals['itemcount_col'])).split(".")[0]
+            if EOS_VALS['itemcount_'+str(req_count)] == '':
+                EOS_VALS['itemcount_'+str(req_count)] = 0
 
             xls_value = xls_worksheet.cell_value(curr_row, xls_vals['platformtype_col'])
             if xls_value == u'x86':
@@ -404,11 +425,15 @@ def load_eos_from_xls(xls_file):
                 EOS_VALS['platformtype_'+str(req_count)]='itanium'
             elif xls_value == u'DataPower':
                 EOS_VALS['platformtype_'+str(req_count)]='---'
+                EOS_VALS['ostype_'+str(req_count)]='---'
                 EOS_VALS['itemtype1_'+str(req_count)]='dp'
             elif xls_value == u'Alteon':
                 EOS_VALS['platformtype_'+str(req_count)]='---'
+                EOS_VALS['ostype_'+str(req_count)]='---'
                 EOS_VALS['itemtype1_'+str(req_count)]='lb'
             elif xls_value == u'Другое':
+                EOS_VALS['platformtype_'+str(req_count)]='---'
+            else:
                 EOS_VALS['platformtype_'+str(req_count)]='---'
 
             xls_value = xls_worksheet.cell_value(curr_row, xls_vals['ostype_col'])

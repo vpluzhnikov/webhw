@@ -15,6 +15,7 @@ var ru_vals = { 'new' : "Новый",
     'term' : "Терминальный сервер",
     'dp' : "IBM DataPower",
     'lb' : "Балансировщик",
+    'other' : "Другое",
     'power' : "IBM Power",
     't_series' : "Oracle T-series",
     'm_series' : "Oracle M-series",
@@ -112,7 +113,7 @@ function renderEos() {
 function prepareReqForm(num_req) {
     if (num_req == -1 ) {
         $("#itemtype2").val('new');
-        $("#itemtype1").val('---');
+        $("#itemtype1").val('other');
         $("#itemstatus").val('---');
         $("#servername").val('-');
         $("#upgrade_params").hide();
@@ -172,13 +173,13 @@ function prepareReqForm(num_req) {
 
 function formCheck() {
     var formValid = 1;
-    if ($("#itemtype1").val() == '---') {
-        $("#itemtype1").css({'color' : 'red'});
-        formValid = 0;
-    } else
-    {
-        $("#itemtype1").css({'color' : 'black'});
-    }
+//    if ($("#itemtype1").val() == '---') {
+//        $("#itemtype1").css({'color' : 'red'});
+//        formValid = 0;
+//    } else
+//    {
+//        $("#itemtype1").css({'color' : 'black'});
+//    }
     if ($("#itemstatus").val() == '---'){
         $("#itemstatus").css({'color' : 'red'});
         formValid = 0;
@@ -186,7 +187,7 @@ function formCheck() {
     {
         $("#itemstatus").css({'color' : 'black'});
     }
-    if (($("#itemtype1").val() == 'upgrade') && ($("#servername").val() == '-' )){
+    if (($("#itemtype2").val() == 'upgrade') && ($("#servername").val() == '-' )){
         $("#servername").css({'color' : 'red'});
         formValid = 0;
     } else
