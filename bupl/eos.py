@@ -6,6 +6,7 @@ from bupl.models import Prices
 
 from decimal import *
 from webhw.settings import ARIAL_FONT_FILELOCATION, BOC_WORK_DIR, MEDIA_ROOT
+from price_calcs import calculate_req_line
 
 from time import time
 from os import path
@@ -376,7 +377,7 @@ def load_eos_from_xls(xls_file):
                 EOS_VALS['itemtype1_'+str(req_count)]='app'
             elif xls_value ==  u'TS':
                 EOS_VALS['itemtype1_'+str(req_count)]='term'
-            elif xls_value ==  u'Прочее':
+            else:
                 EOS_VALS['itemtype1_'+str(req_count)]='other'
 
             EOS_VALS['itemname_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['itemname_col'])
@@ -459,6 +460,8 @@ def load_eos_from_xls(xls_file):
                         EOS_VALS['ostype_'+str(req_count)]='solaris'
                     elif EOS_VALS['platformtype_'+str(req_count)] == 'x86':
                         EOS_VALS['ostype_'+str(req_count)]='linux'
+                else:
+                    EOS_VALS['ostype_'+str(req_count)]='---'
 
             EOS_VALS['swaddons_'+str(req_count)]=xls_worksheet.cell_value(curr_row, xls_vals['swaddons_col'])
 
@@ -497,6 +500,32 @@ def load_eos_from_xls(xls_file):
                 EOS_VALS['backuptype_'+str(req_count)] = 'yes'
             curr_row += 1
         EOS_VALS['req_count'] = req_count
+        logger.error(req_count)
+        logger.error(EOS_VALS)
+        for i in range(1,req_count+1):
+            req_line = {}
+            req_line['itemtype2'] = EOS_VALS['itemtype2_'+str(i)]
+            req_line['itemtype1'] = EOS_VALS['itemtype1_'+str(i)]
+            req_line['itemstatus'] = EOS_VALS['itemstatus_'+str(i)]
+            req_line['servername'] = EOS_VALS['servername_'+str(i)]
+            req_line['cpu_count'] = EOS_VALS['cpucount_'+str(i)]
+            req_line['ram_count'] = EOS_VALS['ramcount_'+str(i)]
+            req_line['hdd_count'] = EOS_VALS['hddcount_'+str(i)]
+            req_line['san_count'] = EOS_VALS['sancount_'+str(i)]
+            req_line['nas_count'] = EOS_VALS['nascount_'+str(i)]
+            req_line['item_count'] = EOS_VALS['itemcount_'+str(i)]
+            req_line['ostype'] = EOS_VALS['ostype_'+str(i)]
+            req_line['platform_type'] = EOS_VALS['platformtype_'+str(i)]
+            req_line['lan_segment'] = EOS_VALS['lansegment_'+str(i)]
+            req_line['db_type'] = ""
+            req_line['cluster_type'] = EOS_VALS['clustype_'+str(i)]
+            req_line['backup_type'] = EOS_VALS['backuptype_'+str(i)]
+            new_req_line = calculate_req_line(req_line)
+            EOS_VALS['price_'+str(i)] = new_req_line['price']
+            EOS_VALS['price_hw_'+str(i)] = new_req_line['price_hw']
+            EOS_VALS['price_lic_'+str(i)] = new_req_line['price_lic']
+            EOS_VALS['price_support_'+str(i)] = new_req_line['price_support']
+
         return EOS_VALS
     else:
         return None
@@ -651,8 +680,20 @@ def export_eos_to_pdf(eos_items):
     test_nt_items = []
     test_items = []
     prom_cost = 0
+    prom_cost_hw = 0
+    prom_cost_sw = 0
+    prom_cost_sup = 0
+
     test_nt_cost = 0
+    test_nt_cost_hw = 0
+    test_nt_cost_sw = 0
+    test_nt_cost_sup = 0
+
     test_cost = 0
+    test_cost_hw = 0
+    test_cost_sw = 0
+    test_cost_sup = 0
+
     project_id = str(eos_items['project_id'])
     project_name = eos_items['project_name']
     eos_items.pop("project_id", None)
@@ -688,13 +729,26 @@ def export_eos_to_pdf(eos_items):
         if (eos_items[key]['itemstatus'] == u'prom'):
             prom_items.append(eos_items[key])
             prom_cost += Decimal(eos_items[key]['price'])
+            prom_cost_hw += Decimal(eos_items[key]['price_hw'])
+            prom_cost_sw += Decimal(eos_items[key]['price_lic'])
+            prom_cost_sup += Decimal(eos_items[key]['price_support'])
         elif (eos_items[key]['itemstatus'] == u'test-nt'):
             test_nt_items.append(eos_items[key])
             test_nt_cost += Decimal(eos_items[key]['price'])
+            test_nt_cost_hw += Decimal(eos_items[key]['price_hw'])
+            test_nt_cost_sw += Decimal(eos_items[key]['price_lic'])
+            test_nt_cost_sup += Decimal(eos_items[key]['price_support'])
         elif (eos_items[key]['itemstatus'] == u'test-other'):
             test_items.append(eos_items[key])
             test_cost += Decimal(eos_items[key]['price'])
+            test_cost_hw += Decimal(eos_items[key]['price_hw'])
+            test_cost_sw += Decimal(eos_items[key]['price_lic'])
+            test_cost_sup += Decimal(eos_items[key]['price_support'])
+
     total_cost = prom_cost + test_nt_cost + test_cost
+    total_cost_hw = prom_cost_hw + test_nt_cost_hw + test_cost_hw
+    total_cost_sw = prom_cost_sw + test_nt_cost_sw + test_cost_sw
+    total_cost_sup = prom_cost_sup + test_nt_cost_sup + test_cost_sup
 
     ts = [('GRID', (0,0), (-1,-1), 0.25, colors.black),
           ('ALIGN', (1,1), (-1,-1), 'LEFT'),
@@ -709,10 +763,15 @@ def export_eos_to_pdf(eos_items):
     Elements.append(Spacer(0, 0.5 * cm))
     Elements.append(Paragraph(u'Оценка стоимости', styles["Heading2"]))
     Elements.append(Spacer(0, 0.1 * cm))
-    data = [[ u'Стоимость промышленных сред', str(prom_cost)+' $'],
-            [ u'Стоимость сред нарузочного тестирования', str(test_nt_cost)+' $'],
-            [ u'Стоимость прочих тестовых сред', str(test_cost)+' $'],
-            [ u'ИТОГО', str(total_cost)+' $'],
+    data = [['Среды', 'Общая стоимость', 'Оборудование', 'Лицензии', 'Поддержка'],
+            [ u'Промышленные среды', str(prom_cost)+' $', str(prom_cost_hw)+' $', str(prom_cost_sw)+' $',
+              str(prom_cost_sup)+' $'],
+            [ u'Среды нарузочного тестирования', str(test_nt_cost)+' $', str(test_nt_cost_hw)+' $',
+              str(test_nt_cost_sw)+' $', str(test_nt_cost_sup)+' $'],
+            [ u'Прочих тестовые среды', str(test_cost)+' $', str(test_cost_hw)+' $', str(test_cost_sw)+' $',
+              str(test_cost_sup)+' $'],
+            [ u'Итого', str(total_cost)+' $', str(total_cost_hw)+' $', str(total_cost_sw)+' $',
+              str(total_cost_sup)+' $'],
     ]
     table = Table(data, style=ts, hAlign='CENTER')
     Elements.append(table)

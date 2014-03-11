@@ -31,9 +31,9 @@ def calculate_req_line(req_line):
 #   Hardware price calculation for CPUs or Appliances
     if (req_line['platform_type'] == u'x86'):
         if (int(req_line['cpu_count']) > 24):
-            cpu_price = prices_dic['x86_ent']
-        else:
             cpu_price = prices_dic['x86_mid']
+        else:
+            cpu_price = prices_dic['x86_ent']
     elif (req_line['platform_type'] == u'power'):
         if (int(req_line['cpu_count']) > 128):
             if (req_line['itemtype2'] == u'upgrade'):
@@ -68,7 +68,7 @@ def calculate_req_line(req_line):
             appliance_price = prices_dic['loadbalancer']
 
     if cpu_price <> 0:
-#        print "cpuprice - " + str(cpu_price)
+        print "cpuprice - " + str(cpu_price)
         price_hw += int(req_line['cpu_count']) * int(req_line['item_count']) * cpu_price
     elif appliance_price <> 0:
         price_hw += int(req_line['item_count']) * appliance_price
@@ -85,16 +85,19 @@ def calculate_req_line(req_line):
     if  (req_line['itemstatus'] == u'prom'):
         if (req_line['platform_type'] == u'power') or (req_line['platform_type'] == u'itanium') or \
            (u'_series' in req_line['platform_type']):
-            if (req_line['cluster_type'] == u'vcs'):
-                if (req_line['backup_type'] == u'yes') and (int(req_line['san_count']) > 2048):
-                    san_price = prices_dic['san_stor_full']
-                else:
-                    san_price = prices_dic['san_stor_repl']
+            if (req_line['itemtype1'] == u'dbarch'):
+                san_price = prices_dic['san_stor_mid']
             else:
-                if (req_line['backup_type'] == u'yes') or (int(req_line['san_count']) > 2048):
-                    san_price = prices_dic['san_stor_bcv']
+                if (req_line['cluster_type'] == u'vcs'):
+                    if (req_line['backup_type'] == u'yes') and (int(req_line['san_count']) > 2048):
+                        san_price = prices_dic['san_stor_full']
+                    else:
+                        san_price = prices_dic['san_stor_repl']
                 else:
-                    san_price = prices_dic['san_stor_hiend']
+                    if (req_line['backup_type'] == u'yes') or (int(req_line['san_count']) > 2048):
+                        san_price = prices_dic['san_stor_bcv']
+                    else:
+                        san_price = prices_dic['san_stor_hiend']
 
         elif (req_line['platform_type'] == u'x86'):
             if (req_line['itemtype1'] == u'db') and (int(req_line['cpu_count']) > 24):
@@ -156,10 +159,10 @@ def calculate_req_line(req_line):
         price_support = int(req_line['cpu_count']) * int(req_line['item_count']) * support
 
     total_price = price_hw + price_lic + price_support
-    req_line['price'] = str(total_price.quantize(Decimal(10) ** -2))
-    req_line['price_hw'] = str(price_hw.quantize(Decimal(10) ** -2))
-    req_line['price_lic'] = str(price_lic.quantize(Decimal(10) ** -2))
-    req_line['price_support'] = str(price_support.quantize(Decimal(10) ** -2))
+    req_line['price'] = str(Decimal(total_price).quantize(Decimal(10) ** -2))
+    req_line['price_hw'] = str(Decimal(price_hw).quantize(Decimal(10) ** -2))
+    req_line['price_lic'] = str(Decimal(price_lic).quantize(Decimal(10) ** -2))
+    req_line['price_support'] = str(Decimal(price_support).quantize(Decimal(10) ** -2))
 
 #    return {'total_price' : total_price,
 #            'price_hw' : price_hw,

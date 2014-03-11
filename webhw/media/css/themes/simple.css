@@ -21,6 +21,11 @@ table.modal_table_1 td {
 
 #main_params {padding: 7px;   }
 
+#cost_footer
+{
+    table-layout: fixed ;
+    width: 90%;}
+
 #prom_table, #test_nt_table, #test_other_table
 {
   table-layout: fixed ;
@@ -29,6 +34,7 @@ width: 60%;}
 #lan_segment {width: 113px;}
 #ostype {width: 115px;}
 #platform_type, #db_type {width: 100px;}
+
 
 
 #prom_table td, #test_nt_table td, #test_other_table td

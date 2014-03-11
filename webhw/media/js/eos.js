@@ -46,10 +46,23 @@ function isNumberKey(evt){
 function renderEos() {
     var prom_count = 0;
     var prom_cost = 0.0;
+    var prom_cost_hw = 0.0;
+    var prom_cost_sw = 0.0;
+    var prom_cost_sup = 0.0;
+
+
     var test_nt_count = 0;
     var test_nt_cost = 0.0;
+    var test_nt_cost_hw = 0.0;
+    var test_nt_cost_sw = 0.0;
+    var test_nt_cost_sup = 0.0;
+
     var test_other_count = 0;
     var test_other_cost = 0.0;
+    var test_other_cost_hw = 0.0;
+    var test_other_cost_sw = 0.0;
+    var test_other_cost_sup = 0.0;
+
 
     $("#prom_body").empty();
     $("#test_nt_body").empty();
@@ -69,6 +82,10 @@ function renderEos() {
                 "</tr> </table>");
             prom_count += 1;
             prom_cost += parseFloat(e_item["price"]);
+            prom_cost_hw += parseFloat(e_item["price_hw"]);
+            prom_cost_sw += parseFloat(e_item["price_lic"]);
+            prom_cost_sup += parseFloat(e_item["price_support"]);
+
         }
         if (e_item["itemstatus"] == 'test-nt'){
             $("#test_nt_body").append("<table class=\"appended_table\"> <tr>"+
@@ -82,6 +99,10 @@ function renderEos() {
                 "</tr> </table>");
             test_nt_count += 1;
             test_nt_cost += parseFloat(e_item["price"]);
+            test_nt_cost_hw += parseFloat(e_item["price_hw"]);
+            test_nt_cost_sw += parseFloat(e_item["price_lic"]);
+            test_nt_cost_sup += parseFloat(e_item["price_support"]);
+
         }
         if (e_item["itemstatus"] == 'test-other'){
             $("#test_other_body").append("<table class=\"appended_table\"> <tr>"+
@@ -95,17 +116,42 @@ function renderEos() {
                 "</tr> </table>");
             test_other_count += 1;
             test_other_cost += parseFloat(e_item["price"]);
+            test_other_cost_hw += parseFloat(e_item["price_hw"]);
+            test_other_cost_sw += parseFloat(e_item["price_lic"]);
+            test_other_cost_sup += parseFloat(e_item["price_support"]);
+
         }
 
     }
     var total_cost = prom_cost + test_nt_cost + test_other_cost;
+    var total_cost_hw = prom_cost_hw + test_nt_cost_hw + test_other_cost_hw;
+    var total_cost_sw = prom_cost_sw + test_nt_cost_sw + test_other_cost_sw;
+    var total_cost_sup = prom_cost_sup + test_nt_cost_sup + test_other_cost_sup;
+
     $("#prom_count").html('Кол-во ' + prom_count);
     $("#prom_cost").html('Стоимость ' + prom_cost +'$');
+    $("#prom_hw_cost").html('Оборудование ' + prom_cost_hw +'$');
+    $("#prom_sw_cost").html('Лицензии ' + prom_cost_sw +'$');
+    $("#prom_sup_cost").html('Поддержка ' + prom_cost_sup +'$');
+
     $("#test_nt_count").html('Кол-во ' + test_nt_count);
     $("#test_nt_cost").html('Стоимость ' + test_nt_cost +'$');
+    $("#test_nt_hw_cost").html('Оборудование ' + test_nt_cost_hw +'$');
+    $("#test_nt_sw_cost").html('Лицензии ' + test_nt_cost_sw +'$');
+    $("#test_nt_sup_cost").html('Поддержка ' + test_nt_cost_sup +'$');
+
+
     $("#test_other_count").html('Кол-во ' + test_other_count);
     $("#test_other_cost").html('Стоимость ' + test_other_cost +'$');
+    $("#test_other_hw_cost").html('Оборудование ' + test_other_cost_hw +'$');
+    $("#test_other_sw_cost").html('Лицензии ' + test_other_cost_sw +'$');
+    $("#test_other_sup_cost").html('Поддержка ' + test_other_cost_sup +'$');
+
+
     $("#total_cost").html('Общая стоимость ' + total_cost +'$');
+    $("#total_cost_hw").html('Оборудование ' + total_cost_hw +'$');
+    $("#total_cost_sw").html('Лицензии ' + total_cost_sw +'$');
+    $("#total_cost_sup").html('Поддержка ' + total_cost_sup +'$');
 
 }
 
@@ -188,6 +234,12 @@ function prepareReqForm(num_req) {
             $("#backup_type").show();
             $("#cluster_type_label").show();
             $("#backup_type_label").show();
+            if (req_line["itemtype2"] == 'upgrade') {
+                $("#upgrade_params").show();
+            }
+            else {
+                $("#upgrade_params").hide();
+            }
         }
 
         modified_record = num_req;
@@ -650,7 +702,7 @@ $("#add_req_modal").click(function() {
 });
 
 $("#edit_req_modal").click(function() {
-    var url_eos_addreq = "/calc_req";
+    var url_eos_addreq = "/eos/calc_req";
     var req_line = {};
     if (formCheck()) {
         req_line["itemtype2"] = $("#itemtype2").val();
@@ -762,22 +814,28 @@ $("#boc_form").ready(function ()
                     req_line["db_type"] = "";
                     req_line["cluster_type"] = data["clustype_"+i];
                     req_line["backup_type"] = data["backuptype_"+i];
+                    req_line["price"] = data["price_"+i];
+                    req_line["price_hw"] = data["price_hw_"+i];
+                    req_line["price_lic"] = data["price_lic_"+i];
+                    req_line["price_support"] = data["price_support_"+i];
 
                     console.log(req_line);
-
-                    $.ajax({
-                        type:'POST',
-                        url:url_eos_addreq,
-                        async:false,
-                        dataType:'json',
-                        data:{"json":JSON.stringify(req_line) },
-                        success:function (data, status) {
-                            error = data.error;
-                            console.log(data);
-                            eos_items.push(data);
-                            console.log(eos_items);
-                        }
-                    });
+                    eos_items.push(req_line);
+//                    console.log(eos_items);
+//                    renderEos();
+//                    $.ajax({
+//                        type:'POST',
+//                        url:url_eos_addreq,
+//                        async:false,
+//                        dataType:'json',
+//                        data:{"json":JSON.stringify(req_line) },
+//                        success:function (data, status) {
+//                            error = data.error;
+//                            console.log(data);
+//                            eos_items.push(data);
+//                            console.log(eos_items);
+//                        }
+//                    });
 
 //                    eos_items.push(req_line);
                 }

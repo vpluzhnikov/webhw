@@ -1,82 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="16d88876-88d8-4668-91b5-3c169be72a6c" name="Default" comment="Fixed some minor import errors">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bupl/price_calcs.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/SlickGrid" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bupl/boc.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/css/examples.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/css/slick-default-theme.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/css/slick.grid.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/actions.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/ajax-loader-small.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/arrow_redo.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/arrow_right_peppermint.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/arrow_right_spearmint.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/arrow_undo.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/bullet_blue.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/bullet_star.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/bullet_toggle_minus.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/bullet_toggle_plus.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/calendar.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/collapse.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/comment_yellow.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/down.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/drag-handle.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/editor-helper-bg.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/expand.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/header-bg.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/header-columns-bg.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/header-columns-over-bg.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/help.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/info.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/listview.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/pencil.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/row-over-bg.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/sort-asc.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/sort-asc.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/sort-desc.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/sort-desc.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/stripes.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/tag_red.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/tick.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/user_identity.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/user_identity_plus.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/controls/slick.columnpicker.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/controls/slick.columnpicker.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/controls/slick.pager.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/controls/slick.pager.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/lib/qunit.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/lib/qunit.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/plugins/slick.autotooltips.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/plugins/slick.cellcopymanager.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/plugins/slick.cellrangedecorator.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/plugins/slick.cellrangeselector.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/plugins/slick.cellselectionmodel.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/plugins/slick.checkboxselectcolumn.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/plugins/slick.headerbuttons.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/plugins/slick.headerbuttons.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/plugins/slick.headermenu.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/plugins/slick.headermenu.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/plugins/slick.rowmovemanager.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/plugins/slick.rowselectionmodel.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/slick.core.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/slick.dataview.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/slick.editors.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/slick.formatters.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/slick.grid.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/slick.groupitemmetadataprovider.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/slick.remotemodel.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/slickgrid.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/templates/boc_grid.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/templates/example3-editing.html" afterPath="" />
+    <list default="true" id="16d88876-88d8-4668-91b5-3c169be72a6c" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bupl/eos.py" afterPath="$PROJECT_DIR$/bupl/eos.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bupl/views.py" afterPath="$PROJECT_DIR$/bupl/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test.py" afterPath="$PROJECT_DIR$/test.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bupl/price_calcs.py" afterPath="$PROJECT_DIR$/bupl/price_calcs.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webhw/media/css/themes/simple.css" afterPath="$PROJECT_DIR$/webhw/media/css/themes/simple.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webhw/media/js/eos.js" afterPath="$PROJECT_DIR$/webhw/media/js/eos.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webhw/templates/new_start.html" afterPath="$PROJECT_DIR$/webhw/templates/new_start.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webhw/urls.py" afterPath="$PROJECT_DIR$/webhw/urls.py" />
     </list>
     <ignored path="webhw.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -99,7 +30,25 @@
       <file leaf-file-name="new_start.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/webhw/templates/new_start.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="166" column="46" selection-start="8251" selection-end="8258" vertical-scroll-proportion="-49.8">
+            <state line="126" column="31" selection-start="5888" selection-end="5902" vertical-scroll-proportion="-5.4">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="eos.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/webhw/media/js/eos.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="841" column="28" selection-start="30031" selection-end="30031" vertical-scroll-proportion="-17.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="simple.css" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/webhw/media/css/themes/simple.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="26" column="12" selection-start="534" selection-end="534" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -108,7 +57,7 @@
       <file leaf-file-name="price_calcs.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bupl/price_calcs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="154" column="14" selection-start="6213" selection-end="6218" vertical-scroll-proportion="-7.923077">
+            <state line="79" column="27" selection-start="2664" selection-end="2664" vertical-scroll-proportion="-12.307693">
               <folding>
                 <element signature="e#42#67#0" expanded="true" />
               </folding>
@@ -128,7 +77,7 @@
       <file leaf-file-name="eos.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bupl/eos.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="72" column="8" selection-start="2210" selection-end="2210" vertical-scroll-proportion="0.39156628">
+            <state line="505" column="25" selection-start="27254" selection-end="27254" vertical-scroll-proportion="0.47136563">
               <folding>
                 <element signature="e#43#72#0" expanded="true" />
               </folding>
@@ -150,8 +99,10 @@
       <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bupl/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="42" selection-start="677" selection-end="677" vertical-scroll-proportion="-9.230769">
-              <folding />
+            <state line="62" column="0" selection-start="2767" selection-end="2767" vertical-scroll-proportion="-9.653846">
+              <folding>
+                <element signature="e#50#100#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -185,14 +136,14 @@
         <option value="$PROJECT_DIR$/webhw/media/css/examples.css" />
         <option value="$PROJECT_DIR$/bupl/forms.py" />
         <option value="$PROJECT_DIR$/webhw/media/css/popup.css" />
-        <option value="$PROJECT_DIR$/webhw/media/css/themes/simple.css" />
         <option value="$PROJECT_DIR$/webhw/settings.py" />
         <option value="$PROJECT_DIR$/webhw/urls.py" />
+        <option value="$PROJECT_DIR$/bupl/views.py" />
+        <option value="$PROJECT_DIR$/webhw/media/css/themes/simple.css" />
         <option value="$PROJECT_DIR$/webhw/templates/new_start.html" />
         <option value="$PROJECT_DIR$/webhw/media/js/eos.js" />
-        <option value="$PROJECT_DIR$/bupl/views.py" />
-        <option value="$PROJECT_DIR$/bupl/price_calcs.py" />
         <option value="$PROJECT_DIR$/bupl/eos.py" />
+        <option value="$PROJECT_DIR$/bupl/price_calcs.py" />
       </list>
     </option>
   </component>
@@ -384,6 +335,32 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="css" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webhw" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webhw" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webhw" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="media" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="themes" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -697,7 +674,11 @@
       <created>1394474460501</created>
       <updated>1394474460501</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="Discarded old table interface and fixed calculation algorithm">
+      <created>1394543449766</created>
+      <updated>1394543449766</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -759,7 +740,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed some minor import errors" />
+    <option name="LAST_COMMIT_MESSAGE" value="Discarded old table interface and fixed calculation algorithm" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -795,6 +776,7 @@
     <MESSAGE value="Moved hierarchi in subpath 'eos'" />
     <MESSAGE value="Added images" />
     <MESSAGE value="Fixed some minor import errors" />
+    <MESSAGE value="Discarded old table interface and fixed calculation algorithm" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -803,16 +785,6 @@
     <entry file="file:///Library/Python/2.7/site-packages/django/db/models/fields/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="938" column="25" selection-start="35957" selection-end="35974" vertical-scroll-proportion="0.2090164" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webhw/media/css/popup.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="13" selection-start="780" selection-end="780" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webhw/media/css/themes/simple.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="21" selection-start="186" selection-end="186" vertical-scroll-proportion="0.09054326" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/webhw/settings.py">
@@ -850,13 +822,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/webhw/media/js/eos.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="763" column="51" selection-start="26756" selection-end="26756" vertical-scroll-proportion="18.097458">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/bupl/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="146" column="4" selection-start="6438" selection-end="6438" vertical-scroll-proportion="0.0">
@@ -873,20 +838,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/webhw/templates/new_start.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="166" column="46" selection-start="8251" selection-end="8258" vertical-scroll-proportion="-49.8">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bupl/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="42" selection-start="677" selection-end="677" vertical-scroll-proportion="-9.230769">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/decimal.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="505" column="6" selection-start="17459" selection-end="17459" vertical-scroll-proportion="0.33268103">
@@ -894,9 +845,46 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/bupl/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="62" column="0" selection-start="2767" selection-end="2767" vertical-scroll-proportion="-9.653846">
+          <folding>
+            <element signature="e#50#100#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webhw/media/css/popup.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="34" column="13" selection-start="780" selection-end="780" vertical-scroll-proportion="0.5766871">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webhw/media/css/themes/simple.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="12" selection-start="534" selection-end="534" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webhw/templates/new_start.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="126" column="31" selection-start="5888" selection-end="5902" vertical-scroll-proportion="-5.4">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webhw/media/js/eos.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="841" column="28" selection-start="30031" selection-end="30031" vertical-scroll-proportion="-17.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/bupl/price_calcs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="154" column="14" selection-start="6213" selection-end="6218" vertical-scroll-proportion="-7.923077">
+        <state line="79" column="27" selection-start="2664" selection-end="2664" vertical-scroll-proportion="-12.307693">
           <folding>
             <element signature="e#42#67#0" expanded="true" />
           </folding>
@@ -905,7 +893,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/bupl/eos.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="72" column="8" selection-start="2210" selection-end="2210" vertical-scroll-proportion="0.39156628">
+        <state line="505" column="25" selection-start="27254" selection-end="27254" vertical-scroll-proportion="0.47136563">
           <folding>
             <element signature="e#43#72#0" expanded="true" />
           </folding>
