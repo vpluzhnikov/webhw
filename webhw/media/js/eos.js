@@ -166,6 +166,30 @@ function prepareReqForm(num_req) {
         $("#backup_type").val(req_line["backup_type"]);
         $("#edit_req_modal").show();
         $("#add_req_modal").hide();
+
+        if ((req_line["itemtype1"] == 'lb') || (req_line["itemtype1"] == 'dp')) {
+            $("#db_type_label").hide();
+            $("#db_type").hide();
+            $("#new_params").hide();
+            $("#ostype").hide();
+            $("#platform_type").hide();
+            $("#cluster_type").hide();
+            $("#backup_type").hide();
+            $("#cluster_type_label").hide();
+            $("#backup_type_label").hide();
+        } else
+        {
+            $("#db_type_label").show();
+            $("#db_type").show();
+            $("#new_params").show();
+            $("#ostype").show();
+            $("#platform_type").show();
+            $("#cluster_type").show();
+            $("#backup_type").show();
+            $("#cluster_type_label").show();
+            $("#backup_type_label").show();
+        }
+
         modified_record = num_req;
     }
     $('#add_req_dialog').arcticmodal();
@@ -668,7 +692,7 @@ $("#edit_req_modal").click(function() {
 
 $("#prjselect").change(function ()
 {
-    var url_get_prj_name = "/eos/boc_get_prj_name"
+    var url_get_prj_name = "/eos/get_prj_name"
     $.ajax({
         url: url_get_prj_name,
         async: false,
@@ -708,7 +732,7 @@ $("#boc_form").ready(function ()
                 if (data.prjnum != null || data.prjnum != undefined) {
                     $("#prjselect").val(data.prjnum);
                     $("#prjnum").val(data.prjnum);
-                    var url_get_prj_name = "/eos/boc_get_prj_name"
+                    var url_get_prj_name = "/eos/get_prj_name"
                     $.ajax({
                         url: url_get_prj_name,
                         async: false,

@@ -70,7 +70,7 @@ xls_vals = { 'prjrow' : 2,
 
 logger = getLogger(__name__)
 
-def calculate_req_line(req_line):
+def old_calculate_req_line(req_line):
     """
     Calculates prices for requrements and modify self.data with price values
     """

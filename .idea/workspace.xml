@@ -1,11 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="16d88876-88d8-4668-91b5-3c169be72a6c" name="Default" comment="Added images">
+    <list default="true" id="16d88876-88d8-4668-91b5-3c169be72a6c" name="Default" comment="Fixed some minor import errors">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/bupl/price_calcs.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/SlickGrid" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bupl/boc.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/css/examples.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/css/slick-default-theme.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/css/slick.grid.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/actions.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/ajax-loader-small.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/arrow_redo.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/arrow_right_peppermint.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/arrow_right_spearmint.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/arrow_undo.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/bullet_blue.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/bullet_star.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/bullet_toggle_minus.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/bullet_toggle_plus.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/calendar.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/collapse.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/comment_yellow.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/down.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/drag-handle.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/editor-helper-bg.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/expand.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/header-bg.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/header-columns-bg.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/header-columns-over-bg.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/help.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/info.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/listview.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/pencil.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/row-over-bg.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/sort-asc.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/sort-asc.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/sort-desc.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/sort-desc.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/stripes.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/tag_red.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/tick.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/user_identity.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/images/user_identity_plus.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/controls/slick.columnpicker.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/controls/slick.columnpicker.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/controls/slick.pager.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/controls/slick.pager.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/lib/qunit.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/lib/qunit.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/plugins/slick.autotooltips.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/plugins/slick.cellcopymanager.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/plugins/slick.cellrangedecorator.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/plugins/slick.cellrangeselector.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/plugins/slick.cellselectionmodel.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/plugins/slick.checkboxselectcolumn.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/plugins/slick.headerbuttons.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/plugins/slick.headerbuttons.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/plugins/slick.headermenu.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/plugins/slick.headermenu.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/plugins/slick.rowmovemanager.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/plugins/slick.rowselectionmodel.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/slick.core.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/slick.dataview.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/slick.editors.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/slick.formatters.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/slick.grid.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/slick.groupitemmetadataprovider.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/media/js/slick.remotemodel.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/slickgrid.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/templates/boc_grid.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webhw/templates/example3-editing.html" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bupl/eos.py" afterPath="$PROJECT_DIR$/bupl/eos.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bupl/views.py" afterPath="$PROJECT_DIR$/bupl/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test.py" afterPath="$PROJECT_DIR$/test.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webhw/media/js/eos.js" afterPath="$PROJECT_DIR$/webhw/media/js/eos.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webhw/templates/new_start.html" afterPath="$PROJECT_DIR$/webhw/templates/new_start.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webhw/urls.py" afterPath="$PROJECT_DIR$/webhw/urls.py" />
     </list>
     <ignored path="webhw.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,61 +99,27 @@
       <file leaf-file-name="new_start.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/webhw/templates/new_start.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="90" column="44" selection-start="3950" selection-end="3956" vertical-scroll-proportion="-3.06">
+            <state line="166" column="46" selection-start="8251" selection-end="8258" vertical-scroll-proportion="-49.8">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="eos.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/webhw/media/js/eos.js">
+      <file leaf-file-name="price_calcs.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bupl/price_calcs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="499" column="29" selection-start="17642" selection-end="17651" vertical-scroll-proportion="-225.84616">
-              <folding />
+            <state line="154" column="14" selection-start="6213" selection-end="6218" vertical-scroll-proportion="-7.923077">
+              <folding>
+                <element signature="e#42#67#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="urls.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/webhw/urls.py">
+      <file leaf-file-name="models.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bupl/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="96" selection-start="1220" selection-end="1220" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bupl/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="50" column="33" selection-start="2157" selection-end="2157" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="settings.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/webhw/settings.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="67" column="17" selection-start="2404" selection-end="2404" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="boc.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bupl/boc.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="205" column="78" selection-start="11098" selection-end="11117" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="forms.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bupl/forms.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="33" selection-start="1170" selection-end="1179" vertical-scroll-proportion="0.0">
+            <state line="146" column="4" selection-start="6438" selection-end="6438" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -91,10 +128,30 @@
       <file leaf-file-name="eos.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bupl/eos.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="500" column="9" selection-start="27054" selection-end="27054" vertical-scroll-proportion="0.72164947">
+            <state line="72" column="8" selection-start="2210" selection-end="2210" vertical-scroll-proportion="0.39156628">
               <folding>
                 <element signature="e#43#72#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="urls.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/webhw/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="22" column="105" selection-start="992" selection-end="992" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#0#51#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bupl/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="42" selection-start="677" selection-end="677" vertical-scroll-proportion="-9.230769">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -120,7 +177,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/webhw/media/css/jquery.arcticmodal-0.3.css" />
         <option value="$PROJECT_DIR$/webhw/media/js/popup.css" />
         <option value="$PROJECT_DIR$/webhw/media/js/boc.js" />
         <option value="$PROJECT_DIR$/bupl/boc.py" />
@@ -130,11 +186,12 @@
         <option value="$PROJECT_DIR$/bupl/forms.py" />
         <option value="$PROJECT_DIR$/webhw/media/css/popup.css" />
         <option value="$PROJECT_DIR$/webhw/media/css/themes/simple.css" />
-        <option value="$PROJECT_DIR$/webhw/urls.py" />
         <option value="$PROJECT_DIR$/webhw/settings.py" />
-        <option value="$PROJECT_DIR$/bupl/views.py" />
+        <option value="$PROJECT_DIR$/webhw/urls.py" />
         <option value="$PROJECT_DIR$/webhw/templates/new_start.html" />
         <option value="$PROJECT_DIR$/webhw/media/js/eos.js" />
+        <option value="$PROJECT_DIR$/bupl/views.py" />
+        <option value="$PROJECT_DIR$/bupl/price_calcs.py" />
         <option value="$PROJECT_DIR$/bupl/eos.py" />
       </list>
     </option>
@@ -217,6 +274,116 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webhw" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webhw" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webhw" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="media" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webhw" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webhw" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webhw" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="media" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webhw" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webhw" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webhw" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="media" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="images" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webhw" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webhw" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webhw" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="media" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webhw" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webhw" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webhw" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="media" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -526,28 +693,32 @@
       <created>1392989050012</created>
       <updated>1392989050012</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Fixed some minor import errors">
+      <created>1394474460501</created>
+      <updated>1394474460501</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32958803" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32958803" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32958803" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19153515" sideWeight="0.6716604" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29411766" sideWeight="0.6716604" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39950064" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32958803" sideWeight="0.56241035" order="10" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32833958" sideWeight="0.0" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32833958" sideWeight="0.0" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32958803" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32958803" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -588,7 +759,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added images" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed some minor import errors" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -623,41 +794,44 @@
     <MESSAGE value="Full support for xls imports" />
     <MESSAGE value="Moved hierarchi in subpath 'eos'" />
     <MESSAGE value="Added images" />
+    <MESSAGE value="Fixed some minor import errors" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/webhw/upload_handlers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webhw/xlsfiles.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="35" selection-start="371" selection-end="371" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file:///Library/Python/2.7/site-packages/django/contrib/admin/static/admin/js/jquery.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2593" column="0" selection-start="67003" selection-end="67003" vertical-scroll-proportion="0.3326316" />
-      </provider>
-    </entry>
     <entry file="file:///Library/Python/2.7/site-packages/django/db/models/fields/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="938" column="25" selection-start="35957" selection-end="35974" vertical-scroll-proportion="0.2090164" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bupl/models.py">
+    <entry file="file://$PROJECT_DIR$/webhw/media/css/popup.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="77" column="26" selection-start="2738" selection-end="2738" vertical-scroll-proportion="0.0">
+        <state line="34" column="13" selection-start="780" selection-end="780" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webhw/media/css/themes/simple.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="21" selection-start="186" selection-end="186" vertical-scroll-proportion="0.09054326" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webhw/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="67" column="17" selection-start="2404" selection-end="2404" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bupl/boc.py">
+    <entry file="file://$PROJECT_DIR$/test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="205" column="78" selection-start="11098" selection-end="11117" vertical-scroll-proportion="0.0">
+        <state line="5" column="0" selection-start="206" selection-end="206" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bupl/tests.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -669,61 +843,69 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/webhw/media/css/popup.css">
+    <entry file="file://$PROJECT_DIR$/webhw/media/css/jquery-ui-1.8.16.custom.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="13" selection-start="780" selection-end="780" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webhw/templates/boc_grid.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="87" column="9" selection-start="2270" selection-end="3172" vertical-scroll-proportion="0.033259425">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webhw/media/css/themes/simple.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="21" selection-start="186" selection-end="186" vertical-scroll-proportion="0.09054326" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webhw/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="96" selection-start="1220" selection-end="1220" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webhw/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="17" selection-start="2404" selection-end="2404" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bupl/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="33" selection-start="2157" selection-end="2157" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webhw/templates/new_start.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="90" column="44" selection-start="3950" selection-end="3956" vertical-scroll-proportion="-3.06">
+        <state line="61" column="72" selection-start="3482" selection-end="3482" vertical-scroll-proportion="0.3326316">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/webhw/media/js/eos.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="499" column="29" selection-start="17642" selection-end="17651" vertical-scroll-proportion="-225.84616">
+        <state line="763" column="51" selection-start="26756" selection-end="26756" vertical-scroll-proportion="18.097458">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bupl/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="146" column="4" selection-start="6438" selection-end="6438" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webhw/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="105" selection-start="992" selection-end="992" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#51#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webhw/templates/new_start.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="166" column="46" selection-start="8251" selection-end="8258" vertical-scroll-proportion="-49.8">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bupl/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="42" selection-start="677" selection-end="677" vertical-scroll-proportion="-9.230769">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/decimal.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="505" column="6" selection-start="17459" selection-end="17459" vertical-scroll-proportion="0.33268103">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bupl/price_calcs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="154" column="14" selection-start="6213" selection-end="6218" vertical-scroll-proportion="-7.923077">
+          <folding>
+            <element signature="e#42#67#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/bupl/eos.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="500" column="9" selection-start="27054" selection-end="27054" vertical-scroll-proportion="0.72164947">
+        <state line="72" column="8" selection-start="2210" selection-end="2210" vertical-scroll-proportion="0.39156628">
           <folding>
             <element signature="e#43#72#0" expanded="true" />
           </folding>
