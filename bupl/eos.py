@@ -45,6 +45,11 @@ ru_vals = { 'new' : u'Новый',
             'prom' : u'Пром',
             'test-nt' : u'Тест (НТ)',
             'test-other' : u'Тест (Другое)',
+            'aix' : u'AIX',
+            'solaris' : u'Solaris',
+            'hpux' : u'HP-UX',
+            'linux' : u'Linux (RHEL)',
+            'windows' : u'Windows',
 }
 
 xls_vals = { 'prjrow' : 2,
@@ -910,7 +915,6 @@ def load_eos_from_xls_new(xls_file):
         req_count = 0
         while curr_row <= num_rows:
             req_line = {}
-            req_count += 1
             xls_value = xls_worksheet.cell_value(curr_row, xls_vals['itemtype1_col'])
             if xls_value == u'Сервер БД':
                 req_line['itemtype1']='db'
@@ -1035,6 +1039,8 @@ def load_eos_from_xls_new(xls_file):
             curr_row += 1
             if (req_line['item_count'] <> 0) and (req_line['item_count'] <> ""):
                 req_line = calculate_req_line(req_line)
+                req_count += 1
+                logger.error(req_line)
                 for key in req_line.keys():
                     EOS_VALS[key+'_'+str(req_count)] = req_line[key]
         EOS_VALS['req_count'] = req_count
@@ -1087,7 +1093,6 @@ def load_eos_from_xls_new(xls_file):
 #            EOS_VALS['price_hw_'+str(i)] = new_req_line['price_hw']
 #            EOS_VALS['price_lic_'+str(i)] = new_req_line['price_lic']
 #            EOS_VALS['price_support_'+str(i)] = new_req_line['price_support']
-
         return EOS_VALS
     else:
         return None
