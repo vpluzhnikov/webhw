@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="16d88876-88d8-4668-91b5-3c169be72a6c" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bupl/eos.py" afterPath="$PROJECT_DIR$/bupl/eos.py" />
     </list>
     <ignored path="webhw.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -646,7 +645,11 @@
       <created>1395414773778</created>
       <updated>1395414773778</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="bug fix for export operation">
+      <created>1395418032679</created>
+      <updated>1395418032679</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -708,7 +711,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added temporaty folders" />
+    <option name="LAST_COMMIT_MESSAGE" value="bug fix for export operation" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -721,7 +724,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="Added event handlers for changed fields (server type handled)" />
     <MESSAGE value="Preliminary support for delete context menu in BP table" />
     <MESSAGE value="Preliminary support for boc-xls import" />
     <MESSAGE value="Major changes in BOC class and preliminary support for boc calculate method" />
@@ -746,6 +748,7 @@
     <MESSAGE value="Optimized import opertaion and bug fixes" />
     <MESSAGE value="Bug fixes and changed output format of pdf  file" />
     <MESSAGE value="Added temporaty folders" />
+    <MESSAGE value="bug fix for export operation" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
