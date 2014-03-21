@@ -14,7 +14,7 @@ from bupl.forms import BocForm, EosForm
 from bupl.models import Projects
 
 from logging import getLogger
-from eos import export_eos_to_pdf, load_eos_from_xls
+from eos import export_eos_to_pdf, load_eos_from_xls, load_eos_from_xls_new
 from price_calcs import calculate_req_line
 from os import path
 import mimetypes
@@ -39,7 +39,8 @@ def eos_main(request):
         if not fileattr == None:
             request.session['xlsfilepath'] = fileattr['filename']
             logger.info("Sucsessfully handeled file  %s in %s" % (request.FILES['xls_file'].name, whoami()))
-            request.session['eos_data'] = load_eos_from_xls(fileattr['filename'])
+            request.session['eos_data'] = load_eos_from_xls_new(fileattr['filename'])
+            logger.error(request.session['eos_data'])
             return redirect('/eos')
         else:
             logger.info("File type %s is not good, reported from %s" % (request.FILES['xls_file'].name, whoami()))

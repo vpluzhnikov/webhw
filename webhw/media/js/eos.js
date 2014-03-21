@@ -151,7 +151,7 @@ function renderEos() {
     $("#total_cost").html('Общая стоимость ' + total_cost +'$');
     $("#total_cost_hw").html('Оборудование ' + total_cost_hw +'$');
     $("#total_cost_sw").html('Лицензии ' + total_cost_sw +'$');
-    $("#total_cost_sup").html('Поддержка ' + total_cost_sup +'$');
+    $("#total_cost_sup").html('Поддержка за год ' + total_cost_sup +'$');
 
 }
 
@@ -514,11 +514,11 @@ $("#itemtype1").change(function() {
             $("#db_type_label").fadeOut(300);
             $("#db_type").fadeOut(300);
             $("#new_params").fadeOut(300);
-            $("#cpu_count").val('-');
-            $("#ram_count").val('-');
-            $("#hdd_count").val('-');
-            $("#san_count").val('-');
-            $("#nas_count").val('-');
+            $("#cpu_count").val('0');
+            $("#ram_count").val('0');
+            $("#hdd_count").val('0');
+            $("#san_count").val('0');
+            $("#nas_count").val('0');
             $("#ostype").val('---');
             $("#platform_type").val('---');
             $("#cluster_type").val('none');
@@ -537,11 +537,11 @@ $("#itemtype1").change(function() {
             $("#db_type_label").fadeOut(300);
             $("#db_type").fadeOut(300);
             $("#new_params").fadeOut(300);
-            $("#cpu_count").val('-');
-            $("#ram_count").val('-');
-            $("#hdd_count").val('-');
-            $("#san_count").val('-');
-            $("#nas_count").val('-');
+            $("#cpu_count").val('0');
+            $("#ram_count").val('0');
+            $("#hdd_count").val('0');
+            $("#san_count").val('0');
+            $("#nas_count").val('0');
             $("#ostype").val('---');
             $("#platform_type").val('---');
             $("#cluster_type").val('none');
@@ -802,18 +802,18 @@ $("#boc_form").ready(function ()
                     req_line["itemtype1"] = data["itemtype1_"+i];
                     req_line["itemstatus"] = data["itemstatus_"+i];
                     req_line["servername"] = data["servername_"+i];
-                    req_line["cpu_count"] = data["cpucount_"+i];
-                    req_line["ram_count"] = data["ramcount_"+i];
-                    req_line["hdd_count"] = data["hddcount_"+i];
-                    req_line["san_count"] = data["sancount_"+i];
-                    req_line["nas_count"] = data["nascount_"+i];
-                    req_line["item_count"] = data["itemcount_"+i];
+                    req_line["cpu_count"] = data["cpu_count_"+i];
+                    req_line["ram_count"] = data["ram_count_"+i];
+                    req_line["hdd_count"] = data["hdd_count_"+i];
+                    req_line["san_count"] = data["san_count_"+i];
+                    req_line["nas_count"] = data["nas_count_"+i];
+                    req_line["item_count"] = data["item_count_"+i];
                     req_line["ostype"] = data["ostype_"+i];
-                    req_line["platform_type"] = data["platformtype_"+i];
-                    req_line["lan_segment"] = data["lansegment_"+i];
+                    req_line["platform_type"] = data["platform_type_"+i];
+                    req_line["lan_segment"] = data["lan_segment_"+i];
                     req_line["db_type"] = "";
-                    req_line["cluster_type"] = data["clustype_"+i];
-                    req_line["backup_type"] = data["backuptype_"+i];
+                    req_line["cluster_type"] = data["cluster_type_"+i];
+                    req_line["backup_type"] = data["backup_type_"+i];
                     req_line["price"] = data["price_"+i];
                     req_line["price_hw"] = data["price_hw_"+i];
                     req_line["price_lic"] = data["price_lic_"+i];
