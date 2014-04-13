@@ -142,9 +142,10 @@ class Prjneeds(models.Model):
 
 class Prices(models.Model):
 #    id = models.CharField(max_length=765, primary_key=True)
-    hw_class = models.DecimalField(max_digits=14, decimal_places=2)
-    hw_type = models.CharField(max_length=765)
-    price = models.DecimalField(max_digits=67, decimal_places=30)
-    hw_full_name = models.CharField(max_length=765)
+    hw_class = models.DecimalField(u'Код оборудования', max_digits=14, decimal_places=2)
+    hw_type = models.CharField(u'Тип оборудования', max_length=765)
+    price = models.DecimalField(u'Стоимость (без НДС)', max_digits=67, decimal_places=30)
+    hw_full_name = models.CharField(u'Описание', max_length=765)
     class Meta:
         db_table = u'prices'
+        verbose_name_plural = u'Цены на типы оборудования'

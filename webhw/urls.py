@@ -4,8 +4,8 @@ from bupl.views import eos_get_prj_name, eos_main, calc_req, export_to_pdf, get_
 from webhw import settings
 
 # Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-# admin.autodiscover()
+from django.contrib import admin
+admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
@@ -20,11 +20,11 @@ urlpatterns = patterns('',
 #url(r'^articles/(?P<year>\d{4})/$', 'news.views.year_archive'),
     #    url(r'^boc_setup$', boc_main),
     url(r'^eos/get_prj_name$', eos_get_prj_name),
-    url(r'^eos/media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT})
+    url(r'^eos/media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
-    # url(r'^admin/', include(admin.site.urls)),
+    url(r'^eos/admin/', include(admin.site.urls)),
 )

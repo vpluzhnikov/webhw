@@ -68,7 +68,7 @@ def calculate_req_line(req_line):
             appliance_price = prices_dic['loadbalancer']
 
     if cpu_price <> 0:
-        print "cpuprice - " + str(cpu_price)
+#        print "cpuprice - " + str(cpu_price)
         price_hw += int(req_line['cpu_count']) * int(req_line['item_count']) * cpu_price
     elif appliance_price <> 0:
         price_hw += int(req_line['item_count']) * appliance_price

@@ -14,7 +14,7 @@ from bupl.forms import BocForm, EosForm
 from bupl.models import Projects
 
 from logging import getLogger
-from eos import export_eos_to_pdf, load_eos_from_xls, load_eos_from_xls_new
+from eos import export_eos_to_pdf, load_eos_from_xls_new
 from price_calcs import calculate_req_line
 from os import path
 import mimetypes
