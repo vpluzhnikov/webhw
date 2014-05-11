@@ -819,6 +819,20 @@ $("#boc_form").ready(function ()
                     req_line["price_lic"] = data["price_lic_"+i];
                     req_line["price_support"] = data["price_support_"+i];
 
+                    req_line["lic_symantec_count"] = data["lic_symantec_count_"+i];
+                    req_line["lic_symantec_cost"] = data["lic_symantec_cost_"+i];
+                    req_line["lic_ms_count"] = data["lic_ms_count_"+i];
+                    req_line["lic_ms_cost"] = data["lic_ms_cost_"+i];
+                    req_line["lic_vmware_count"] = data["lic_vmware_count_"+i];
+                    req_line["lic_vmware_cost"] = data["lic_vmware_cost_"+i];
+                    req_line["supp_symantec_count"] = data["supp_symantec_count_"+i];
+                    req_line["supp_symantec_cost"] = data["supp_symantec_cost_"+i];
+                    req_line["supp_rhel_count"] = data["supp_rhel_count_"+i];
+                    req_line["supp_rhel_cost"] = data["supp_rhel_cost_"+i];
+                    req_line["supp_vmware_count"] = data["supp_vmware_count_"+i];
+                    req_line["supp_vmware_cost"] = data["supp_vmware_cost_"+i];
+
+
                     console.log(req_line);
                     eos_items.push(req_line);
 //                    console.log(eos_items);

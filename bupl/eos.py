@@ -19,7 +19,7 @@ from reportlab.pdfbase import ttfonts, pdfmetrics
 from reportlab.lib.styles import ParagraphStyle, StyleSheet1
 from reportlab.platypus import *
 from reportlab.lib import colors
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, PageBreak
 from reportlab import rl_config
 from reportlab.lib.fonts import addMapping
 from reportlab.lib.pagesizes import A4, landscape
@@ -75,247 +75,6 @@ xls_vals = { 'prjrow' : 2,
 }
 
 logger = getLogger(__name__)
-
-def old_calculate_req_line(req_line):
-    """
-    Calculates prices for requrements and modify self.data with price values
-    """
-    req_line['price'] = '0'
-    req_line['error'] = '0'
-    error_flag = False
-    line_price = 0
-    if req_line.keys() > 0:
-#        logger.error("--------- BEFORE")
-#        logger.error(req_line)
-
-        #---------------------------------------------
-        #Calculation for new systems only
-        #---------------------------------------------
-
-        #Calculation for new x86 systems
-
-        if (not error_flag) and (req_line['itemtype2'] == u'new') and\
-           ((req_line['itemtype1'] == u'app') or (req_line['itemtype1'] == u'term') or
-            (req_line['itemtype1'] == u'db') or (req_line['itemtype1'] == u'dbarch') or
-            (req_line['itemtype1'] == u'other')) and ((req_line['ostype'] == u'windows') or
-                                                      (req_line['ostype'] == u'linux')):
-            if (int(req_line['cpu_count']) <= 16):
-                line_price += Prices.objects.get(hw_type='x86_ent').price * int(req_line['cpu_count']) *\
-                              int(req_line['item_count'])
-                line_price += Prices.objects.get(hw_type='san_stor_vmware').price * int(req_line['hdd_count']) *\
-                              int(req_line['item_count'])
-                line_price += Prices.objects.get(hw_type='san_stor_mid').price * int(req_line['san_count']) *\
-                              int(req_line['item_count'])
-                line_price += Prices.objects.get(hw_type='nas_stor').price * int(req_line['nas_count']) *\
-                              int(req_line['item_count'])
-                line_price += Prices.objects.get(hw_type='vmware_lic').price * int(req_line['cpu_count']) *\
-                              int(req_line['item_count'])
-                line_price += Prices.objects.get(hw_type='vmware_support').price * int(req_line['cpu_count']) *\
-                              int(req_line['item_count'])
-            elif (int(req_line['cpu_count']) > 16):
-                line_price += Prices.objects.get(hw_type='x86_mid').price * int(req_line['cpu_count']) *\
-                              int(req_line['item_count'])
-                if (req_line['itemtype1'] == u'db') and (req_line['itemstatus'] == u'prom'):
-                    line_price += Prices.objects.get(hw_type='san_stor_repl').price * int(req_line['san_count']) *\
-                                  int(req_line['item_count'])
-                elif (req_line['itemtype1'] == u'db') and (req_line['itemstatus'] == u'test-nt'):
-                    line_price += Prices.objects.get(hw_type='san_stor_hiend').price * int(req_line['san_count']) *\
-                                  int(req_line['item_count'])
-                else:
-                    line_price += Prices.objects.get(hw_type='san_stor_mid').price * int(req_line['san_count']) *\
-                                  int(req_line['item_count'])
-                line_price += Prices.objects.get(hw_type='nas_stor').price * int(req_line['nas_count']) *\
-                              int(req_line['item_count'])
-
-        #Calculation for new AIX, HPUX and Solaris systems
-
-        if (not error_flag) and (req_line['itemtype2'] == u'new') and\
-           ((req_line['itemtype1'] == u'app') or (req_line['itemtype1'] == u'db') or
-            (req_line['itemtype1'] == u'dbarch') or (req_line['itemtype1'] == u'other')) and \
-           ((req_line['ostype'] == u'aix') or (req_line['ostype'] == u'solaris') or (req_line['ostype'] == u'hpux')):
-            if (int(req_line['cpu_count']) <= 64) and (req_line['ostype'] == u'hpux'):
-                line_price += Prices.objects.get(hw_type='ia_mid').price * int(req_line['cpu_count']) * \
-                              int(req_line['item_count'])
-            elif (int(req_line['cpu_count']) <= 64) and (req_line['ostype'] == u'hpux'):
-                line_price += Prices.objects.get(hw_type='ia_hiend').price * int(req_line['cpu_count']) *\
-                              int(req_line['item_count'])
-            if (int(req_line['cpu_count']) <= 128):
-                if (req_line['ostype'] == u'aix'):
-                    line_price += Prices.objects.get(hw_type='ppc_mid').price * int(req_line['cpu_count']) *\
-                                  int(req_line['item_count'])
-                if (req_line['ostype'] == u'solaris'):
-                    if (req_line['platform_type'] == u't_series'):
-                        line_price += Prices.objects.get(hw_type='t_mid').price * int(req_line['cpu_count']) *\
-                                      int(req_line['item_count'])
-                    elif (req_line['platform_type'] == u'm_series'):
-                        line_price += Prices.objects.get(hw_type='m_mid').price * int(req_line['cpu_count']) *\
-                                      int(req_line['item_count'])
-            elif (int(req_line['cpu_count']) > 128):
-                if (req_line['ostype'] == u'aix'):
-                    line_price += Prices.objects.get(hw_type='ppc_hiend').price * int(req_line['cpu_count']) *\
-                                  int(req_line['item_count'])
-                if (req_line['ostype'] == u'solaris'):
-                    line_price += Prices.objects.get(hw_type='m_hiend').price * int(req_line['cpu_count']) *\
-                                  int(req_line['item_count'])
-            if (req_line['itemstatus'] == u'prom'):
-                if not (req_line['ostype'] == u'hpux'):
-                    line_price += Prices.objects.get(hw_type='symantec_lic').price * int(req_line['cpu_count']) *\
-                                  int(req_line['item_count'])
-                    line_price += Prices.objects.get(hw_type='symantec_support').price *\
-                                  int(req_line['cpu_count']) * int(req_line['item_count']) * 3
-                if (req_line['backup_type'] == u'yes') and (int(req_line['san_count']) > 2000) and \
-                   not (req_line['itemtype1'] == u'dbarch'):
-                    line_price += Prices.objects.get(hw_type='san_stor_full').price *\
-                                  int(req_line['san_count']) * int(req_line['item_count'])
-                elif (req_line['backup_type'] == u'no') and not (req_line['itemtype1'] == u'dbarch'):
-                    line_price += Prices.objects.get(hw_type='san_stor_repl').price *\
-                                  int(req_line['san_count']) * int(req_line['item_count'])
-                elif (req_line['itemtype1'] == u'dbarch'):
-                    line_price += Prices.objects.get(hw_type='san_stor_vmware').price *\
-                                  int(req_line['san_count']) * int(req_line['item_count'])
-            elif (req_line['itemstatus'] == u'test-nt'):
-                line_price += Prices.objects.get(hw_type='san_stor_hiend').price *\
-                              int(req_line['san_count']) * int(req_line['item_count'])
-            else:
-                line_price += Prices.objects.get(hw_type='san_stor_mid').price *\
-                              int(req_line['san_count']) * int(req_line['item_count'])
-            line_price += Prices.objects.get(hw_type='nas_stor').price * int(req_line['nas_count']) *\
-                          int(req_line['item_count'])
-        #Calculation for Alteons
-        if (not error_flag) and (req_line['itemtype2'] == u'new') and\
-           (req_line['itemtype1'] == u'lb'):
-            line_price += Prices.objects.get(hw_type='loadbalancer').price * int(req_line['item_count'])
-
-        #Calculation for Datapowers
-        if (not error_flag) and (req_line['itemtype2'] == u'new') and\
-           (req_line['itemtype1'] == u'dp'):
-            line_price += Prices.objects.get(hw_type='datapower').price * int(req_line['item_count'])
-
-        # ---------------------------------------------
-        # Calculation for upgrades only
-        # ---------------------------------------------
-
-        # Calculation for new x86 systems
-
-        if (not error_flag) and (req_line['itemtype2'] == u'upgrade') and\
-           ((req_line['itemtype1'] == u'app') or (req_line['itemtype1'] == u'term') or\
-            (req_line['itemtype1'] == u'db')  or (req_line['itemtype1'] == u'other')) and \
-           ((req_line['ostype'] == u'windows') or (req_line['ostype'] == u'linux')):
-            if (Prices.objects.get(hw_type='x86_ent').price > Prices.objects.get(hw_type='x86_mid').price):
-                cpu_price = Prices.objects.get(hw_type='x86_ent').price
-            else:
-                cpu_price = Prices.objects.get(hw_type='x86_mid').price
-
-            line_price += cpu_price * int(req_line['cpu_count']) * int(req_line['item_count'])
-            line_price += Prices.objects.get(hw_type='san_stor_vmware').price * int(req_line['hdd_count']) * \
-                          int(req_line['item_count'])
-            line_price += Prices.objects.get(hw_type='nas_stor').price * int(req_line['nas_count']) *\
-                          int(req_line['item_count'])
-            line_price += Prices.objects.get(hw_type='vmware_lic').price * int(req_line['cpu_count']) *\
-                          int(req_line['item_count'])
-            line_price += Prices.objects.get(hw_type='vmware_support').price * int(req_line['cpu_count']) *\
-                          int(req_line['item_count'])
-            if (req_line['itemtype1'] == u'db') and (req_line['itemstatus'] == u'prom'):
-                line_price += Prices.objects.get(hw_type='san_stor_repl').price * int(req_line['san_count']) *\
-                              int(req_line['item_count'])
-            elif (req_line['itemtype1'] == u'db') and (req_line['itemstate'] == u'тест(НТ)'):
-                line_price += Prices.objects.get(hw_type='san_stor_hiend').price * int(req_line['san_count']) *\
-                              int(req_line['item_count'])
-            else:
-                line_price += Prices.objects.get(hw_type='san_stor_mid').price * int(req_line['san_count']) * \
-                              int(req_line['item_count'])
-
-        #Calculation for AIX, HPUX and Solaris upgrades
-
-#        logger.error('LOGGER')
-#        logger.error(line_price)
-        if (not error_flag) and (req_line['itemtype2'] == u'upgrade') and\
-           ((req_line['itemtype1'] == u'app') or (req_line['itemtype1'] == u'db') or\
-            (req_line['itemtype1'] == u'dbarch') or (req_line['itemtype1'] == u'other')) and\
-           ((req_line['ostype'] == u'aix') or (req_line['ostype'] == u'solaris') or (req_line['ostype'] == u'hpux')):
-            if (Prices.objects.get(hw_type='upg_ppc_mid').price > Prices.objects.get(hw_type='upg_ppc_hiend').price):
-                aix_cpu_price = Prices.objects.get(hw_type='upg_ppc_mid').price
-            else:
-                aix_cpu_price = Prices.objects.get(hw_type='upg_ppc_hiend').price
-            if (Prices.objects.get(hw_type='upg_t4_mid').price > Prices.objects.get(hw_type='upg_sparc_hiend').price):
-                solaris_cpu_price = Prices.objects.get(hw_type='upg_t4_mid').price
-            else:
-                solaris_cpu_price = Prices.objects.get(hw_type='upg_sparc_hiend').price
-            hpux_cpu_price = Prices.objects.get(hw_type='ia_hiend').price
-            if (req_line['ostype'] == u'aix'):
-                line_price += aix_cpu_price * int(req_line['cpu_count']) * int(req_line['item_count'])
-            elif (req_line['ostype'] == u'solaris'):
-                line_price += solaris_cpu_price * int(req_line['cpu_count']) * int(req_line['item_count'])
-            elif (req_line['ostype'] == u'hpux'):
-                line_price += hpux_cpu_price * int(req_line['cpu_count']) * int(req_line['item_count'])
-            if (req_line['itemstatus'] == u'prom'):
-                if not (req_line['ostype'] == u'hpux'):
-                    line_price += Prices.objects.get(hw_type='symantec_lic').price * int(req_line['cpu_count']) *\
-                                  int(req_line['item_count'])
-                    line_price += Prices.objects.get(hw_type='symantec_support').price *\
-                                  int(req_line['cpu_count']) * int(req_line['item_count']) * 3
-                if (req_line['backup_type'] == u'yes') and not (req_line['itemtype1'] == u'dbarch'):
-                    line_price += Prices.objects.get(hw_type='san_stor_full').price *\
-                                  int(req_line['san_count']) * int(req_line['item_count'])
-                    line_price += Prices.objects.get(hw_type='san_stor_full').price *\
-                                  int(req_line['san_count']) * int(req_line['item_count'])
-                elif (req_line['backup_type'] == u'no') and not (req_line['itemtype1'] == u'dbarch'):
-                    line_price += Prices.objects.get(hw_type='san_stor_repl').price *\
-                                  int(req_line['san_count']) * int(req_line['item_count'])
-                elif (req_line['itemtype1'] == u'dbarch'):
-#                    logger.error('LOGGER')
-#                    logger.error(line_price)
-#                    logger.error(Prices.objects.get(hw_type='san_stor_vmware').price)
-#                    logger.error(int(req_line['san_count']) * int(req_line['item_count']))
-                    line_price += Prices.objects.get(hw_type='san_stor_vmware').price *\
-                                  int(req_line['san_count']) * int(req_line['item_count'])
-#                    logger.error(line_price)
-
-            if (req_line['itemstatus'] == u'test-nt'):
-                line_price += Prices.objects.get(hw_type='san_stor_hiend').price *\
-                              int(req_line['san_count']) * int(req_line['item_count'])
-            elif (req_line['itemstatus'] == u'test-other'):
-                line_price += Prices.objects.get(hw_type='san_stor_mid').price *\
-                              int(req_line['san_count']) * int(req_line['item_count'])
-            line_price += Prices.objects.get(hw_type='nas_stor').price * int(req_line['nas_count']) *\
-                          int(req_line['item_count'])
-#
-        # ---------------------------------------------
-        # Common position for new systems and upgrades
-        # ---------------------------------------------
-
-        #Calculation for windows license (new systems and upgrade)
-        if (req_line['ostype'] == u'windows'):
-            line_price += Prices.objects.get(hw_type='ms_lic').price * int(req_line['cpu_count'])\
-                          * int(req_line['item_count'])
-
-        #Calculation for RHEL support (new systems and upgrade)
-        elif (req_line['ostype'] == u'linux'):
-            line_price += Prices.objects.get(hw_type='rhel_support').price * int(req_line['cpu_count']) *\
-                          int(req_line['item_count'])
-
-        #Calculation for backup (new systems and upgrade)
-        if (req_line['backup_type'] == u'yes') and (req_line['itemtype1'] <> u'dp') and\
-           (req_line['itemtype1'] <> u'lb'):
-            line_price += Prices.objects.get(hw_type='backup_stor').price *\
-                          (int(req_line['hdd_count']) + int(req_line['nas_count']) + int(req_line['san_count'])) *\
-                          int(req_line['item_count'])
-
-
-        if ('price' in req_line.keys()) and (req_line['price'] <> u'Ошибка данных') and (not error_flag) and\
-           (line_price <> 0):
-            req_line['price'] = str(line_price.quantize(Decimal(10) ** -2))
-        elif error_flag:
-            req_line['price'] = 'Ошибка данных'
-            req_line['error'] = '1'
-
-#        logger.error("--------- AFTER")
-#        logger.error(req_line)
-#        logger.error(error_flag)
-#
-#        logger.error("--------- ENDED ----------")
-        return req_line
-
 
 def eos_xls_check(xls_filename):
     if not ('xlsx' in xls_filename)  and ('xls' in xls_filename):
@@ -512,6 +271,24 @@ def export_eos_to_pdf(eos_items):
     prom_cost_sw = 0
     prom_cost_sup = 0
 
+    lic_and_support_data = {
+        'lic_vmware_count' : 0,
+        'lic_vmware_cost' : 0,
+        'lic_ms_count' : 0,
+        'lic_ms_cost' : 0,
+        'lic_symantec_count' : 0,
+        'lic_symantec_cost' : 0,
+        'supp_rhel_count' : 0,
+        'supp_rhel_cost' : 0,
+        'supp_vmware_count' : 0,
+        'supp_vmware_cost' : 0,
+        'supp_symantec_count' : 0,
+        'supp_symantec_cost' : 0,
+    }
+
+    total_lic_counter = 0
+    total_supp_counter = 0
+
     test_nt_cost = 0
     test_nt_cost_hw = 0
     test_nt_cost_sw = 0
@@ -552,7 +329,15 @@ def export_eos_to_pdf(eos_items):
     logger.error("FINNNNISSHHHH")
 
     for key in eos_items.keys():
-        logger.error(eos_items[key])
+        for val in lic_and_support_data.keys():
+#            print eos_items[key]
+            lic_and_support_data[val] += Decimal(eos_items[key][val])
+            if 'count' in val:
+                if 'lic' in val:
+                    total_lic_counter += lic_and_support_data[val]
+                else:
+                    total_supp_counter += lic_and_support_data[val]
+
         if (eos_items[key]['itemstatus'] == u'prom'):
             prom_items.append(eos_items[key])
             prom_cost += Decimal(eos_items[key]['price'])
@@ -572,6 +357,7 @@ def export_eos_to_pdf(eos_items):
             test_cost_sw += Decimal(eos_items[key]['price_lic'])
             test_cost_sup += Decimal(eos_items[key]['price_support'])
 
+    print lic_and_support_data
     total_cost = prom_cost + test_nt_cost + test_cost
     total_cost_hw = prom_cost_hw + test_nt_cost_hw + test_cost_hw
     total_cost_sw = prom_cost_sw + test_nt_cost_sw + test_cost_sw
@@ -602,24 +388,87 @@ def export_eos_to_pdf(eos_items):
     ]
     table = Table(data, style=ts, hAlign='CENTER')
     Elements.append(table)
+    Elements.append(Spacer(0, 0.5 * cm))
+    Elements.append(Paragraph(u'Информация о лицензиях и поддержке СПО', styles["Heading2"]))
+    Elements.append(Spacer(0, 0.1 * cm))
+    if total_lic_counter == 0:
+        Elements.append(Paragraph(u'Дополнительных лицензий на СПО не требуется', styles["Heading3"]))
+    else:
+        data = [['Наименование лицензии', 'Кол-во лицензий', 'Стоимость'],
+                ]
+        if lic_and_support_data['lic_ms_count'] > 0:
+            data.append([
+                Paragraph(u'Microsoft Core Infrastructure Server (CIS) Suite Standard (2CPU)', styles["Normal"]),
+                Paragraph(str(lic_and_support_data['lic_ms_count']), styles["Normal"]),
+                Paragraph(str(lic_and_support_data['lic_ms_cost'].quantize(Decimal(10) ** -2)), styles["Normal"]),
+                ])
+        if lic_and_support_data['lic_vmware_count'] > 0:
+            data.append([
+                Paragraph(u'VMware vSphere 5 Enterprise Plus (2CPU)', styles["Normal"]),
+                Paragraph(str(lic_and_support_data['lic_vmware_count']), styles["Normal"]),
+                Paragraph(str(lic_and_support_data['lic_vmware_cost'].quantize(Decimal(10) ** -2)), styles["Normal"]),
+            ])
+        if lic_and_support_data['lic_symantec_count'] > 0:
+            data.append([
+                Paragraph(u'Symantec Storage Foundation HA/DR', styles["Normal"]),
+                Paragraph(str(lic_and_support_data['lic_symantec_count']), styles["Normal"]),
+                Paragraph(str(lic_and_support_data['lic_symantec_cost'].quantize(Decimal(10) ** -2)), styles["Normal"]),
+            ])
+        table = Table(data, style=ts, hAlign='LEFT')
+        Elements.append(Paragraph(u'Лицензии на СПО:', styles["Heading3"]))
+        Elements.append(table)
+        Elements.append(Spacer(0, 0.2 * cm))
+
+    if total_supp_counter == 0:
+        Elements.append(Paragraph(u'Дополнительной поддержки на СПО не требуется', styles["Heading3"]))
+    else:
+        data = [['Наименование позиции', 'Кол-во едеиниц', 'Стоимость'],
+                ]
+        if lic_and_support_data['supp_rhel_count'] > 0:
+            data.append([
+                Paragraph(u'Red Hat Enterprise Linux Server 6 (2CPU)', styles["Normal"]),
+                Paragraph(str(lic_and_support_data['supp_rhel_count']), styles["Normal"]),
+                Paragraph(str(lic_and_support_data['supp_rhel_cost'].quantize(Decimal(10) ** -2)), styles["Normal"]),
+            ])
+        if lic_and_support_data['supp_vmware_count'] > 0:
+            data.append([
+                Paragraph(u'VMware vSphere 5 Enterprise Plus (2CPU)', styles["Normal"]),
+                Paragraph(str(lic_and_support_data['supp_vmware_count']), styles["Normal"]),
+                Paragraph(str(lic_and_support_data['supp_vmware_cost'].quantize(Decimal(10) ** -2)), styles["Normal"]),
+            ])
+        if lic_and_support_data['supp_symantec_count'] > 0:
+            data.append([
+                Paragraph(u'Symantec Storage Foundation HA/DR', styles["Normal"]),
+                Paragraph(str(lic_and_support_data['supp_symantec_count']), styles["Normal"]),
+                Paragraph(str(lic_and_support_data['supp_symantec_cost'].quantize(Decimal(10) ** -2)),styles["Normal"]),
+            ])
+            table = Table(data, style=ts, hAlign='LEFT')
+        Elements.append(Paragraph(u'Поддержка на СПО:', styles["Heading3"]))
+        Elements.append(table)
+        Elements.append(Spacer(0, 0.2 * cm))
+
+
+    Elements.append(PageBreak())
 
     #Промышелнные среды
     Elements.append(Spacer(0, 0.5 * cm))
     Elements.append(Paragraph(u'Промышленные среды', styles["Heading2"]))
     Elements.append(Spacer(0, 0.1 * cm))
     if prom_items:
-        data = [[Paragraph(u'Кол-во позиций', styles["TableTitleSmall"]),
+        data = [[Paragraph(u'Кол-во', styles["TableTitleSmall"]),
                  Paragraph(u'Тип позиции', styles["TableTitleSmall"]),
-                 Paragraph(u'Название позиции', styles["TableTitleSmall"]),
+                 Paragraph(u'Наименование', styles["TableTitleSmall"]),
                  Paragraph(u'Статус', styles["TableTitleSmall"]),
                  Paragraph(u'Платформа', styles["TableTitleSmall"]),
                  Paragraph(u'ОС', styles["TableTitleSmall"]),
-                 Paragraph(u'Кол-во ядер', styles["TableTitleSmall"]),
-                 Paragraph(u'Кол-во ОЗУ', styles["TableTitleSmall"]),
-                 Paragraph(u'Кол-во СХД, Гб', styles["TableTitleSmall"]),
-                 Paragraph(u'Кол-во СХД,SAN Гб', styles["TableTitleSmall"]),
-                 Paragraph(u'Кол-во СХД,NAS Гб', styles["TableTitleSmall"]),
-                 Paragraph(u'Стоимость, $', styles["TableTitleSmall"])
+                 Paragraph(u'Ядер', styles["TableTitleSmall"]),
+                 Paragraph(u'ОЗУ (Гб)', styles["TableTitleSmall"]),
+                 Paragraph(u'СХД (Гб)', styles["TableTitleSmall"]),
+                 Paragraph(u'СХД,SAN (Гб)', styles["TableTitleSmall"]),
+                 Paragraph(u'СХД,NAS (Гб)', styles["TableTitleSmall"]),
+                 Paragraph(u'Стоимость оборудования ($)', styles["TableTitleSmall"]),
+                 Paragraph(u'Стоимость лицензий ($)', styles["TableTitleSmall"]),
+                 Paragraph(u'Стоимость поддержки ($)', styles["TableTitleSmall"])
                 ]]
         for item in prom_items:
             data.append([Paragraph(item['item_count'], styles["Code"]),
@@ -633,8 +482,10 @@ def export_eos_to_pdf(eos_items):
                 Paragraph(str(item['hdd_count']), styles["Code"]),
                 Paragraph(str(item['san_count']), styles["Code"]),
                 Paragraph(str(item['nas_count']), styles["Code"]),
-                Paragraph(str(item['price']), styles["Code"])
-            ])
+                Paragraph(str(item['price_hw']), styles["Code"]),
+                Paragraph(str(item['price_lic']), styles["Code"]),
+                Paragraph(str(item['price_support']), styles["Code"]),
+                ])
         table = Table(data, style=reqts, hAlign='LEFT', repeatRows=1, splitByRow=1)
         Elements.append(table)
     else:
@@ -645,18 +496,20 @@ def export_eos_to_pdf(eos_items):
     Elements.append(Paragraph(u'Среды нагрузочного тестирования', styles["Heading2"]))
     Elements.append(Spacer(0, 0.1 * cm))
     if test_nt_items:
-        data = [[Paragraph(u'Кол-во позиций', styles["TableTitleSmall"]),
+        data = [[Paragraph(u'Кол-во', styles["TableTitleSmall"]),
                  Paragraph(u'Тип позиции', styles["TableTitleSmall"]),
-                 Paragraph(u'Название позиции', styles["TableTitleSmall"]),
+                 Paragraph(u'Наименование', styles["TableTitleSmall"]),
                  Paragraph(u'Статус', styles["TableTitleSmall"]),
                  Paragraph(u'Платформа', styles["TableTitleSmall"]),
                  Paragraph(u'ОС', styles["TableTitleSmall"]),
-                 Paragraph(u'Кол-во ядер', styles["TableTitleSmall"]),
-                 Paragraph(u'Кол-во ОЗУ', styles["TableTitleSmall"]),
-                 Paragraph(u'Кол-во СХД, Гб', styles["TableTitleSmall"]),
-                 Paragraph(u'Кол-во СХД,SAN Гб', styles["TableTitleSmall"]),
-                 Paragraph(u'Кол-во СХД,NAS Гб', styles["TableTitleSmall"]),
-                 Paragraph(u'Стоимость, $', styles["TableTitleSmall"])
+                 Paragraph(u'Ядер', styles["TableTitleSmall"]),
+                 Paragraph(u'ОЗУ (Гб)', styles["TableTitleSmall"]),
+                 Paragraph(u'СХД (Гб)', styles["TableTitleSmall"]),
+                 Paragraph(u'СХД,SAN (Гб)', styles["TableTitleSmall"]),
+                 Paragraph(u'СХД,NAS (Гб)', styles["TableTitleSmall"]),
+                 Paragraph(u'Стоимость оборудования ($)', styles["TableTitleSmall"]),
+                 Paragraph(u'Стоимость лицензий ($)', styles["TableTitleSmall"]),
+                 Paragraph(u'Стоимость поддержки ($)', styles["TableTitleSmall"])
                 ]]
         for item in test_nt_items:
             data.append([Paragraph(item['item_count'], styles["Code"]),
@@ -670,7 +523,9 @@ def export_eos_to_pdf(eos_items):
                 Paragraph(str(item['hdd_count']), styles["Code"]),
                 Paragraph(str(item['san_count']), styles["Code"]),
                 Paragraph(str(item['nas_count']), styles["Code"]),
-                Paragraph(str(item['price']), styles["Code"])
+                Paragraph(str(item['price_hw']), styles["Code"]),
+                Paragraph(str(item['price_lic']), styles["Code"]),
+                Paragraph(str(item['price_support']), styles["Code"]),
             ])
         table = Table(data, style=reqts, hAlign='LEFT', repeatRows=1, splitByRow=1)
         Elements.append(table)
@@ -682,18 +537,18 @@ def export_eos_to_pdf(eos_items):
     Elements.append(Paragraph(u'Прочие тестовые среды', styles["Heading2"]))
     Elements.append(Spacer(0, 0.1 * cm))
     if test_items:
-        data = [[Paragraph(u'Кол-во позиций', styles["TableTitleSmall"]),
+        data = [[Paragraph(u'Кол-во', styles["TableTitleSmall"]),
                  Paragraph(u'Тип позиции', styles["TableTitleSmall"]),
-                 Paragraph(u'Название позиции', styles["TableTitleSmall"]),
+                 Paragraph(u'Наименование', styles["TableTitleSmall"]),
                  Paragraph(u'Статус', styles["TableTitleSmall"]),
                  Paragraph(u'Платформа', styles["TableTitleSmall"]),
                  Paragraph(u'ОС', styles["TableTitleSmall"]),
-                 Paragraph(u'Кол-во ядер', styles["TableTitleSmall"]),
-                 Paragraph(u'Кол-во ОЗУ', styles["TableTitleSmall"]),
-                 Paragraph(u'Кол-во СХД, Гб', styles["TableTitleSmall"]),
-                 Paragraph(u'Кол-во СХД,SAN Гб', styles["TableTitleSmall"]),
-                 Paragraph(u'Кол-во СХД,NAS Гб', styles["TableTitleSmall"]),
-                 Paragraph(u'Стоимость, $', styles["TableTitleSmall"])
+                 Paragraph(u'Ядер', styles["TableTitleSmall"]),
+                 Paragraph(u'ОЗУ (Гб)', styles["TableTitleSmall"]),
+                 Paragraph(u'СХД (Гб)', styles["TableTitleSmall"]),
+                 Paragraph(u'СХД,SAN (Гб)', styles["TableTitleSmall"]),
+                 Paragraph(u'СХД,NAS (Гб)', styles["TableTitleSmall"]),
+                 Paragraph(u'Стоимость ($)', styles["TableTitleSmall"])
                 ]]
         for item in test_items:
             data.append([Paragraph(item['item_count'], styles["Code"]),
@@ -755,7 +610,7 @@ def load_eos_from_xls_new(xls_file):
                 req_line['itemtype2'] = 'new'
             else:
                 req_line['itemtype2'] = 'upgrade'
-
+            print xls_worksheet.cell_value(curr_row, xls_vals['cpucount_col'])
             req_line['cpu_count']= str(xls_worksheet.cell_value(curr_row, xls_vals['cpucount_col'])).split(".")[0]
             if req_line['cpu_count'] == '':
                 req_line['cpu_count'] = 0
