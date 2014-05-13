@@ -548,7 +548,9 @@ def export_eos_to_pdf(eos_items):
                  Paragraph(u'СХД (Гб)', styles["TableTitleSmall"]),
                  Paragraph(u'СХД,SAN (Гб)', styles["TableTitleSmall"]),
                  Paragraph(u'СХД,NAS (Гб)', styles["TableTitleSmall"]),
-                 Paragraph(u'Стоимость ($)', styles["TableTitleSmall"])
+                 Paragraph(u'Стоимость оборудования ($)', styles["TableTitleSmall"]),
+                 Paragraph(u'Стоимость лицензий ($)', styles["TableTitleSmall"]),
+                 Paragraph(u'Стоимость поддержки ($)', styles["TableTitleSmall"])
                 ]]
         for item in test_items:
             data.append([Paragraph(item['item_count'], styles["Code"]),
@@ -562,7 +564,9 @@ def export_eos_to_pdf(eos_items):
                 Paragraph(str(item['hdd_count']), styles["Code"]),
                 Paragraph(str(item['san_count']), styles["Code"]),
                 Paragraph(str(item['nas_count']), styles["Code"]),
-                Paragraph(str(item['price']), styles["Code"])
+                Paragraph(str(item['price_hw']), styles["Code"]),
+                Paragraph(str(item['price_lic']), styles["Code"]),
+                Paragraph(str(item['price_support']), styles["Code"]),
             ])
         table = Table(data, style=reqts, hAlign='LEFT', repeatRows=1, splitByRow=1)
         Elements.append(table)

@@ -196,14 +196,17 @@ def calculate_req_line(req_line):
                 price_lic = lic_ms_cost
                 lic_ms_count = int(req_line['item_count'])
         else:
-            if (req_line['platform_type'] <> u'itanium') and (req_line['cluster_type'] == u'vcs'):
+            if (req_line['platform_type'] <> u'itanium') and (req_line['itemtype1'] <> u'lb') and\
+               (req_line['itemtype1'] <> u'dp') and (req_line['cluster_type'] == u'vcs') and \
+               (req_line['itemstatus'] == u'prom'):
+                print req_line
                 lic_symantec_cost = int(req_line['item_count'])* int(req_line['cpu_count']) * prices_dic['symantec_lic']
                 price_lic = lic_symantec_cost
-                lic_symantec_count += 1
+                lic_symantec_count += int(req_line['item_count'])
                 supp_symantec_cost = int(req_line['item_count']) * int(req_line['cpu_count']) * \
                                       prices_dic['symantec_support']
                 price_support = supp_symantec_cost
-                supp_symantec_count += 1
+                supp_symantec_count += int(req_line['item_count'])
 
 #    if lic <> 0:
 #        print "lic - " + str(lic)
