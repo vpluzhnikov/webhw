@@ -155,54 +155,55 @@ def calculate_req_line(req_line):
     price_hw += int(req_line['nas_count']) * int(req_line['item_count']) * prices_dic['nas_stor']
 
 #   Licenses and support price calculation
-    if (req_line['platform_type'] == u'x86'):
-        if (int(req_line['cpu_count']) <= 24) and (req_line['ostype'] == u'windows'):
-            if req_line['itemstatus'] == u'prom':
-                k_vm = 5.0
-            else:
-                k_vm = 10.0
+    if (req_line['itemtype2'] <> u'upgrade'):
+        if (req_line['platform_type'] == u'x86'):
+            if (int(req_line['cpu_count']) <= 24) and (req_line['ostype'] == u'windows'):
+                if req_line['itemstatus'] == u'prom':
+                    k_vm = 5.0
+                else:
+                    k_vm = 10.0
 
-            lic_ms_cost = Decimal(ceil(float(req_line['item_count']) / 2)) * prices_dic['ms_lic_2sock']
-            lic_vmware_cost = int(req_line['item_count']) * (prices_dic['vmware_lic_2sock'] / Decimal(k_vm))
-            price_lic = lic_ms_cost + lic_vmware_cost
-            lic_ms_count = ceil(int(req_line['item_count']) / 2)
-            lic_vmware_count = int(req_line['item_count']) / k_vm
-            supp_vmware_cost = int(req_line['item_count']) * (prices_dic['vmware_support_2sock'] / Decimal(k_vm))
-            price_support = supp_vmware_cost
-            supp_vmware_count = int(req_line['item_count']) / k_vm
+                lic_ms_cost = Decimal(ceil(float(req_line['item_count']) / 2)) * prices_dic['ms_lic_2sock']
+                lic_vmware_cost = int(req_line['item_count']) * (prices_dic['vmware_lic_2sock'] / Decimal(k_vm))
+                price_lic = lic_ms_cost + lic_vmware_cost
+                lic_ms_count = ceil(int(req_line['item_count']) / 2)
+                lic_vmware_count = int(req_line['item_count']) / k_vm
+                supp_vmware_cost = int(req_line['item_count']) * (prices_dic['vmware_support_2sock'] / Decimal(k_vm))
+                price_support = supp_vmware_cost
+                supp_vmware_count = int(req_line['item_count']) / k_vm
 
-        elif (int(req_line['cpu_count']) <= 24) and (req_line['ostype'] == u'linux'):
-            if req_line['itemstatus'] == u'prom':
-                k_vm = 5.0
-            else:
-                k_vm = 10.0
-            lic_vmware_cost = int(req_line['item_count'])* (prices_dic['vmware_lic_2sock'] / Decimal(k_vm))
-            price_lic = lic_vmware_cost
-            lic_vmware_count = int(req_line['item_count']) / k_vm
-            supp_vmware_cost = int(req_line['item_count']) * prices_dic['vmware_support_2sock'] / Decimal(k_vm)
-            supp_rhel_cost = int(req_line['item_count']) * prices_dic['rhel_support_2sock'] / Decimal(k_vm)
-            price_support =  supp_vmware_cost + supp_rhel_cost
-            supp_vmware_count = int(req_line['item_count']) / k_vm
-            supp_rhel_count += int(req_line['item_count']) / k_vm
+            elif (int(req_line['cpu_count']) <= 24) and (req_line['ostype'] == u'linux'):
+                if req_line['itemstatus'] == u'prom':
+                    k_vm = 5.0
+                else:
+                    k_vm = 10.0
+                lic_vmware_cost = int(req_line['item_count'])* (prices_dic['vmware_lic_2sock'] / Decimal(k_vm))
+                price_lic = lic_vmware_cost
+                lic_vmware_count = int(req_line['item_count']) / k_vm
+                supp_vmware_cost = int(req_line['item_count']) * prices_dic['vmware_support_2sock'] / Decimal(k_vm)
+                supp_rhel_cost = int(req_line['item_count']) * prices_dic['rhel_support_2sock'] / Decimal(k_vm)
+                price_support =  supp_vmware_cost + supp_rhel_cost
+                supp_vmware_count = int(req_line['item_count']) / k_vm
+                supp_rhel_count += int(req_line['item_count']) / k_vm
 
-        elif (int(req_line['cpu_count']) > 24) and (req_line['ostype'] == u'linux'):
-            supp_rhel_cost = int(req_line['item_count']) * prices_dic['rhel_support_2sock']
-            price_support = supp_rhel_cost
-            supp_rhel_count = int(req_line['item_count'])
+            elif (int(req_line['cpu_count']) > 24) and (req_line['ostype'] == u'linux'):
+                supp_rhel_cost = int(req_line['item_count']) * prices_dic['rhel_support_2sock']
+                price_support = supp_rhel_cost
+                supp_rhel_count = int(req_line['item_count'])
 
-        elif (int(req_line['cpu_count']) > 24) and (req_line['ostype'] == u'windows'):
-            lic_ms_cost = int(req_line['item_count']) * prices_dic['ms_lic_2sock']
-            price_lic = lic_ms_cost
-            lic_ms_count = int(req_line['item_count'])
-    else:
-        if (req_line['platform_type'] <> u'itanium') and (req_line['cluster_type'] == u'vcs'):
-            lic_symantec_cost = int(req_line['item_count'])* int(req_line['cpu_count']) * prices_dic['symantec_lic']
-            price_lic = lic_symantec_cost
-            lic_symantec_count += 1
-            supp_symantec_cost = int(req_line['item_count']) * int(req_line['cpu_count']) * \
-                                  prices_dic['symantec_support']
-            price_support = supp_symantec_cost
-            supp_symantec_count += 1
+            elif (int(req_line['cpu_count']) > 24) and (req_line['ostype'] == u'windows'):
+                lic_ms_cost = int(req_line['item_count']) * prices_dic['ms_lic_2sock']
+                price_lic = lic_ms_cost
+                lic_ms_count = int(req_line['item_count'])
+        else:
+            if (req_line['platform_type'] <> u'itanium') and (req_line['cluster_type'] == u'vcs'):
+                lic_symantec_cost = int(req_line['item_count'])* int(req_line['cpu_count']) * prices_dic['symantec_lic']
+                price_lic = lic_symantec_cost
+                lic_symantec_count += 1
+                supp_symantec_cost = int(req_line['item_count']) * int(req_line['cpu_count']) * \
+                                      prices_dic['symantec_support']
+                price_support = supp_symantec_cost
+                supp_symantec_count += 1
 
 #    if lic <> 0:
 #        print "lic - " + str(lic)

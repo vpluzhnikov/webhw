@@ -394,57 +394,57 @@ def export_eos_to_pdf(eos_items):
     if total_lic_counter == 0:
         Elements.append(Paragraph(u'Дополнительных лицензий на СПО не требуется', styles["Heading3"]))
     else:
-        data = [['Наименование лицензии', 'Кол-во лицензий', 'Стоимость'],
+        data_lic = [['Наименование лицензии', 'Кол-во лицензий', 'Стоимость'],
                 ]
         if lic_and_support_data['lic_ms_count'] > 0:
-            data.append([
+            data_lic.append([
                 Paragraph(u'Microsoft Core Infrastructure Server (CIS) Suite Standard (2CPU)', styles["Normal"]),
                 Paragraph(str(lic_and_support_data['lic_ms_count']), styles["Normal"]),
                 Paragraph(str(lic_and_support_data['lic_ms_cost'].quantize(Decimal(10) ** -2)), styles["Normal"]),
                 ])
         if lic_and_support_data['lic_vmware_count'] > 0:
-            data.append([
+            data_lic.append([
                 Paragraph(u'VMware vSphere 5 Enterprise Plus (2CPU)', styles["Normal"]),
                 Paragraph(str(lic_and_support_data['lic_vmware_count']), styles["Normal"]),
                 Paragraph(str(lic_and_support_data['lic_vmware_cost'].quantize(Decimal(10) ** -2)), styles["Normal"]),
             ])
         if lic_and_support_data['lic_symantec_count'] > 0:
-            data.append([
+            data_lic.append([
                 Paragraph(u'Symantec Storage Foundation HA/DR', styles["Normal"]),
                 Paragraph(str(lic_and_support_data['lic_symantec_count']), styles["Normal"]),
                 Paragraph(str(lic_and_support_data['lic_symantec_cost'].quantize(Decimal(10) ** -2)), styles["Normal"]),
             ])
-        table = Table(data, style=ts, hAlign='LEFT')
+        table_lic = Table(data_lic, style=ts, hAlign='LEFT')
         Elements.append(Paragraph(u'Лицензии на СПО:', styles["Heading3"]))
-        Elements.append(table)
+        Elements.append(table_lic)
         Elements.append(Spacer(0, 0.2 * cm))
 
     if total_supp_counter == 0:
         Elements.append(Paragraph(u'Дополнительной поддержки на СПО не требуется', styles["Heading3"]))
     else:
-        data = [['Наименование позиции', 'Кол-во едеиниц', 'Стоимость'],
+        data_supp = [['Наименование позиции', 'Кол-во едеиниц', 'Стоимость'],
                 ]
         if lic_and_support_data['supp_rhel_count'] > 0:
-            data.append([
+            data_supp.append([
                 Paragraph(u'Red Hat Enterprise Linux Server 6 (2CPU)', styles["Normal"]),
                 Paragraph(str(lic_and_support_data['supp_rhel_count']), styles["Normal"]),
                 Paragraph(str(lic_and_support_data['supp_rhel_cost'].quantize(Decimal(10) ** -2)), styles["Normal"]),
             ])
         if lic_and_support_data['supp_vmware_count'] > 0:
-            data.append([
+            data_supp.append([
                 Paragraph(u'VMware vSphere 5 Enterprise Plus (2CPU)', styles["Normal"]),
                 Paragraph(str(lic_and_support_data['supp_vmware_count']), styles["Normal"]),
                 Paragraph(str(lic_and_support_data['supp_vmware_cost'].quantize(Decimal(10) ** -2)), styles["Normal"]),
             ])
         if lic_and_support_data['supp_symantec_count'] > 0:
-            data.append([
+            data_supp.append([
                 Paragraph(u'Symantec Storage Foundation HA/DR', styles["Normal"]),
                 Paragraph(str(lic_and_support_data['supp_symantec_count']), styles["Normal"]),
                 Paragraph(str(lic_and_support_data['supp_symantec_cost'].quantize(Decimal(10) ** -2)),styles["Normal"]),
             ])
-            table = Table(data, style=ts, hAlign='LEFT')
+        table_supp = Table(data_supp, style=ts, hAlign='LEFT')
         Elements.append(Paragraph(u'Поддержка на СПО:', styles["Heading3"]))
-        Elements.append(table)
+        Elements.append(table_supp)
         Elements.append(Spacer(0, 0.2 * cm))
 
 
