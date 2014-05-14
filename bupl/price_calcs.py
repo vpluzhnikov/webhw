@@ -68,10 +68,13 @@ def calculate_req_line(req_line):
         if (int(req_line['cpu_count']) > 128):
             if (req_line['itemtype2'] == u'upgrade'):
                 cpu_price = prices_dic['m_hiend']
+                req_line['platform_type'] = u'm_series'
             else:
                 cpu_price = prices_dic['m_hiend']
+                req_line['platform_type'] = u'm_series'
         else:
             cpu_price = prices_dic['t_mid']
+            req_line['platform_type'] = u't_series'
     elif (req_line['platform_type'] == u'itanium'):
         if (int(req_line['cpu_count']) > 64):
             if (req_line['itemtype2'] == u'upgrade'):
@@ -199,7 +202,7 @@ def calculate_req_line(req_line):
             if (req_line['platform_type'] <> u'itanium') and (req_line['itemtype1'] <> u'lb') and\
                (req_line['itemtype1'] <> u'dp') and (req_line['cluster_type'] == u'vcs') and \
                (req_line['itemstatus'] == u'prom'):
-                print req_line
+#                print req_line
                 lic_symantec_cost = int(req_line['item_count'])* int(req_line['cpu_count']) * prices_dic['symantec_lic']
                 price_lic = lic_symantec_cost
                 lic_symantec_count += int(req_line['item_count'])

@@ -357,7 +357,7 @@ def export_eos_to_pdf(eos_items):
             test_cost_sw += Decimal(eos_items[key]['price_lic'])
             test_cost_sup += Decimal(eos_items[key]['price_support'])
 
-    print lic_and_support_data
+#    print lic_and_support_data
     total_cost = prom_cost + test_nt_cost + test_cost
     total_cost_hw = prom_cost_hw + test_nt_cost_hw + test_cost_hw
     total_cost_sw = prom_cost_sw + test_nt_cost_sw + test_cost_sw
@@ -584,7 +584,6 @@ def export_eos_to_pdf(eos_items):
 def load_eos_from_xls_new(xls_file):
     EOS_VALS = {}
     if eos_xls_check(xls_file):
-    #        xls_print_content(xls_file)
         try:
             xls_workbook = open_workbook(xls_file)
             xls_worksheet = xls_workbook.sheet_by_name(u'Технические требования')
@@ -614,7 +613,6 @@ def load_eos_from_xls_new(xls_file):
                 req_line['itemtype2'] = 'new'
             else:
                 req_line['itemtype2'] = 'upgrade'
-            print xls_worksheet.cell_value(curr_row, xls_vals['cpucount_col'])
             req_line['cpu_count']= str(xls_worksheet.cell_value(curr_row, xls_vals['cpucount_col'])).split(".")[0]
             if req_line['cpu_count'] == '':
                 req_line['cpu_count'] = 0
@@ -722,59 +720,9 @@ def load_eos_from_xls_new(xls_file):
             if (req_line['item_count'] <> 0) and (req_line['item_count'] <> ""):
                 req_line = calculate_req_line(req_line)
                 req_count += 1
-#                logger.error(req_line)
                 for key in req_line.keys():
                     EOS_VALS[key+'_'+str(req_count)] = req_line[key]
         EOS_VALS['req_count'] = req_count
-
-#                EOS_VALS['itemtype2_' + str(i)] = req_line['itemtype2']
-#                EOS_VALS['itemtype1_' + str(i)] = req_line['itemtype1']
-#                EOS_VALS['itemstatus_' + str(i)] = req_line['itemstatus']
-#                EOS_VALS['servername_' + str(i)] = req_line['servername']
-#                EOS_VALS['cpucount_' + str(i)] = req_line['cpu_count']
-#                EOS_VALS['ramcount_' + str(i)] = req_line['ram_count']
-#                EOS_VALS['hddcount_' + str(i)] = req_line['hdd_count']
-#                EOS_VALS['sancount_' + str(i)] = req_line['san_count']
-#                req_line['nas_count'] = EOS_VALS['nascount_' + str(i)]
-#                req_line['item_count'] = EOS_VALS['itemcount_' + str(i)]
-#                req_line['ostype'] = EOS_VALS['ostype_' + str(i)]
-#                req_line['platform_type'] = EOS_VALS['platformtype_' + str(i)]
-#                req_line['lan_segment'] = EOS_VALS['lansegment_' + str(i)]
-#                req_line['db_type'] = ""
-#                req_line['cluster_type'] = EOS_VALS['clustype_' + str(i)]
-#                req_line['backup_type'] = EOS_VALS['backuptype_' + str(i)]
-#                new_req_line = calculate_req_line(req_line)
-#                EOS_VALS['price_' + str(i)] = new_req_line['price']
-#                EOS_VALS['price_hw_' + str(i)] = new_req_line['price_hw']
-#                EOS_VALS['price_lic_' + str(i)] = new_req_line['price_lic']
-#                EOS_VALS['price_support_' + str(i)] = new_req_line['price_support']
-
-                #        EOS_VALS['req_count'] = req_count
-#        logger.error(req_count)
-#        logger.error(EOS_VALS)
-#        for i in range(1,req_count+1):
-#            req_line = {}
-#            req_line['itemtype2'] = EOS_VALS['itemtype2_'+str(i)]
-#            req_line['itemtype1'] = EOS_VALS['itemtype1_'+str(i)]
-#            req_line['itemstatus'] = EOS_VALS['itemstatus_'+str(i)]
-#            req_line['servername'] = EOS_VALS['servername_'+str(i)]
-#            req_line['cpu_count'] = EOS_VALS['cpucount_'+str(i)]
-#            req_line['ram_count'] = EOS_VALS['ramcount_'+str(i)]
-#            req_line['hdd_count'] = EOS_VALS['hddcount_'+str(i)]
-#            req_line['san_count'] = EOS_VALS['sancount_'+str(i)]
-#            req_line['nas_count'] = EOS_VALS['nascount_'+str(i)]
-#            req_line['item_count'] = EOS_VALS['itemcount_'+str(i)]
-#            req_line['ostype'] = EOS_VALS['ostype_'+str(i)]
-#            req_line['platform_type'] = EOS_VALS['platformtype_'+str(i)]
-#            req_line['lan_segment'] = EOS_VALS['lansegment_'+str(i)]
-#            req_line['db_type'] = ""
-#            req_line['cluster_type'] = EOS_VALS['clustype_'+str(i)]
-#            req_line['backup_type'] = EOS_VALS['backuptype_'+str(i)]
-#            new_req_line = calculate_req_line(req_line)
-#            EOS_VALS['price_'+str(i)] = new_req_line['price']
-#            EOS_VALS['price_hw_'+str(i)] = new_req_line['price_hw']
-#            EOS_VALS['price_lic_'+str(i)] = new_req_line['price_lic']
-#            EOS_VALS['price_support_'+str(i)] = new_req_line['price_support']
         return EOS_VALS
     else:
         return None
