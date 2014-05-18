@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="16d88876-88d8-4668-91b5-3c169be72a6c" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Testcase_v1.xls" afterPath="" />
+    <list default="true" id="16d88876-88d8-4668-91b5-3c169be72a6c" name="Default" comment="TestCase fixed">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="webhw.iws" />
@@ -579,7 +578,11 @@
       <created>1400049659287</created>
       <updated>1400049659287</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="TestCase fixed">
+      <created>1400397727066</created>
+      <updated>1400397727066</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -641,7 +644,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="TestCase and new Django version implemented" />
+    <option name="LAST_COMMIT_MESSAGE" value="TestCase fixed" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -654,7 +657,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="Boc save in xls implemented" />
     <MESSAGE value="New design for start form" />
     <MESSAGE value="Fixed caclulation algo" />
     <MESSAGE value="Export to PDF function added" />
@@ -679,6 +681,7 @@
     <MESSAGE value="Bug fixes for support cout and cost in PDF report." />
     <MESSAGE value="Bug fixes for test environment in PDF report." />
     <MESSAGE value="TestCase and new Django version implemented" />
+    <MESSAGE value="TestCase fixed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
