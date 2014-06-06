@@ -48,7 +48,7 @@ def calculate_req_line(req_line):
         prices_dic[price.hw_type] = Decimal(price.price)
 
 #   Hardware price calculation for CPUs or Appliances
-    if (req_line['platform_type'] == u'x86'):
+    if (req_line['platform_type'] == u'x86') and (req_line['itemtype1'] <> u'mqdmz'):
         if (int(req_line['cpu_count']) > 24):
             cpu_price = prices_dic['x86_mid']
         else:
@@ -88,15 +88,18 @@ def calculate_req_line(req_line):
             appliance_price = prices_dic['datapower']
         elif (req_line['itemtype1'] == u'lb'):
             appliance_price = prices_dic['loadbalancer']
+        elif (req_line['itemtype1'] == u'mqdmz'):
+            appliance_price = prices_dic['mqdmz']
 
     if cpu_price <> 0:
 #        print "cpuprice - " + str(cpu_price)
         price_hw += int(req_line['cpu_count']) * int(req_line['item_count']) * cpu_price
     elif appliance_price <> 0:
-        price_hw += int(req_line['item_count']) * appliance_price
+        price_hw += int(req_line['item_count']) * appliance_price * (int(req_line['utilization']) / Decimal(100))
 
 #   Hardware price calculation for internal storage
-    if (req_line['platform_type'] == u'x86') and (int(req_line['cpu_count']) < 24):
+    if (req_line['platform_type'] == u'x86') and (int(req_line['cpu_count']) < 24) and \
+       (req_line['itemtype1'] <> u'mqdmz'):
         intdisks_price = prices_dic['int_stor']
 
     if intdisks_price <> 0:
@@ -104,7 +107,7 @@ def calculate_req_line(req_line):
         price_hw += int(req_line['hdd_count']) * int(req_line['item_count']) * intdisks_price
 
 #   Hardware price calculation for external storage
-    if  (req_line['itemstatus'] == u'prom'):
+    if  (req_line['itemstatus'] == u'prom') and (req_line['itemtype1'] <> u'mqdmz'):
         if (req_line['platform_type'] == u'power') or (req_line['platform_type'] == u'itanium') or \
            (u'_series' in req_line['platform_type']):
             if (req_line['itemtype1'] == u'dbarch'):
@@ -133,10 +136,10 @@ def calculate_req_line(req_line):
             else:
                 san_price = prices_dic['san_stor_mid'] + prices_dic['san_stor_vplex']
 
-    elif (req_line['itemstatus'] == u'test-nt'):
+    elif (req_line['itemstatus'] == u'test-nt') and (req_line['itemtype1'] <> u'mqdmz'):
         san_price = prices_dic['san_stor_hiend']
 
-    else:
+    elif (req_line['itemtype1'] <> u'mqdmz'):
         san_price = prices_dic['san_stor_mid']
 
     if san_price <> 0:
@@ -146,7 +149,7 @@ def calculate_req_line(req_line):
 
 #   Hardware price calculation for backup storage
     if (req_line['backup_type'] == u'yes') and (req_line['itemtype1'] <> u'dp') and\
-       (req_line['itemtype1'] <> u'lb'):
+       (req_line['itemtype1'] <> u'lb') and (req_line['itemtype1'] <> u'mqdmz'):
         backup_price = prices_dic['backup_stor']
 
     if backup_price <> 0:

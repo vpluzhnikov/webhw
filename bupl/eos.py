@@ -35,6 +35,7 @@ ru_vals = { 'new' : u'Новый',
             'term' : u'Терминальный сервер',
             'dp' : u'IBM DataPower',
             'lb' : u'Балансировщик',
+            'mqdmz' : u'Сервер MQ (DMZ)',
             'other' : u'Другое',
             'power' : u'IBM Power',
             't_series' : u'Oracle T-series',
@@ -317,15 +318,18 @@ def export_eos_to_pdf(eos_items):
     doc = SimpleDocTemplate(path.join(BOC_WORK_DIR, filename + ".pdf"), rightMargin=1*cm,leftMargin=1*cm, topMargin=1*cm, bottomMargin=1*cm)
     styles = getReportStyleSheet('Arial')
     #REPORT TITLE
-    Sblogo = Image(path.join(MEDIA_ROOT,'images/sb-logo.jpg'),1 * cm, 1 * cm)
+    Sblogo = Image(path.join(MEDIA_ROOT,'images/sb-logo-new.jpg'), 10 * cm, 1.5 * cm)
     Sblogo.hAlign='RIGHT'
+
     if project_id == u'0':
         Title = Paragraph(u'Экспресс-оценка для проекта без номера', styles["Heading1"])
+#        Title = Paragraph(u'Экспресс оценка для Программы ТАБС', styles["Heading1"])
         SubTitle = Paragraph(u' ', styles["SubTitle"])
     else:
         Title = Paragraph(u'Экспресс-оценка для проекта №' + project_id, styles["Heading1"])
+#        Title = Paragraph(u'Экспресс оценка для Программы ТАБС', styles["Heading1"])
         SubTitle = Paragraph(project_name, styles["SubTitle"])
-    Elements = [Sblogo, Title, SubTitle]
+    Elements = [Sblogo, Spacer(0, 0.2 * cm), Title, SubTitle]
     logger.error("FINNNNISSHHHH")
 
     for key in eos_items.keys():
@@ -373,8 +377,8 @@ def export_eos_to_pdf(eos_items):
                ('FONTSIZE', (0,0), (-1,-1), 9)]
 
     #Таблица стоимсоти
-    Elements.append(Spacer(0, 0.5 * cm))
-    Elements.append(Paragraph(u'Оценка стоимости', styles["Heading2"]))
+    Elements.append(Spacer(0, 0.2 * cm))
+    Elements.append(Paragraph(u'Оценка стоимости (без НДС)', styles["Heading2"]))
     Elements.append(Spacer(0, 0.1 * cm))
     data = [['Среды', 'Общая стоимость', 'Оборудование', 'Лицензии', 'Поддержка за год'],
             [ u'Промышленные среды', str(prom_cost)+' $', str(prom_cost_hw)+' $', str(prom_cost_sw)+' $',
@@ -471,9 +475,13 @@ def export_eos_to_pdf(eos_items):
                  Paragraph(u'Стоимость поддержки ($)', styles["TableTitleSmall"])
                 ]]
         for item in prom_items:
+            if item['itemtype1'] in [u'mqdmz', u'lb', u'dp']:
+                itemname = ru_vals[item['itemtype1']] + u" (Загрузка " + item["utilization"] + u"%)"
+            else:
+                itemname = ru_vals[item['itemtype1']]
             data.append([Paragraph(item['item_count'], styles["Code"]),
                 Paragraph(ru_vals[item['itemtype2']], styles["Code"]),
-                Paragraph(ru_vals[item['itemtype1']], styles["Code"]),
+                Paragraph(itemname, styles["Code"]),
                 Paragraph(ru_vals[item['itemstatus']], styles["Code"]),
                 Paragraph(ru_vals[item['platform_type']], styles["Code"]),
                 Paragraph(ru_vals[item['ostype']], styles["Code"]),
@@ -512,9 +520,13 @@ def export_eos_to_pdf(eos_items):
                  Paragraph(u'Стоимость поддержки ($)', styles["TableTitleSmall"])
                 ]]
         for item in test_nt_items:
+            if item['itemtype1'] in [u'mqdmz', u'lb', u'dp']:
+                itemname = ru_vals[item['itemtype1']] + u" (Загрузка " + item["utilization"] + u"%)"
+            else:
+                itemname = ru_vals[item['itemtype1']]
             data.append([Paragraph(item['item_count'], styles["Code"]),
                 Paragraph(ru_vals[item['itemtype2']], styles["Code"]),
-                Paragraph(ru_vals[item['itemtype1']], styles["Code"]),
+                Paragraph(itemname, styles["Code"]),
                 Paragraph(ru_vals[item['itemstatus']], styles["Code"]),
                 Paragraph(ru_vals[item['platform_type']], styles["Code"]),
                 Paragraph(ru_vals[item['ostype']], styles["Code"]),
@@ -553,9 +565,13 @@ def export_eos_to_pdf(eos_items):
                  Paragraph(u'Стоимость поддержки ($)', styles["TableTitleSmall"])
                 ]]
         for item in test_items:
+            if item['itemtype1'] in [u'mqdmz', u'lb', u'dp']:
+                itemname = ru_vals[item['itemtype1']] + u" (Загрузка " + item["utilization"] + u"%)"
+            else:
+                itemname = ru_vals[item['itemtype1']]
             data.append([Paragraph(item['item_count'], styles["Code"]),
                 Paragraph(ru_vals[item['itemtype2']], styles["Code"]),
-                Paragraph(ru_vals[item['itemtype1']], styles["Code"]),
+                Paragraph(itemname, styles["Code"]),
                 Paragraph(ru_vals[item['itemstatus']], styles["Code"]),
                 Paragraph(ru_vals[item['platform_type']], styles["Code"]),
                 Paragraph(ru_vals[item['ostype']], styles["Code"]),
@@ -603,6 +619,9 @@ def load_eos_from_xls_new(xls_file):
                 req_line['itemtype1']='app'
             elif xls_value ==  u'TS':
                 req_line['itemtype1']='term'
+            elif xls_value ==  u'Сервер MQ (DMZ)':
+                req_line['itemtype1']='mqdmz'
+                req_line['platform_type']='---'
             else:
                 req_line['itemtype1']='other'
 
@@ -633,7 +652,7 @@ def load_eos_from_xls_new(xls_file):
                 req_line['item_count'] = 0
 
             xls_value = xls_worksheet.cell_value(curr_row, xls_vals['platform_type_col'])
-            if xls_value == u'x86':
+            if xls_value == u'x86' and req_line['itemtype1'] <> 'mqdmz':
                 req_line['platform_type']='x86'
             elif xls_value == u'Power':
                 req_line['platform_type']='power'
@@ -647,10 +666,12 @@ def load_eos_from_xls_new(xls_file):
                 req_line['platform_type']='---'
                 req_line['ostype']='---'
                 req_line['itemtype1']='dp'
+                req_line['utilization']='100'
             elif xls_value == u'Alteon':
                 req_line['platform_type']='---'
                 req_line['ostype']='---'
                 req_line['itemtype1']='lb'
+                req_line['utilization']='100'
             elif xls_value == u'Другое':
                 req_line['platform_type']='---'
             else:
@@ -698,6 +719,8 @@ def load_eos_from_xls_new(xls_file):
                 req_line['lan_segment'] = 'sigma'
             elif xls_value == u'TAU':
                 req_line['lan_segment'] = 'tay'
+            elif xls_value == u'DMZ':
+                req_line['lan_segment'] = 'DMZ'
             else:
                 req_line['lan_segment'] = 'other'
 
@@ -716,6 +739,7 @@ def load_eos_from_xls_new(xls_file):
                 req_line['backup_type'] = 'no'
             else:
                 req_line['backup_type'] = 'yes'
+            req_line['utilization']='100'
             curr_row += 1
             if (req_line['item_count'] <> 0) and (req_line['item_count'] <> ""):
                 req_line = calculate_req_line(req_line)

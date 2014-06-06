@@ -2,7 +2,7 @@
         "http://www.w3.org/TR/html4/loose.dtd">
 {% load i18n %}
 
-<html xmlns="http://www.w3.org/1999/html">
+<html xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
 <head>
     <noscript>Для корректной работы страницы включите JavaScript в настройках браузера</noscript>
     <script src="{{ MEDIA_URL }}/js/lib/firebugx.js"></script>
@@ -115,6 +115,7 @@
                 <option value="term">Терминальный сервер</option>
                 <option value="lb">Балансировщик</option>
                 <option value="dp">IBM DataPower</option>
+                <option value="mqdmz">Сервер MQ (DMZ)</option>
             </select>
             <select id="itemstatus" name="itemstatus">
                 <option value="---">---</option>
@@ -196,6 +197,7 @@
                         <option value="alpha">Alpha</option>
                         <option value="sigma">Sigma</option>
                         <option value="tay">Tau</option>
+                        <option value="dmz">DMZ</option>
                         <option value="other">Другой</option>
                     </select>
                 </td>
@@ -227,7 +229,11 @@
                     </select>
                 </td>
             </tr>
-            </table>
+            <tr>
+                <td><label class="label-modal" for="utilization">Загрузка (%):</label></td>
+                <td><input class="textbox-modal" id="utilization" type="number" size="3" value="0" onkeypress="return isNumberKey(event)"></td>
+            </tr>
+        </table>
             <hr>
         </div>
 
@@ -245,7 +251,7 @@
 <div style="display: none;">
     <div class="box-modal" id="prjselect_dialog">
         <div id="close_prjselect_dialog" class="box-modal_close arcticmodal-close">закрыть</div>
-        <label class="label-modal">Инфоамация о проекте</label>
+        <label class="label-modal">Информация о проекте</label>
         <table>
             <tr>
                 <td>

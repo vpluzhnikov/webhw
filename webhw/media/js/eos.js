@@ -15,6 +15,7 @@ var ru_vals = { 'new' : "Новый",
     'term' : "Терминальный сервер",
     'dp' : "IBM DataPower",
     'lb' : "Балансировщик",
+    'mqdmz' : "Сервер MQ (DMZ)",
     'other' : "Другое",
     'power' : "IBM Power",
     't_series' : "Oracle T-series",
@@ -182,12 +183,15 @@ function prepareReqForm(num_req) {
         $("#cluster_type").show();
         $("#backup_type").val('no');
         $("#backup_type").show();
+        $("#utilization").val('100');
+        $("#utilization").hide();
         $("#itemtype1").css({'color':'black'});
         $("#itemstatus").css({'color':'black'});
         $("#servername").css({'color':'black'});
         $("#item_count").css({'color':'black'});
         $("#ostype").css({'color':'black'});
         $("#platform_type").css({'color':'black'});
+        $("#utilization").css({'color':'black'});
         $("#add_req_modal").show();
         $("#edit_req_modal").hide();
     }
@@ -213,7 +217,8 @@ function prepareReqForm(num_req) {
         $("#edit_req_modal").show();
         $("#add_req_modal").hide();
 
-        if ((req_line["itemtype1"] == 'lb') || (req_line["itemtype1"] == 'dp')) {
+
+        if ((req_line["itemtype1"] == 'lb') || (req_line["itemtype1"] == 'dp') || (req_line["itemtype1"] == 'mqdmz')) {
             $("#db_type_label").hide();
             $("#db_type").hide();
             $("#new_params").hide();
@@ -223,6 +228,8 @@ function prepareReqForm(num_req) {
             $("#backup_type").hide();
             $("#cluster_type_label").hide();
             $("#backup_type_label").hide();
+            $("#utilization").val(req_line["utilization"]);
+            $("#utilization").show();
         } else
         {
             $("#db_type_label").show();
@@ -234,6 +241,7 @@ function prepareReqForm(num_req) {
             $("#backup_type").show();
             $("#cluster_type_label").show();
             $("#backup_type_label").show();
+            $("#utilization").hide();
             if (req_line["itemtype2"] == 'upgrade') {
                 $("#upgrade_params").show();
             }
@@ -313,16 +321,23 @@ function formCheck() {
         $("#nas_count").css({'color' : 'black'});
     }
 
+    if ((parseInt($("#utilization").val()) < 0)||(parseInt($("#utilization").val()) > 100)) {
+        $("#utilization").css({'color' : 'red'});
+        formValid = 0;
+    } else
+    {
+        $("#utilization").css({'color' : 'black'});
+    }
 
 
-    if (($("#ostype").val() == '---') && !(($("#itemtype1").val() == 'dp')||($("#itemtype1").val() == 'lb'))) {
+    if (($("#ostype").val() == '---') && !(($("#itemtype1").val() == 'dp')||($("#itemtype1").val() == 'lb')||($("#itemtype1").val() == 'mqdmz'))) {
         $("#ostype").css({'color' : 'red'});
         formValid = 0;
     } else
     {
         $("#ostype").css({'color' : 'black'});
     }
-    if (($("#platform_type").val() == '---')  && !(($("#itemtype1").val() == 'dp')||($("#itemtype1").val() == 'lb'))) {
+    if (($("#platform_type").val() == '---')  && !(($("#itemtype1").val() == 'dp')||($("#itemtype1").val() == 'lb')||($("#itemtype1").val() == 'mqdmz'))) {
         $("#platform_type").css({'color' : 'red'});
         formValid = 0;
     } else
@@ -468,6 +483,7 @@ $("#itemtype1").change(function() {
             $("#backup_type").show();
             $("#cluster_type_label").show();
             $("#backup_type_label").show();
+            $("#utilization").hide();
 
         }
         if ($(this).val() == 'app') {
@@ -488,6 +504,7 @@ $("#itemtype1").change(function() {
             $("#backup_type").show();
             $("#cluster_type_label").show();
             $("#backup_type_label").show();
+            $("#utilization").hide();
 
         }
         if ($(this).val() == 'term') {
@@ -508,6 +525,7 @@ $("#itemtype1").change(function() {
             $("#backup_type").show();
             $("#cluster_type_label").show();
             $("#backup_type_label").show();
+            $("#utilization").hide();
 
         }
         if ($(this).val() == 'lb') {
@@ -530,6 +548,7 @@ $("#itemtype1").change(function() {
             $("#backup_type").hide();
             $("#cluster_type_label").hide();
             $("#backup_type_label").hide();
+            $("#utilization").show();
 
 
         }
@@ -553,8 +572,33 @@ $("#itemtype1").change(function() {
             $("#backup_type").hide();
             $("#cluster_type_label").hide();
             $("#backup_type_label").hide();
+            $("#utilization").show();
 
         }
+        if ($(this).val() == 'mqdmz') {
+            $("#db_type_label").fadeOut(300);
+            $("#db_type").fadeOut(300);
+            $("#new_params").fadeOut(300);
+            $("#cpu_count").val('32');
+            $("#ram_count").val('96');
+            $("#hdd_count").val('300');
+            $("#san_count").val('50');
+            $("#nas_count").val('0');
+            $("#ostype").val('windows');
+            $("#platform_type").val('x86');
+            $("#cluster_type").val('vcs');
+            $("#backup_type").val('yes');
+
+            $("#ostype").hide();
+            $("#platform_type").hide();
+            $("#cluster_type").hide();
+            $("#backup_type").hide();
+            $("#cluster_type_label").hide();
+            $("#backup_type_label").hide();
+            $("#utilization").show();
+
+        }
+
     }
 });
 
@@ -570,6 +614,10 @@ $("#itemstatus").change(function() {
                 $("#backup_type").val('yes');
             }
             if ($("#itemtype1").val() == 'term') {
+                $("#cluster_type").val('app');
+                $("#backup_type").val('yes');
+            }
+            if ($("#itemtype1").val() == 'mqdmz') {
                 $("#cluster_type").val('app');
                 $("#backup_type").val('yes');
             }
@@ -683,6 +731,7 @@ $("#add_req_modal").click(function() {
         req_line["db_type"] = $("#db_type").val();
         req_line["cluster_type"] = $("#cluster_type").val();
         req_line["backup_type"] = $("#backup_type").val();
+        req_line["utilization"] = $("#utilization").val();
     $.ajax({
         type:'POST',
         url:url_eos_addreq,
@@ -721,6 +770,7 @@ $("#edit_req_modal").click(function() {
         req_line["db_type"] = $("#db_type").val();
         req_line["cluster_type"] = $("#cluster_type").val();
         req_line["backup_type"] = $("#backup_type").val();
+        req_line["utilization"] = $("#utilization").val();
         $.ajax({
             type:'POST',
             url:url_eos_addreq,
@@ -818,6 +868,7 @@ $("#boc_form").ready(function ()
                     req_line["price_hw"] = data["price_hw_"+i];
                     req_line["price_lic"] = data["price_lic_"+i];
                     req_line["price_support"] = data["price_support_"+i];
+                    req_line["utilization"] = data["utilization_"+i];
 
                     req_line["lic_symantec_count"] = data["lic_symantec_count_"+i];
                     req_line["lic_symantec_cost"] = data["lic_symantec_cost_"+i];

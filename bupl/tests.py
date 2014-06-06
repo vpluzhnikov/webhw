@@ -45,7 +45,11 @@ class EosTestCase(unittest.TestCase):
                                        1108910,
                                        1207000,
                                        110891,
-                                       120700,]
+                                       120700,
+                                       36000,
+                                       18000,
+                                       18000,
+                                       ]
         Prices.objects.create(id=1, hw_class=1, hw_type="x86_ent", price=602)
         Prices.objects.create(id=10, hw_class=1, hw_type="t4_mid", price=4900)
         Prices.objects.create(id=11, hw_class=1, hw_type="ia_hiend", price=20100)
@@ -83,6 +87,7 @@ class EosTestCase(unittest.TestCase):
         Prices.objects.create(id=40, hw_class=5, hw_type="vmware_lic_2sock", price=6682)
         Prices.objects.create(id=41, hw_class=5, hw_type="vmware_support_2sock", price=1659)
         Prices.objects.create(id=42, hw_class=5, hw_type="rhel_support_2sock", price=6000)
+        Prices.objects.create(id=43, hw_class=6, hw_type="mqdmz", price=18000)
         Prices.objects.create(id=5, hw_class=1, hw_type="ppc_mid", price=22197)
         Prices.objects.create(id=6, hw_class=2, hw_type="upg_ppc_mid", price=12800)
         Prices.objects.create(id=7, hw_class=2, hw_type="upg_sparc_hiend", price=12800)
