@@ -9,12 +9,90 @@ class ProjectPlan:
         __init__ class constructor
         Following class attributes initialized in __init__:
         """
+        self.task_attr = [
+            'UID',
+            'ID',
+            'Name',
+            'Active',
+            'Manual',
+            'Type',
+            'IsNull',
+            'CreateDate',
+            'WBS',
+            'OutlineNumber',
+            'OutlineLevel',
+            'Priority',
+            'Start',
+            'Duration',
+            'ManualStart',
+            'ManualDuration',
+            'DurationFormat',
+            'Work',
+            'ResumeValid',
+            'EffortDriven',
+            'Recurring',
+            'OverAllocated',
+            'Estimated',
+            'Milestone',
+            'Summary',
+            'DisplayAsSummary',
+            'Critical',
+            'IsSubproject',
+            'IsSubprojectReadOnly',
+            'ExternalTask',
+            'EarlyStart',
+            'LateStart',
+            'StartVariance',
+            'FinishVariance',
+            'WorkVariance',
+            'FreeSlack',
+            'TotalSlack',
+            'StartSlack',
+            'FinishSlack',
+            'FixedCost',
+            'FixedCostAccrual',
+            'PercentComplete',
+            'PercentWorkComplete',
+            'Cost',
+            'OvertimeCost',
+            'OvertimeWork',
+            'ActualDuration',
+            'ActualCost',
+            'ActualOvertimeCost',
+            'ActualWork',
+            'ActualOvertimeWork',
+            'RegularWork',
+            'RemainingDuration',
+            'RemainingCost',
+            'RemainingWork',
+            'RemainingOvertimeCost',
+            'RemainingOvertimeWork',
+            'ACWP',
+            'CV',
+            'ConstraintType',
+            'CalendarUID',
+            'LevelAssignments',
+            'LevelingCanSplit',
+            'LevelingDelay',
+            'LevelingDelayFormat',
+            'IgnoreResourceCalendar',
+            'HideBar',
+            'Rollup',
+            'BCWS',
+            'BCWP',
+            'PhysicalPercentComplete',
+            'EarnedValueMethod',
+            'IsPublished',
+            'CommitmentType',
+        ]
         self.current_task_id = 1
-
+        self.tasks = None
         self.project_number = project_number
         self.project_reqs = project_reqs
         self.xml_root = ET.Element("Project")
         self.project_filename = project_filename
+        self.current_block_id = 0
+        self.block_structure = {}
 
 
         #
@@ -215,16 +293,17 @@ class ProjectPlan:
                 self.totime_2 = ET.SubElement(self.workingtime_2, "ToTime")
                 self.totime_2.text = u"18:00:00"
 
-    def add_task(self, taskid):
+    def add_task(self, taskid, linked_with_block = None, link_type = 1):
         TASKS = []
-        self.tasks = ET.SubElement(self.xml_root, "Tasks")
-        tasks = TasksBaseTable.objects.filter(WBS__contains=taskid).order_by('Task_ID')
+        if not self.tasks:
+            self.tasks = ET.SubElement(self.xml_root, "Tasks")
+        summary_task = TasksBaseTable.objects.get(WBS=taskid)
+        tasks = TasksBaseTable.objects.filter(WBS__contains=taskid+'.').order_by('Task_ID')
+        TASKS.append(summary_task.__dict__)
+        summary_task_id = self.current_task_id
         for task in tasks:
             TASKS.append(task.__dict__)
-
         for task in TASKS:
-            if '_state' in task.keys():
-                del task['_state']
             current_task = ET.SubElement(self.tasks, "Task")
             task_uid = ET.SubElement(current_task, "UID")
             task_id = ET.SubElement(current_task, "ID")
@@ -236,20 +315,20 @@ class ProjectPlan:
                         subtask['PredecessorUID'] = str(self.current_task_id)
             self.current_task_id += 1
 
-            create_date = ET.SubElement(current_task, "CreateDate")
-            create_date.text = strftime("20%y-%m-%dT%00:00:00")
-            start = ET.SubElement(current_task, "Start")
-            start.text = strftime("20%y-%m-%dT%00:00:00")
-#            finish = ET.SubElement(current_task, "Finish")
-#            manual_start = ET.SubElement(current_task, "ManualStart")
-#            manual_finish = ET.SubElement(current_task, "ManualFinish")
-#            manual_duration = ET.SubElement(current_task, "ManualDuration")
-#            early_start = ET.SubElement(current_task, "EarlyStart")
-#            early_finish = ET.SubElement(current_task, "EarlyFinish")
-#            late_start = ET.SubElement(current_task, "LateStart")
-#            late_finish = ET.SubElement(current_task, "LateFinish")
-            calendar_uid = ET.SubElement(current_task, "CalendarUID")
-            calendar_uid.text = "1"
+            for attr in self.task_attr:
+                if attr in task.keys():
+                    current_attr = ET.SubElement(current_task, attr)
+                    current_attr.text = unicode(task[attr])
+                elif attr == 'CreateDate':
+                    create_date = ET.SubElement(current_task, "CreateDate")
+                    create_date.text = strftime("20%y-%m-%dT%00:00:00")
+                elif attr == 'Start':
+                    start = ET.SubElement(current_task, "Start")
+                    start.text = strftime("20%y-%m-%dT%00:00:00")
+                elif attr == 'CalendarUID':
+                    calendar_uid = ET.SubElement(current_task, "CalendarUID")
+                    calendar_uid.text = "1"
+
             if ('PredecessorUID' in task) and task['PredecessorUID']:
                 prelink = ET.SubElement(current_task, "PredecessorLink")
                 for key in ['PredecessorUID', 'Predecessor_Type', 'CrossProject', 'LinkLag', 'LagFormat']:
@@ -258,6 +337,20 @@ class ProjectPlan:
                     else:
                         link_attr = ET.SubElement(prelink, key)
                     link_attr.text = task[key]
+            elif (task['Summary'] == '1'):
+                if linked_with_block:
+                    prelink = ET.SubElement(current_task, "PredecessorLink")
+                    preuid = ET.SubElement(prelink, 'PredecessorUID')
+                    preuid.text = self.block_structure['block_task_uid_'+str(linked_with_block)]
+                    pretype = ET.SubElement(prelink, "Type")
+                    if link_type:
+                        pretype.text = str(link_type)
+                    precross = ET.SubElement(prelink, "CrossProject")
+                    precross.text = '0'
+                    prelag = ET.SubElement(prelink, "LinkLag")
+                    prelag.text = '0'
+                    prelagformat = ET.SubElement(prelink, "LagFormat")
+                    prelagformat.text = '5'
 
             if ('EA_FieldID1' in task) and task['EA_FieldID1']:
                 extended_attr = ET.SubElement(current_task, "ExtendedAttribute")
@@ -290,17 +383,8 @@ class ProjectPlan:
                 extended_value = ET.SubElement(extended_attr, "Value")
                 extended_value.text = task['EA_Value5']
 
-            for key in ['PredecessorUID', 'Predecessor_Type', 'CrossProject', 'LinkLag', 'LagFormat', 'EA_FieldID1',
-                        'EA_FieldID2', 'EA_FieldID3', 'EA_FieldID4', 'EA_FieldID5', 'EA_Value1', 'EA_Value2',
-                        'EA_Value3', 'EA_Value4', 'EA_Value5']:
-                del task[key]
-
-            for attr in task.keys():
-                if task[attr]:
-                    current_attr = ET.SubElement(current_task, attr)
-                    current_attr.text = unicode(task[attr])
-
-
+        self.current_block_id += 1
+        self.block_structure.update({'block_task_uid_'+str(self.current_block_id) : str(summary_task_id)})
 
     def export_project_xml(self):
         tree = ET.ElementTree(self.xml_root)

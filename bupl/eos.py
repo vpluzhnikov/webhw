@@ -320,7 +320,8 @@ def export_eos_to_pdf(eos_items):
     #REPORT TITLE
     Sblogo = Image(path.join(MEDIA_ROOT,'images/sb-logo-new.jpg'), 10 * cm, 1.5 * cm)
     Sblogo.hAlign='RIGHT'
-
+    lh1 = Paragraph(u'Приложение №', styles["Normal"])
+    lh2 = Paragraph(u'к решению КПП от ___.20__ г. № __ §__', styles["Normal"])
     if project_id == u'0':
         Title = Paragraph(u'Экспресс-оценка для проекта без номера', styles["Heading1"])
 #        Title = Paragraph(u'Экспресс оценка для Программы ТАБС', styles["Heading1"])
@@ -329,7 +330,7 @@ def export_eos_to_pdf(eos_items):
         Title = Paragraph(u'Экспресс-оценка для проекта №' + project_id, styles["Heading1"])
 #        Title = Paragraph(u'Экспресс оценка для Программы ТАБС', styles["Heading1"])
         SubTitle = Paragraph(project_name, styles["SubTitle"])
-    Elements = [Sblogo, Spacer(0, 0.2 * cm), Title, SubTitle]
+    Elements = [Sblogo, lh1, lh2, Spacer(0, 0.2 * cm), Title, SubTitle]
     logger.error("FINNNNISSHHHH")
 
     for key in eos_items.keys():
