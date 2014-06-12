@@ -12,6 +12,7 @@ from webhw.xlsfiles import handle_xls_file
 
 from bupl.forms import BocForm, EosForm
 from bupl.models import Projects
+from bupl.rp_build import prepare_resource_plan
 
 from logging import getLogger
 from eos import export_eos_to_pdf, load_eos_from_xls_new
@@ -90,26 +91,35 @@ def calc_req(request):
 
 def export_to_pdf(request):
     eos_items = loads(request.POST['json'])
-    print 'export ---------'
+#    print 'export ---------'
     print eos_items
     return HttpResponse(dumps({'filename' : export_eos_to_pdf(eos_items)}))
 
+def build_resource_plan(request):
+    eos_items = loads(request.POST['json'])
+    return HttpResponse(dumps({'filename' : prepare_resource_plan(eos_items)}))
 
-def get_eos_pdf(request, filename):
+def get_exported_file(request, filename):
     try:
-        file_path = path.join(BOC_WORK_DIR, filename + ".pdf")
+        if 'eos' in filename:
+            file_path = path.join(BOC_WORK_DIR, filename + ".pdf")
+        elif 'tp' in filename:
+            file_path = path.join(BOC_WORK_DIR, filename + ".xml")
         print file_path
         fsock = open(file_path,"r")
         file_name = path.basename(file_path)
         file_size = path.getsize(file_path)
         print "file size is: " + str(file_size)
         mime_type_guess = mimetypes.guess_type(file_name)
-        if mime_type_guess is not None:
+        if (mime_type_guess is not None) and (not 'tp' in filename):
             response = HttpResponse(fsock, mimetype=mime_type_guess[0])
+        elif 'tp' in filename:
+            response = HttpResponse(fsock, mimetype='application/x-ms-project')
         response['Content-Disposition'] = 'attachment; filename=' + file_name
     except IOError:
         response = HttpResponseNotFound()
     return response
+
 
 def eos_get_prj_name(request):
     """

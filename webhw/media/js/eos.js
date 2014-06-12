@@ -70,7 +70,7 @@ function renderEos() {
     $("#test_other_body").empty();
     for (var i =0; i < eos_items.length; ++i) {
         e_item = eos_items[i];
-        console.log(e_item);
+//        console.log(e_item);
         if (e_item["itemstatus"] == 'prom'){
             $("#prom_body").append("<table class=\"appended_table\"> <tr>"+
                 "<td width=\"62px\"> <label class=\"main_window_data\">"+ru_vals[e_item["itemtype2"]]+"</label></td>" +
@@ -362,8 +362,11 @@ $("#id_xls_file").change(function ()
 }
 );
 
-$("#save").click(function ()
+
+$("#save").add("#rp_save").click(function (event)
     {
+        $("#prj_function").val(event.target.id);
+        console.log(event.target.id)
 
         var url_get_prj_list = "/eos/get_prj_list"
         $.ajax({
@@ -386,7 +389,6 @@ $("#save").click(function ()
             }
         });
 
-
         $('#prjselect_dialog').arcticmodal();
 
     }
@@ -396,31 +398,54 @@ $("#prj_confirm").click(function ()
 {
     $("#close_prjselect_dialog").click();
 
-    var url_eos_pdfsave = "/eos/export_to_pdf"
-    eosdata = {}
-    i = 1
-    for (line in eos_items) {
-        eosdata[i] = eos_items[line];
-        i++;
-    }
-    eosdata['project_id'] = $("#prjnum").val();
-    eosdata['project_name'] = $("#prjname").val();
-    console.log(eosdata);
-    $.ajax({
-        type : 'POST',
-        url: url_eos_pdfsave ,
-        async: false,
-        dataType: 'json',
-        data: {"json" : JSON.stringify(eosdata) },
-        success: function(data, status){
-            error = data.error;
-            console.log(data);
-            document.location.href="eos/get_eos_pdf/"+data['filename'];
-//                element = '<input id="xlsfilename" name="xlsfilename" value="'+ data['filename'] +'" type="hidden">'
-//                var input = $('#boc_form').appendTo(document.body).append(element);
+    if ($("#prj_function").val() == 'save') {
+        var url_eos_pdfsave = "/eos/export_to_pdf";
+        eosdata = {};
+        i = 1;
+        for (line in eos_items) {
+            eosdata[i] = eos_items[line];
+            i++;
         }
-    });
-
+        eosdata['project_id'] = $("#prjnum").val();
+        eosdata['project_name'] = $("#prjname").val();
+        console.log(eosdata);
+        $.ajax({
+            type : 'POST',
+            url: url_eos_pdfsave ,
+            async: false,
+            dataType: 'json',
+            data: {"json" : JSON.stringify(eosdata) },
+            success: function(data, status){
+                error = data.error;
+//                console.log(data);
+                document.location.href="eos/get_eos_pdf/"+data['filename'];
+            }
+        });
+    } else
+    {
+        var url_plan_build = "/eos/build_resource_plan";
+        eosdata = {};
+        i = 1;
+        for (line in eos_items) {
+            eosdata[i] = eos_items[line];
+            i++;
+        }
+        eosdata['project_id'] = $("#prjnum").val();
+        eosdata['project_name'] = $("#prjname").val();
+        console.log(eosdata);
+        $.ajax({
+            type : 'POST',
+            url: url_plan_build ,
+            async: false,
+            dataType: 'json',
+            data: {"json" : JSON.stringify(eosdata) },
+            success: function(data, status){
+                error = data.error;
+                console.log(data);
+                document.location.href="eos/get_resource_plan/"+data['filename'];
+            }
+        });
+    }
 }
     );
 
@@ -830,7 +855,7 @@ $("#boc_form").ready(function ()
             async:false,
             dataType:'json',
             success:function (data, status) {
-                console.log(data);
+//                console.log(data);
                 if (data.prjnum != null || data.prjnum != undefined) {
                     $("#prjselect").val(data.prjnum);
                     $("#prjnum").val(data.prjnum);
@@ -884,7 +909,7 @@ $("#boc_form").ready(function ()
                     req_line["supp_vmware_cost"] = data["supp_vmware_cost_"+i];
 
 
-                    console.log(req_line);
+//                    console.log(req_line);
                     eos_items.push(req_line);
 //                    console.log(eos_items);
 //                    renderEos();
@@ -904,7 +929,7 @@ $("#boc_form").ready(function ()
 
 //                    eos_items.push(req_line);
                 }
-                console.log(eos_items);
+//                console.log(eos_items);
                 renderEos();
 
             }

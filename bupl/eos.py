@@ -378,7 +378,7 @@ def export_eos_to_pdf(eos_items):
                ('FONTSIZE', (0,0), (-1,-1), 9)]
 
     #Таблица стоимсоти
-    Elements.append(Spacer(0, 0.2 * cm))
+    Elements.append(Spacer(0, 0.1 * cm))
     Elements.append(Paragraph(u'Оценка стоимости (без НДС)', styles["Heading2"]))
     Elements.append(Spacer(0, 0.1 * cm))
     data = [['Среды', 'Общая стоимость', 'Оборудование', 'Лицензии', 'Поддержка за год'],
@@ -393,7 +393,7 @@ def export_eos_to_pdf(eos_items):
     ]
     table = Table(data, style=ts, hAlign='CENTER')
     Elements.append(table)
-    Elements.append(Spacer(0, 0.5 * cm))
+    Elements.append(Spacer(0, 0.2 * cm))
     Elements.append(Paragraph(u'Информация о лицензиях и поддержке СПО', styles["Heading2"]))
     Elements.append(Spacer(0, 0.1 * cm))
     if total_lic_counter == 0:
@@ -422,7 +422,7 @@ def export_eos_to_pdf(eos_items):
         table_lic = Table(data_lic, style=ts, hAlign='LEFT')
         Elements.append(Paragraph(u'Лицензии на СПО:', styles["Heading3"]))
         Elements.append(table_lic)
-        Elements.append(Spacer(0, 0.2 * cm))
+        Elements.append(Spacer(0, 0.1 * cm))
 
     if total_supp_counter == 0:
         Elements.append(Paragraph(u'Дополнительной поддержки на СПО не требуется', styles["Heading3"]))
@@ -450,13 +450,13 @@ def export_eos_to_pdf(eos_items):
         table_supp = Table(data_supp, style=ts, hAlign='LEFT')
         Elements.append(Paragraph(u'Поддержка на СПО:', styles["Heading3"]))
         Elements.append(table_supp)
-        Elements.append(Spacer(0, 0.2 * cm))
+        Elements.append(Spacer(0, 0.1 * cm))
 
 
     Elements.append(PageBreak())
 
     #Промышелнные среды
-    Elements.append(Spacer(0, 0.5 * cm))
+    Elements.append(Spacer(0, 0.2 * cm))
     Elements.append(Paragraph(u'Промышленные среды', styles["Heading2"]))
     Elements.append(Spacer(0, 0.1 * cm))
     if prom_items:
@@ -501,7 +501,7 @@ def export_eos_to_pdf(eos_items):
         Elements.append(Paragraph(u'Промышленных сред нет', styles["Heading3"]))
 
     #Среды НТ
-    Elements.append(Spacer(0, 0.5 * cm))
+    Elements.append(Spacer(0, 0.2 * cm))
     Elements.append(Paragraph(u'Среды нагрузочного тестирования', styles["Heading2"]))
     Elements.append(Spacer(0, 0.1 * cm))
     if test_nt_items:
@@ -546,7 +546,7 @@ def export_eos_to_pdf(eos_items):
         Elements.append(Paragraph(u'Cред нагрузочного тестирования нет', styles["Heading3"]))
 
     #Тестовые среды
-    Elements.append(Spacer(0, 0.5 * cm))
+    Elements.append(Spacer(0, 0.2 * cm))
     Elements.append(Paragraph(u'Прочие тестовые среды', styles["Heading2"]))
     Elements.append(Spacer(0, 0.1 * cm))
     if test_items:
@@ -595,7 +595,6 @@ def export_eos_to_pdf(eos_items):
 #    response.write(buffer.getvalue())
 #    buffer.close()
     return filename
-
 
 
 def load_eos_from_xls_new(xls_file):

@@ -4,7 +4,7 @@ from time import strftime
 from models import TasksBaseTable
 
 class ProjectPlan:
-    def __init__(self, project_number, project_reqs, project_filename):
+    def __init__(self, project_number, project_filename):
         """
         __init__ class constructor
         Following class attributes initialized in __init__:
@@ -88,7 +88,7 @@ class ProjectPlan:
         self.current_task_id = 1
         self.tasks = None
         self.project_number = project_number
-        self.project_reqs = project_reqs
+#        self.project_reqs = project_reqs
         self.xml_root = ET.Element("Project")
         self.project_filename = project_filename
         self.current_block_id = 0

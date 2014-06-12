@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
-from bupl.views import eos_get_prj_name, eos_main, calc_req, export_to_pdf, get_eos_pdf, \
-    get_loaded_eos, get_prj_list
+from bupl.views import eos_get_prj_name, eos_main, calc_req, export_to_pdf, get_exported_file, \
+    get_loaded_eos, get_prj_list, build_resource_plan
 from webhw import settings
 
 # Uncomment the next two lines to enable the admin:
@@ -16,12 +16,11 @@ urlpatterns = patterns('',
     url(r'^eos/export_to_pdf$', export_to_pdf),
     url(r'^eos/get_loaded_eos$', get_loaded_eos),
     url(r'^eos/get_prj_list$', get_prj_list),
-    url(r'^eos/get_eos_pdf/(?P<filename>\w+)$', get_eos_pdf),
-#url(r'^articles/(?P<year>\d{4})/$', 'news.views.year_archive'),
-    #    url(r'^boc_setup$', boc_main),
+    url(r'^eos/get_eos_pdf/(?P<filename>\w+)$', get_exported_file),
+    url(r'^eos/build_resource_plan$', build_resource_plan),
+    url(r'^eos/get_resource_plan/(?P<filename>\w+)$', get_exported_file),
     url(r'^eos/get_prj_name$', eos_get_prj_name),
     url(r'^eos/media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
-
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
