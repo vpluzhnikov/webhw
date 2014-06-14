@@ -2,6 +2,7 @@
 import xml.etree.cElementTree as ET
 from time import strftime
 from models import TasksBaseTable
+import datetime
 
 class ProjectPlan:
     def __init__(self, project_number, project_filename):
@@ -23,8 +24,10 @@ class ProjectPlan:
             'OutlineLevel',
             'Priority',
             'Start',
+            'Finish',
             'Duration',
             'ManualStart',
+            'ManualFinish',
             'ManualDuration',
             'DurationFormat',
             'Work',
@@ -41,7 +44,9 @@ class ProjectPlan:
             'IsSubprojectReadOnly',
             'ExternalTask',
             'EarlyStart',
+            'EarlyFinish',
             'LateStart',
+            'LateFinish',
             'StartVariance',
             'FinishVariance',
             'WorkVariance',
@@ -93,8 +98,12 @@ class ProjectPlan:
         self.project_filename = project_filename
         self.current_block_id = 0
         self.block_structure = {}
-
-
+        if datetime.datetime.today().weekday() not in [5,6]:
+            self.project_startdate = datetime.datetime.today()
+        else:
+            self.project_startdate = datetime.datetime.today() + \
+                                     datetime.timedelta(days = (7-datetime.datetime.today().weekday())
+)
         #
         #   Standart hedaer for all projects
         #
@@ -106,21 +115,22 @@ class ProjectPlan:
         self.title = ET.SubElement(self.xml_root, "Title")
         self.title.text = u"Проект №"+self.project_number
         self.company = ET.SubElement(self.xml_root, "Company")
-        self.title.text = u"Сбербанк России"
+        self.company.text = u"Сбербанк России"
         self.author =  ET.SubElement(self.xml_root, "Author")
         self.author.text =  u"EOS Calculator"
         self.schedulefromstart = ET.SubElement(self.xml_root, "ScheduleFromStart")
         self.schedulefromstart.text = u"1"
         self.startdate = ET.SubElement(self.xml_root,"StartDate")
-        self.startdate.text = strftime("20%y-%m-%dT%00:00:00")
+        self.startdate.text = self.project_startdate.strftime("20%y-%m-%dT00:00:00")
+#        strftime("20%y-%m-%dT00:00:00")
         self.fystartdate = ET.SubElement(self.xml_root, "FYStartDate")
         self.fystartdate.text = u"1"
         self.criticalslacklimit = ET.SubElement(self.xml_root, "CriticalSlackLimit")
         self.criticalslacklimit.text = u"0"
         self.currencydigits = ET.SubElement(self.xml_root, "CurrencyDigits")
-        self.currencydigits = u"2"
+        self.currencydigits.text = u"2"
         self.currencysymbol = ET.SubElement(self.xml_root, "CurrencySymbol")
-        self.currencysymbol = u"р."
+        self.currencysymbol.text = u"р."
         self.currencycode = ET.SubElement(self.xml_root, "CurrencyCode")
         self.currencycode.text = u"RUB"
         self.currencysymbolposition = ET.SubElement(self.xml_root, "CurrencySymbolPosition")
@@ -187,7 +197,7 @@ class ProjectPlan:
         self.autoaddnewresourcesandtasks = ET.SubElement(self.xml_root, "AutoAddNewResourcesAndTasks")
         self.autoaddnewresourcesandtasks.text = u"1"
         self.currentdate = ET.SubElement(self.xml_root, "CurrentDate")
-        self.currentdate.text = strftime("20%y-%m-%dT%00:00:00")
+        self.currentdate.text = strftime("20%y-%m-%dT08:00:00")
         self.microsoftprojectserverurl = ET.SubElement(self.xml_root, "MicrosoftProjectServerURL")
         self.microsoftprojectserverurl.text = u"1"
         self.autolink = ET.SubElement(self.xml_root, "Autolink")
@@ -267,7 +277,7 @@ class ProjectPlan:
         self.cal_isbaselinecalendar = ET.SubElement(self.calendar, "IsBaselineCalendar")
         self.cal_isbaselinecalendar.text = u"0"
         self.cal_basecalendaruid = ET.SubElement(self.calendar, "BaseCalendarUID")
-        self.cal_basecalendaruid.text = u"0"
+        self.cal_basecalendaruid.text = u"-1"
         self.weekdays = ET.SubElement(self.calendar, "WeekDays")
         for i in range(1, 8):
             self.weekday = ET.SubElement(self.weekdays, "WeekDay")
@@ -293,7 +303,7 @@ class ProjectPlan:
                 self.totime_2 = ET.SubElement(self.workingtime_2, "ToTime")
                 self.totime_2.text = u"18:00:00"
 
-    def add_task(self, taskid, linked_with_block = None, link_type = 1):
+    def add_task(self, taskid, linked_with_block = None, link_type = 1, task_additional_name = None):
         TASKS = []
         if not self.tasks:
             self.tasks = ET.SubElement(self.xml_root, "Tasks")
@@ -317,17 +327,40 @@ class ProjectPlan:
 
             for attr in self.task_attr:
                 if attr in task.keys():
-                    current_attr = ET.SubElement(current_task, attr)
-                    current_attr.text = unicode(task[attr])
+                    if (attr == 'Name') and (task['Summary'] == u'1'):
+                        current_attr = ET.SubElement(current_task, attr)
+                        current_attr.text = unicode(task[attr] + u" (" + unicode(task_additional_name) + u")")
+                    else:
+                        current_attr = ET.SubElement(current_task, attr)
+                        current_attr.text = unicode(task[attr])
                 elif attr == 'CreateDate':
                     create_date = ET.SubElement(current_task, "CreateDate")
-                    create_date.text = strftime("20%y-%m-%dT%00:00:00")
-                elif attr == 'Start':
-                    start = ET.SubElement(current_task, "Start")
-                    start.text = strftime("20%y-%m-%dT%00:00:00")
+                    create_date.text = strftime("20%y-%m-%dT00:00:00")
+                elif (attr in ['Start', 'ManualStart', 'EarlyStart', 'LateStart']):
+                    start = ET.SubElement(current_task, attr)
+                    start.text = self.project_startdate.strftime("20%y-%m-%dT09:00:00")
+#                    strftime("20%y-%m-%dT09:00:00")
+#                elif (attr in ['Finish', 'ManualFinish', 'EarlyFinish', 'LateFinish']):
+#                    start_date = datetime.datetime(datetime.datetime.today().year, datetime.datetime.today().month,
+#                        datetime.datetime.today().day, 9, 00, 00)
+#                    delta_days = 0
+#                    delta_hours = 0
+#                    delta_minutes = 0
+#                    delta_hours = int(task['Duration'].split('T')[1].split('H')[0])
+#                    delta_minutes = int(task['Duration'].split('T')[1].split('H')[1].split('M')[0])
+#                    if delta_hours > 8:
+#                        delta_days = delta_hours / 8
+#                        delta_hours = delta_hours - (8 * delta_days)
+#                    finish_date = start_date + datetime.timedelta(days = delta_days, hours = delta_hours,
+#                        minutes = delta_minutes)
+#                    finish = ET.SubElement(current_task, attr)
+#                    finish.text = finish_date.strftime("20%y-%m-%dT%H:%M:%S")
                 elif attr == 'CalendarUID':
                     calendar_uid = ET.SubElement(current_task, "CalendarUID")
-                    calendar_uid.text = "1"
+                    calendar_uid.text = "-1"
+#                elif attr == 'ManualDuration':
+#                    manual_duration = ET.SubElement(current_task, attr)
+#                    manual_duration.text = unicode(task['Duration'])
 
             if ('PredecessorUID' in task) and task['PredecessorUID']:
                 prelink = ET.SubElement(current_task, "PredecessorLink")
@@ -385,6 +418,7 @@ class ProjectPlan:
 
         self.current_block_id += 1
         self.block_structure.update({'block_task_uid_'+str(self.current_block_id) : str(summary_task_id)})
+        return self.current_block_id
 
     def export_project_xml(self):
         tree = ET.ElementTree(self.xml_root)
