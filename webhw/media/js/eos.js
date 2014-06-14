@@ -185,6 +185,7 @@ function prepareReqForm(num_req) {
         $("#backup_type").show();
         $("#utilization").val('100');
         $("#utilization").hide();
+        $("#utilization_label").hide();
         $("#itemtype1").css({'color':'black'});
         $("#itemstatus").css({'color':'black'});
         $("#servername").css({'color':'black'});
@@ -230,6 +231,7 @@ function prepareReqForm(num_req) {
             $("#backup_type_label").hide();
             $("#utilization").val(req_line["utilization"]);
             $("#utilization").show();
+            $("#utilization_label").show();
         } else
         {
             $("#db_type_label").show();
@@ -242,6 +244,7 @@ function prepareReqForm(num_req) {
             $("#cluster_type_label").show();
             $("#backup_type_label").show();
             $("#utilization").hide();
+            $("#utilization_label").hide();
             if (req_line["itemtype2"] == 'upgrade') {
                 $("#upgrade_params").show();
             }
@@ -509,7 +512,7 @@ $("#itemtype1").change(function() {
             $("#cluster_type_label").show();
             $("#backup_type_label").show();
             $("#utilization").hide();
-
+            $("#utilization_label").hide();
         }
         if ($(this).val() == 'app') {
             $("#db_type_label").fadeOut(300);
@@ -530,6 +533,7 @@ $("#itemtype1").change(function() {
             $("#cluster_type_label").show();
             $("#backup_type_label").show();
             $("#utilization").hide();
+            $("#utilization_label").hide();
 
         }
         if ($(this).val() == 'term') {
@@ -551,6 +555,7 @@ $("#itemtype1").change(function() {
             $("#cluster_type_label").show();
             $("#backup_type_label").show();
             $("#utilization").hide();
+            $("#utilization_label").hide();
 
         }
         if ($(this).val() == 'lb') {
@@ -574,6 +579,7 @@ $("#itemtype1").change(function() {
             $("#cluster_type_label").hide();
             $("#backup_type_label").hide();
             $("#utilization").show();
+            $("#utilization_label").show();
 
 
         }
@@ -598,6 +604,7 @@ $("#itemtype1").change(function() {
             $("#cluster_type_label").hide();
             $("#backup_type_label").hide();
             $("#utilization").show();
+            $("#utilization_label").show();
 
         }
         if ($(this).val() == 'mqdmz') {
@@ -621,6 +628,7 @@ $("#itemtype1").change(function() {
             $("#cluster_type_label").hide();
             $("#backup_type_label").hide();
             $("#utilization").show();
+            $("#utilization_label").show();
 
         }
 
