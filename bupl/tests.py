@@ -46,9 +46,9 @@ class EosTestCase(unittest.TestCase):
                                        1207000,
                                        110891,
                                        120700,
-                                       36000,
-                                       18000,
-                                       18000,
+                                       40800,
+                                       20400,
+                                       20400,
                                        ]
         Prices.objects.create(id=1, hw_class=1, hw_type="x86_ent", price=602)
         Prices.objects.create(id=10, hw_class=1, hw_type="t4_mid", price=4900)

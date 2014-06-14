@@ -97,7 +97,7 @@ def calculate_req_line(req_line):
     elif appliance_price <> 0:
         price_hw += int(req_line['item_count']) * appliance_price * (int(req_line['utilization']) / Decimal(100))
         if (req_line['itemtype1'] == u'mqdmz'):
-            print req_line
+#            print req_line
             lic_ms_cost = int(req_line['item_count']) * prices_dic['ms_lic_2sock']
             price_lic = lic_ms_cost
             lic_ms_count = int(req_line['item_count'])
@@ -214,12 +214,18 @@ def calculate_req_line(req_line):
                     lic_symantec_cost = int(req_line['item_count'])* int(req_line['cpu_count']) * \
                                         prices_dic['symantec_lic']
                     lic_symantec_count += int(req_line['item_count'])
+                    price_lic = lic_symantec_cost
                     supp_symantec_cost = int(req_line['item_count']) * int(req_line['cpu_count']) * \
                                       prices_dic['symantec_support']
                     price_support = supp_symantec_cost
                     supp_symantec_count += int(req_line['item_count'])
+#                print "lic_symantec_cost - " + str(lic_symantec_cost)
+#                print "lic_symantec_count - " + str(lic_symantec_count)
+#                print "supp_sumantec_cost - " + str(supp_symantec_cost)
+#                print "supp_semantec_count - " + str(supp_symantec_count)
 
-#    if lic <> 0:
+
+            #    if lic <> 0:
 #        print "lic - " + str(lic)
 #        price_lic = int(req_line['cpu_count']) * int(req_line['item_count']) * lic
 #    if support <> 0:
@@ -248,5 +254,5 @@ def calculate_req_line(req_line):
 #            'price_hw' : price_hw,
 #            'price_lic' : price_lic,
 #            'price_support' : price_support}
-    print req_line
+#    print req_line
     return req_line
