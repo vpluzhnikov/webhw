@@ -122,7 +122,13 @@
                 <option value="---">---</option>
                 <option value="prom">Пром</option>
                 <option value="test-nt">Тест (НТ)</option>
-                <option value="test-other">Тест (другое)</option>
+                <option value="test-dev">Тест (DEV)</option>
+                <option value="test-sst1">Тест (ССТ1)</option>
+                <option value="test-sst2">Тест (ССТ2)</option>
+                <option value="test-ift">Тест (ИФТ)</option>
+                <option value="test-obuch">Тест (ОБУЧ)</option>
+                <option value="test-psi">Тест (ПСИ)</option>
+                <option value="test-hf">Тест (HF)</option>
             </select>
         </div>
         <hr>
@@ -137,11 +143,6 @@
             <hr>
         </div>
         <div id="new_params">
-{#            <p> <label class="label-modal" for="cpu_count">Кол-во CPU:</label>#}
-{#                <input class="textbox-modal" id="cpu_count" type="number" size="3" value="0" onkeypress="return isNumberKey(event)">#}
-{#                <label class="label-modal" for="ram_count">Кол-во ОЗУ:</label>#}
-{#                <input class="textbox-modal" id="ram_count" type="number" size="4" value="0" onkeypress="return isNumberKey(event)">#}
-{#            </p>#}
             <table class="modal_table">
                 <tr>
                     <td><label class="label-modal" for="cpu_count">Кол-во CPU:</label> </td>
@@ -209,6 +210,23 @@
                     <option value="db2">IBM DB2</option>
                     <option value="mssql">MS SQL</option>
                     </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label id="app_type_label" class="label-modal" for="app_type" style="display: none;">Приложение/сервис:</label> </td>
+                <td><select id="app_type" name="app_type" style="display: none;">
+                    <option value="---">---</option>
+                    <option value="mq">IBM MQ</option>
+                    <option value="mb">IBM MB</option>
+                    <option value="was">IBM WAS</option>
+                    <option value="ad">Microsoft AD</option>
+                    <option value="iis">Microsoft IIS</option>
+                    <option value="dns">Сервис DNS</option>
+                    <option value="sudir">Сервис СУДИР</option>
+                    <option value="wls">Oracle WLS</option>
+                    <option value="sybase_as">Sybase AS</option>
+                    <option value="prpc">PRPC</option>
+                </select>
                 </td>
             </tr>
             <tr>

@@ -20,10 +20,9 @@ def load_tasks(filename):
                 'ManualFinish',
                 'LateStart',
                 'LateFinish',]
-
+    TASKS = []
     tree = ET.parse(filename)
     root = tree.getroot()
-    TASKS = []
     taskid = 1
     for tasks in root.findall("Tasks"):
         for task in tasks:
@@ -47,6 +46,7 @@ def load_tasks(filename):
                 else:
                     TASK.update({task_attr.tag : unicode(task_attr.text)})
             TASKS.append(TASK)
+    print TASKS
     for task in TASKS:
         if 'PredecessorUID' in task.keys():
             preuid = int(task['PredecessorUID'])
@@ -64,8 +64,8 @@ def load_tasks(filename):
     return TASKS
 
 if __name__ == "__main__":
-    print load_tasks('/users/vs/dev/webhw/bupl/test2.xml')
+    print load_tasks('/users/vs/dev/webhw/bupl/task_list_v1.2.xml')
 
 #python manage.py shell
 #from bupl.tasks_loader import load_tasks
-#print load_tasks('/users/vs/dev/webhw/bupl/test2.xml')
+#print load_tasks('/users/vs/dev/webhw/bupl/task_list_v1.2.xml')

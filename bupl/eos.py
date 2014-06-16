@@ -45,6 +45,13 @@ ru_vals = { 'new' : u'Новый',
             '---' : u'---',
             'prom' : u'Пром',
             'test-nt' : u'Тест (НТ)',
+            'test-dev' : u'Тест (DEV)',
+            'test-sst1' : u'Тест (ССТ1)',
+            'test-sst2' : u'Тест (ССТ2)',
+            'test-ift' : u'Тест (ИФТ)',
+            'test-obuch' : u'Тест (ОБУЧ)',
+            'test-psi' : u'Тест (ПСИ)',
+            'test-hf' : u'Тест (HF)',
             'test-other' : u'Тест (Другое)',
             'aix' : u'AIX',
             'solaris' : u'Solaris',
@@ -70,7 +77,7 @@ xls_vals = { 'prjrow' : 2,
              'swaddons_col' : 16,
              'itemstatus_col' : 3,
              'lansegment_col' : 17,
-             'dbtype_col' : 16,
+             'swtype_col' : 16,
              'clustype_col' : 18,
              'backuptype_col' : 19,
 }
@@ -355,7 +362,8 @@ def export_eos_to_pdf(eos_items):
             test_nt_cost_hw += Decimal(eos_items[key]['price_hw'])
             test_nt_cost_sw += Decimal(eos_items[key]['price_lic'])
             test_nt_cost_sup += Decimal(eos_items[key]['price_support'])
-        elif (eos_items[key]['itemstatus'] == u'test-other'):
+        else:
+#        (eos_items[key]['itemstatus'] == u'test-other'):
             test_items.append(eos_items[key])
             test_cost += Decimal(eos_items[key]['price'])
             test_cost_hw += Decimal(eos_items[key]['price_hw'])
@@ -709,6 +717,20 @@ def load_eos_from_xls_new(xls_file):
                 req_line['itemstatus'] = 'prom'
             elif u'нт' in xls_value.lower():
                 req_line['itemstatus'] = 'test-nt'
+            elif u'dev' in xls_value.lower():
+                req_line['itemstatus'] = 'test-dev'
+            elif u'сст1' in xls_value.lower():
+                req_line['itemstatus'] = 'test-sst1'
+            elif u'сст2' in xls_value.lower():
+                req_line['itemstatus'] = 'test-sst2'
+            elif u'ифт' in xls_value.lower():
+                req_line['itemstatus'] = 'test-ift'
+            elif u'обуч' in xls_value.lower():
+                req_line['itemstatus'] = 'test-obuch'
+            elif u'пси' in xls_value.lower():
+                req_line['itemstatus'] = 'test-psi'
+            elif u'hf' in xls_value.lower():
+                req_line['itemstatus'] = 'test-hf'
             else:
                 req_line['itemstatus'] = 'test-other'
 
@@ -724,7 +746,52 @@ def load_eos_from_xls_new(xls_file):
             else:
                 req_line['lan_segment'] = 'other'
 
-            req_line['req_dbtype']=xls_worksheet.cell_value(curr_row, xls_vals['dbtype_col'])
+            xls_value = xls_worksheet.cell_value(curr_row, xls_vals['swtype_col']).lower()
+            if u'oracle' in xls_value:
+                req_line['db_type']='oracle'
+                req_line['app_type']='---'
+            elif u'db2' in xls_value:
+                req_line['db_type']='db2'
+                req_line['app_type']='---'
+            elif u'sql' in xls_value:
+                req_line['db_type'] = 'mssql'
+                req_line['app_type']='---'
+            elif u'mq' in xls_value:
+                req_line['db_type'] = '---'
+                req_line['app_type']='mq'
+            elif u'mb' in xls_value:
+                req_line['db_type'] = '---'
+                req_line['app_type']='mb'
+            elif u'was' in xls_value:
+                req_line['db_type'] = '---'
+                req_line['app_type']='was'
+            elif (u'ad' in xls_value) or (u'active' in xls_value) or (u'directory' in xls_value):
+                req_line['db_type'] = '---'
+                req_line['app_type']='ad'
+            elif (u'iis' in xls_value):
+                req_line['db_type'] = '---'
+                req_line['app_type']='iis'
+            elif (u'dns' in xls_value):
+                req_line['db_type'] = '---'
+                req_line['app_type']='dns'
+            elif (u'судир' in xls_value):
+                req_line['db_type'] = '---'
+                req_line['app_type']='sudir'
+            elif (u'wls' in xls_value) or (u'weblogic' in xls_value):
+                req_line['db_type'] = '---'
+                req_line['app_type']='wls'
+            elif (u'sybase' in xls_value):
+                req_line['db_type'] = '---'
+                req_line['app_type']='sybase_as'
+            elif (u'prpc' in xls_value):
+                req_line['db_type'] = '---'
+                req_line['app_type']='prpc'
+            else:
+                req_line['db_type'] = '---'
+                req_line['app_type']='---'
+
+#            print "db_type - " +  req_line['db_type']
+#            print "app_type - " +  req_line['app_type']
 
             xls_value = xls_worksheet.cell_value(curr_row, xls_vals['clustype_col'])
             if (u'тр' in xls_value.lower()) or (u'лок' in xls_value.lower()):

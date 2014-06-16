@@ -88,7 +88,7 @@ function renderEos() {
             prom_cost_sup += parseFloat(e_item["price_support"]);
 
         }
-        if (e_item["itemstatus"] == 'test-nt'){
+        else if (e_item["itemstatus"] == 'test-nt'){
             $("#test_nt_body").append("<table class=\"appended_table\"> <tr>"+
                 "<td width=\"62px\"> <label class=\"main_window_data\">"+ru_vals[e_item["itemtype2"]]+"</label></td>" +
                 "<td width=\"172px\"> <label class=\"main_window_data\">"+ru_vals[e_item["itemtype1"]]+"</label></td>" +
@@ -105,7 +105,7 @@ function renderEos() {
             test_nt_cost_sup += parseFloat(e_item["price_support"]);
 
         }
-        if (e_item["itemstatus"] == 'test-other'){
+        else {
             $("#test_other_body").append("<table class=\"appended_table\"> <tr>"+
                 "<td width=\"62px\"> <label class=\"main_window_data\">"+ru_vals[e_item["itemtype2"]]+"</label></td>" +
                 "<td width=\"172px\"> <label class=\"main_window_data\">"+ru_vals[e_item["itemtype1"]]+"</label></td>" +
@@ -179,6 +179,9 @@ function prepareReqForm(num_req) {
         $("#db_type").val('---');
         $("#db_type").hide();
         $("#db_type_label").hide();
+        $("#app_type").val('---');
+        $("#app_type").hide();
+        $("#app_type_label").hide();
         $("#cluster_type").val('none');
         $("#cluster_type").show();
         $("#backup_type").val('no');
@@ -213,6 +216,7 @@ function prepareReqForm(num_req) {
         $("#platform_type").val(req_line["platform_type"]);
         $("#lan_segment").val(req_line["lan_segment"]);
         $("#db_type").val(req_line["db_type"]);
+        $("#app_type").val(req_line["app_type"]);
         $("#cluster_type").val(req_line["cluster_type"]);
         $("#backup_type").val(req_line["backup_type"]);
         $("#edit_req_modal").show();
@@ -222,6 +226,8 @@ function prepareReqForm(num_req) {
         if ((req_line["itemtype1"] == 'lb') || (req_line["itemtype1"] == 'dp') || (req_line["itemtype1"] == 'mqdmz')) {
             $("#db_type_label").hide();
             $("#db_type").hide();
+            $("#app_type_label").hide();
+            $("#app_type").hide();
             $("#new_params").hide();
             $("#ostype").hide();
             $("#platform_type").hide();
@@ -234,8 +240,21 @@ function prepareReqForm(num_req) {
             $("#utilization_label").show();
         } else
         {
-            $("#db_type_label").show();
-            $("#db_type").show();
+            if ((req_line["itemtype1"] == 'db') || (req_line["itemtype1"] == 'dbarch')) {
+                $("#db_type_label").show();
+                $("#db_type").show();
+            } else {
+                $("#db_type_label").hide();
+                $("#db_type").hide();
+
+            }
+            if (req_line["itemtype1"] == 'app') {
+                $("#app_type_label").show();
+                $("#app_type").show();
+            } else {
+                $("#app_type_label").hide();
+                $("#app_type").hide();
+            }
             $("#new_params").show();
             $("#ostype").show();
             $("#platform_type").show();
@@ -498,6 +517,8 @@ $("#itemtype1").change(function() {
         if (($(this).val() == 'db') ||($(this).val() == 'dbarch'))  {
             $("#db_type_label").fadeIn(300);
             $("#db_type").fadeIn(300);
+            $("#app_type_label").fadeOut(300);
+            $("#app_type").fadeOut(300);
             $("#new_params").fadeIn(300);
             $("#cpu_count").val('4');
             $("#ram_count").val('32');
@@ -517,6 +538,8 @@ $("#itemtype1").change(function() {
         if ($(this).val() == 'app') {
             $("#db_type_label").fadeOut(300);
             $("#db_type").fadeOut(300);
+            $("#app_type_label").fadeIn(300);
+            $("#app_type").fadeIn(300);
             $("#new_params").fadeIn(300);
             $("#cpu_count").val('6');
             $("#ram_count").val('48');
@@ -539,6 +562,8 @@ $("#itemtype1").change(function() {
         if ($(this).val() == 'term') {
             $("#db_type_label").fadeOut(300);
             $("#db_type").fadeOut(300);
+            $("#app_type_label").fadeOut(300);
+            $("#app_type").fadeOut(300);
             $("#new_params").fadeIn(300);
             $("#cpu_count").val('4');
             $("#ram_count").val('24');
@@ -561,6 +586,8 @@ $("#itemtype1").change(function() {
         if ($(this).val() == 'lb') {
             $("#db_type_label").fadeOut(300);
             $("#db_type").fadeOut(300);
+            $("#app_type_label").fadeOut(300);
+            $("#app_type").fadeOut(300);
             $("#new_params").fadeOut(300);
             $("#cpu_count").val('0');
             $("#ram_count").val('0');
@@ -586,6 +613,8 @@ $("#itemtype1").change(function() {
         if ($(this).val() == 'dp') {
             $("#db_type_label").fadeOut(300);
             $("#db_type").fadeOut(300);
+            $("#app_type_label").fadeOut(300);
+            $("#app_type").fadeOut(300);
             $("#new_params").fadeOut(300);
             $("#cpu_count").val('0');
             $("#ram_count").val('0');
@@ -610,6 +639,8 @@ $("#itemtype1").change(function() {
         if ($(this).val() == 'mqdmz') {
             $("#db_type_label").fadeOut(300);
             $("#db_type").fadeOut(300);
+            $("#app_type_label").fadeOut(300);
+            $("#app_type").fadeOut(300);
             $("#new_params").fadeOut(300);
             $("#cpu_count").val('32');
             $("#ram_count").val('96');
@@ -663,11 +694,7 @@ $("#itemstatus").change(function() {
                 $("#backup_type").val('no');
             }
         }
-        if ($(this).val() == 'test-nt') {
-            $("#cluster_type").val('none');
-            $("#backup_type").val('no');
-        }
-        if ($(this).val() == 'test-other') {
+        else  {
             $("#cluster_type").val('none');
             $("#backup_type").val('no');
         }
@@ -762,6 +789,7 @@ $("#add_req_modal").click(function() {
         req_line["platform_type"] = $("#platform_type").val();
         req_line["lan_segment"] = $("#lan_segment").val();
         req_line["db_type"] = $("#db_type").val();
+        req_line["app_type"] = $("#app_type").val();
         req_line["cluster_type"] = $("#cluster_type").val();
         req_line["backup_type"] = $("#backup_type").val();
         req_line["utilization"] = $("#utilization").val();
@@ -801,6 +829,7 @@ $("#edit_req_modal").click(function() {
         req_line["platform_type"] = $("#platform_type").val();
         req_line["lan_segment"] = $("#lan_segment").val();
         req_line["db_type"] = $("#db_type").val();
+        req_line["app_type"] = $("#app_type").val();
         req_line["cluster_type"] = $("#cluster_type").val();
         req_line["backup_type"] = $("#backup_type").val();
         req_line["utilization"] = $("#utilization").val();
@@ -894,7 +923,8 @@ $("#boc_form").ready(function ()
                     req_line["ostype"] = data["ostype_"+i];
                     req_line["platform_type"] = data["platform_type_"+i];
                     req_line["lan_segment"] = data["lan_segment_"+i];
-                    req_line["db_type"] = "";
+                    req_line["db_type"] = data["db_type_" + i];
+                    req_line["app_type"] = data["app_type_" + i];
                     req_line["cluster_type"] = data["cluster_type_"+i];
                     req_line["backup_type"] = data["backup_type_"+i];
                     req_line["price"] = data["price_"+i];
