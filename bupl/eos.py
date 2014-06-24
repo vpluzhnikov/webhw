@@ -80,6 +80,7 @@ xls_vals = { 'prjrow' : 2,
              'swtype_col' : 16,
              'clustype_col' : 18,
              'backuptype_col' : 19,
+             'project_id' : 1,
 }
 
 logger = getLogger(__name__)
@@ -806,7 +807,16 @@ def load_eos_from_xls_new(xls_file):
                 req_line['backup_type'] = 'no'
             else:
                 req_line['backup_type'] = 'yes'
+
             req_line['utilization']='100'
+
+            xls_value = xls_worksheet.cell_value(curr_row, xls_vals['project_id'])
+            if xls_value:
+                try:
+                    req_line['project_id'] = str(unicode(xls_value)).split('.')[0]
+                except:
+                    req_line['project_id'] = xls_value
+
             curr_row += 1
             if (req_line['item_count'] <> 0) and (req_line['item_count'] <> ""):
                 req_line = calculate_req_line(req_line)

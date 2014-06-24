@@ -79,8 +79,73 @@ tasks_id_values  = { "aix_standalone" : "1.2.1",
                      "nas_upgrade_test" : "2.2.18",
                      }
 
+
+def prepocess_super_plan(eos_data):
+    ALL_PRJS = {}
+    for i in range(eos_data['req_count']):
+        if eos_data['project_id_'+str(i+1)] in ALL_PRJS.keys():
+            req_num = ALL_PRJS[eos_data['project_id_'+str(i+1)]]['curr_key']
+        else:
+            ALL_PRJS[eos_data['project_id_'+str(i+1)]] = {}
+            ALL_PRJS[eos_data['project_id_'+str(i+1)]]['curr_key'] = '1'
+            req_num = '1'
+
+        req_line = {}
+        req_line["itemtype2"] = eos_data["itemtype2_"+str(i+1)]
+        req_line["itemtype1"] = eos_data["itemtype1_"+str(i+1)]
+        req_line["itemstatus"] = eos_data["itemstatus_"+str(i+1)]
+        req_line["servername"] = eos_data["servername_"+str(i+1)]
+        req_line["cpu_count"] = eos_data["cpu_count_"+str(i+1)]
+        req_line["ram_count"] = eos_data["ram_count_"+str(i+1)]
+        req_line["hdd_count"] = eos_data["hdd_count_"+str(i+1)]
+        req_line["san_count"] = eos_data["san_count_"+str(i+1)]
+        req_line["nas_count"] = eos_data["nas_count_"+str(i+1)]
+        req_line["item_count"] = eos_data["item_count_"+str(i+1)]
+        req_line["ostype"] = eos_data["ostype_"+str(i+1)]
+        req_line["platform_type"] = eos_data["platform_type_"+str(i+1)]
+        req_line["lan_segment"] = eos_data["lan_segment_"+str(i+1)]
+        req_line["db_type"] = eos_data["db_type_" + str(i+1)]
+        req_line["app_type"] = eos_data["app_type_" + str(i+1)]
+        req_line["cluster_type"] = eos_data["cluster_type_"+str(i+1)]
+        req_line["backup_type"] = eos_data["backup_type_"+str(i+1)]
+        req_line["price"] = eos_data["price_"+str(i+1)]
+        req_line["price_hw"] = eos_data["price_hw_"+str(i+1)]
+        req_line["price_lic"] = eos_data["price_lic_"+str(i+1)]
+        req_line["price_support"] = eos_data["price_support_"+str(i+1)]
+        req_line["utilization"] = eos_data["utilization_"+str(i+1)]
+        ALL_PRJS[eos_data['project_id_'+str(i+1)]][req_num] = req_line
+        ALL_PRJS[eos_data['project_id_'+str(i+1)]]['curr_key'] = \
+        str(int(ALL_PRJS[eos_data['project_id_'+str(i+1)]]['curr_key'])+1)
+#    print ALL_PRJS
+    print len(ALL_PRJS.keys())
+    full_counter = 0
+    for prj in ALL_PRJS:
+        del ALL_PRJS[prj]['curr_key']
+        full_counter += len(ALL_PRJS[prj])
+        ALL_PRJS[prj]['project_id'] = prj
+        ALL_PRJS[prj]['project_name'] = prj
+        prepare_resource_plan(ALL_PRJS[prj])
+    print full_counter
+
+#            req_line["lic_symantec_count"] = eos_data["lic_symantec_count_"+str(i+1)]
+#            req_line["lic_symantec_cost"] = eos_data["lic_symantec_cost_"+str(i+1)]
+#            req_line["lic_ms_count"] = eos_data["lic_ms_count_"+str(i+1)]
+#            req_line["lic_ms_cost"] = eos_data["lic_ms_cost_"+str(i+1)]
+#            req_line["lic_vmware_count"] = eos_data["lic_vmware_count_"+str(i+1)]
+#            req_line["lic_vmware_cost"] = eos_data["lic_vmware_cost_"+str(i+1)]
+#            req_line["supp_symantec_count"] = eos_data["supp_symantec_count_"+str(i+1)]
+#            req_line["supp_symantec_cost"] = eos_data["supp_symantec_cost_"+str(i+1)]
+#            req_line["supp_rhel_count"] = eos_data["supp_rhel_count_"+str(i+1)]
+#            req_line["supp_rhel_cost"] = eos_data["supp_rhel_cost_"+str(i+1)]
+#            req_line["supp_vmware_count"] = eos_data["supp_vmware_count_"+str(i+1)]
+#            req_line["supp_vmware_cost"] = eos_data["supp_vmware_cost_"+str(i+1)]
+
+
 def prepare_resource_plan(eos_items):
-    project_id = str(eos_items['project_id'])
+    try:
+        project_id = str(eos_items['project_id'])
+    except:
+        project_id = eos_items['project_id']
     project_name = eos_items['project_name']
     eos_items.pop("project_id", None)
     eos_items.pop("project_name", None)
@@ -111,7 +176,7 @@ def prepare_resource_plan(eos_items):
 
         req_line_tasks = []
 
-#        print eos_items[key]
+        print eos_items[key]
         if (eos_items[key]['platform_type'] == 'x86'):
             if (int(eos_items[key]['cpu_count']) > 24) or (eos_items[key]['itemtype1'] == u'mqdmz'):
                 if ((eos_items[key]['itemtype1'] == u'mqdmz') or (eos_items[key]['ostype'] == u'windows')):
@@ -158,10 +223,10 @@ def prepare_resource_plan(eos_items):
                                 req_line_tasks.append(tasks_id_values["nas_upgrade_test"])
             elif (int(eos_items[key]['cpu_count']) < 24):
                 if (eos_items[key]['ostype'] == u'windows'):
-                    if eos_items[key]['itemstatus'] == u'prom':
+                    if (eos_items[key]['itemstatus'] == u'prom') and (int(eos_items[key]['cpu_count']) > 0):
                         req_line_tasks.append(tasks_id_values["x86_vm"])
                         req_line_tasks.append(tasks_id_values["windows_standalone"])
-                    else:
+                    elif (int(eos_items[key]['cpu_count']) > 0):
                         req_line_tasks.append(tasks_id_values["x86_vm_test"])
                         req_line_tasks.append(tasks_id_values["windows_standalone_test"])
                     if int(eos_items[key]['san_count']) > 0:
@@ -175,10 +240,10 @@ def prepare_resource_plan(eos_items):
                         else:
                             req_line_tasks.append(tasks_id_values["nas_upgrade_test"])
                 elif (eos_items[key]['ostype'] == u'linux'):
-                    if eos_items[key]['itemstatus'] == u'prom':
+                    if (eos_items[key]['itemstatus'] == u'prom') and (int(eos_items[key]['cpu_count']) > 0):
                         req_line_tasks.append(tasks_id_values["x86_vm"])
                         req_line_tasks.append(tasks_id_values["linux"])
-                    else:
+                    elif (int(eos_items[key]['cpu_count']) > 0):
                         req_line_tasks.append(tasks_id_values["x86_vm_test"])
                         req_line_tasks.append(tasks_id_values["linux_test"])
                     if int(eos_items[key]['san_count']) > 0:
@@ -193,9 +258,9 @@ def prepare_resource_plan(eos_items):
                             req_line_tasks.append(tasks_id_values["nas_upgrade_test"])
         elif (eos_items[key]['platform_type'] == 'power'):
             if (eos_items[key]['itemtype2'] == u'upgrade'):
-                if eos_items[key]['itemstatus'] == u'prom':
+                if (eos_items[key]['itemstatus'] == u'prom') and (int(eos_items[key]['cpu_count']) > 0):
                     req_line_tasks.append(tasks_id_values["aix_upgrade"])
-                else:
+                elif (int(eos_items[key]['cpu_count']) > 0):
                     req_line_tasks.append(tasks_id_values["aix_upgrade_test"])
                 if int(eos_items[key]['san_count']) > 0:
                     if (eos_items[key]['cluster_type'] == u'vcs'):
@@ -214,21 +279,21 @@ def prepare_resource_plan(eos_items):
                     else:
                         req_line_tasks.append(tasks_id_values["nas_upgrade_test"])
             elif (eos_items[key]['cluster_type'] == u'vcs'):
-                if eos_items[key]['itemstatus'] == u'prom':
+                if (eos_items[key]['itemstatus'] == u'prom') and (int(eos_items[key]['cpu_count']) > 0):
                     req_line_tasks.append(tasks_id_values["aix_cluster"])
-                else:
+                elif (int(eos_items[key]['cpu_count']) > 0):
                     req_line_tasks.append(tasks_id_values["aix_cluster_test"])
             else:
-                if eos_items[key]['itemstatus'] == u'prom':
+                if (eos_items[key]['itemstatus'] == u'prom') and (int(eos_items[key]['cpu_count']) > 0):
                     req_line_tasks.append(tasks_id_values["aix_standalone"])
-                else:
+                elif (int(eos_items[key]['cpu_count']) > 0):
                     req_line_tasks.append(tasks_id_values["aix_standalone_test"])
 
         elif (u'_series' in  eos_items[key]['platform_type']):
             if (eos_items[key]['itemtype2'] == u'upgrade'):
-                if eos_items[key]['itemstatus'] == u'prom':
+                if (eos_items[key]['itemstatus'] == u'prom') and (int(eos_items[key]['cpu_count']) > 0):
                     req_line_tasks.append(tasks_id_values["solaris_upgrade"])
-                else:
+                elif (int(eos_items[key]['cpu_count']) > 0):
                     req_line_tasks.append(tasks_id_values["solaris_upgrade_test"])
                 if int(eos_items[key]['san_count']) > 0:
                     if (eos_items[key]['cluster_type'] == u'vcs'):
@@ -247,20 +312,20 @@ def prepare_resource_plan(eos_items):
                     else:
                         req_line_tasks.append(tasks_id_values["nas_upgrade_test"])
             elif (eos_items[key]['cluster_type'] == u'vcs'):
-                if eos_items[key]['itemstatus'] == u'prom':
+                if (eos_items[key]['itemstatus'] == u'prom') and (int(eos_items[key]['cpu_count']) > 0):
                     req_line_tasks.append(tasks_id_values["solaris_cluster"])
-                else:
+                elif (int(eos_items[key]['cpu_count']) > 0):
                     req_line_tasks.append(tasks_id_values["solaris_cluster_test"])
             else:
-                if eos_items[key]['itemstatus'] == u'prom':
+                if (eos_items[key]['itemstatus'] == u'prom') and (int(eos_items[key]['cpu_count']) > 0):
                     req_line_tasks.append(tasks_id_values["solaris_standalone"])
-                else:
+                elif (int(eos_items[key]['cpu_count']) > 0):
                     req_line_tasks.append(tasks_id_values["solaris_standalone_test"])
         elif (eos_items[key]['platform_type'] == 'itanium'):
             if (eos_items[key]['itemtype2'] == u'upgrade'):
-                if eos_items[key]['itemstatus'] == u'prom':
+                if (eos_items[key]['itemstatus'] == u'prom') and (int(eos_items[key]['cpu_count']) > 0):
                     req_line_tasks.append(tasks_id_values["hpux_upgrade"])
-                else:
+                elif (int(eos_items[key]['cpu_count']) > 0):
                     req_line_tasks.append(tasks_id_values["hpux_upgrade_test"])
                 if int(eos_items[key]['san_count']) > 0:
                     if (eos_items[key]['cluster_type'] == u'vcs'):
@@ -279,14 +344,14 @@ def prepare_resource_plan(eos_items):
                     else:
                         req_line_tasks.append(tasks_id_values["nas_upgrade_test"])
             elif (eos_items[key]['cluster_type'] == u'vcs'):
-                if eos_items[key]['itemstatus'] == u'prom':
+                if (eos_items[key]['itemstatus'] == u'prom') and (int(eos_items[key]['cpu_count']) > 0):
                     req_line_tasks.append(tasks_id_values["hpux_cluster"])
-                else:
+                elif (int(eos_items[key]['cpu_count']) > 0):
                     req_line_tasks.append(tasks_id_values["hpux_cluster_test"])
             else:
-                if eos_items[key]['itemstatus'] == u'prom':
+                if (eos_items[key]['itemstatus'] == u'prom') and (int(eos_items[key]['cpu_count']) > 0):
                     req_line_tasks.append(tasks_id_values["hpux_standalone"])
-                else:
+                elif (int(eos_items[key]['cpu_count']) > 0):
                     req_line_tasks.append(tasks_id_values["hpux_standalone_test"])
         else:
             if (eos_items[key]['itemtype1'] == u'dp'):
