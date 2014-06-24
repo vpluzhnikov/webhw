@@ -352,14 +352,14 @@ function formCheck() {
     }
 
 
-    if (($("#ostype").val() == '---') && !(($("#itemtype1").val() == 'dp')||($("#itemtype1").val() == 'lb')||($("#itemtype1").val() == 'mqdmz'))) {
+    if (($("#ostype").val() == '---') && !(($("#itemtype1").val() == 'dp')||($("#itemtype1").val() == 'lb')||($("#itemtype1").val() == 'mqdmz')||($("#itemtype1").val() == 'other'))) {
         $("#ostype").css({'color' : 'red'});
         formValid = 0;
     } else
     {
         $("#ostype").css({'color' : 'black'});
     }
-    if (($("#platform_type").val() == '---')  && !(($("#itemtype1").val() == 'dp')||($("#itemtype1").val() == 'lb')||($("#itemtype1").val() == 'mqdmz'))) {
+    if (($("#platform_type").val() == '---')  && !(($("#itemtype1").val() == 'dp')||($("#itemtype1").val() == 'lb')||($("#itemtype1").val() == 'mqdmz')||($("#itemtype1").val() == 'other'))) {
         $("#platform_type").css({'color' : 'red'});
         formValid = 0;
     } else

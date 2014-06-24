@@ -168,7 +168,8 @@ def calculate_req_line(req_line):
 #   Licenses and support price calculation
     if (req_line['itemtype2'] <> u'upgrade'):
         if (req_line['platform_type'] == u'x86'):
-            if (int(req_line['cpu_count']) <= 24) and (req_line['ostype'] == u'windows'):
+            if (int(req_line['cpu_count']) <= 24) and (req_line['ostype'] == u'windows') and\
+               (int(req_line['cpu_count']) > 0):
                 if req_line['itemstatus'] == u'prom':
                     k_vm = 5.0
                 else:
@@ -183,7 +184,8 @@ def calculate_req_line(req_line):
                 price_support = supp_vmware_cost
                 supp_vmware_count = int(req_line['item_count']) / k_vm
 
-            elif (int(req_line['cpu_count']) <= 24) and (req_line['ostype'] == u'linux'):
+            elif (int(req_line['cpu_count']) <= 24) and (req_line['ostype'] == u'linux') and \
+                 (int(req_line['cpu_count']) > 0):
                 if req_line['itemstatus'] == u'prom':
                     k_vm = 5.0
                 else:
@@ -254,5 +256,5 @@ def calculate_req_line(req_line):
 #            'price_hw' : price_hw,
 #            'price_lic' : price_lic,
 #            'price_support' : price_support}
-#    print req_line
+    print req_line
     return req_line
