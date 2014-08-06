@@ -365,7 +365,7 @@ def prepare_resource_plan(eos_items):
                 else:
                     req_line_tasks.append(tasks_id_values["loadbalancer_test"])
 
-        if (eos_items[key]['db_type'] <> '---'):
+        if (eos_items[key]['db_type'] <> '---') and (eos_items[key]['itemtype2'] <> u'upgrade'):
             if eos_items[key]['db_type'] == 'mssql':
                 req_line_tasks.append(tasks_id_values["mssql"])
             elif eos_items[key]['db_type'] == 'db2':
@@ -379,7 +379,7 @@ def prepare_resource_plan(eos_items):
                 else:
                     req_line_tasks.append(tasks_id_values["oracle_standalone"])
 
-        if (eos_items[key]['app_type'] <> '---'):
+        if (eos_items[key]['app_type'] <> '---') and (eos_items[key]['itemtype2'] <> u'upgrade'):
             if eos_items[key]['app_type'] == 'was':
                 if (eos_items[key]['cluster_type'] == u'app'):
                     req_line_tasks.append(tasks_id_values["was_cluster"])

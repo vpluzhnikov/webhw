@@ -175,10 +175,11 @@ def calculate_req_line(req_line):
                 else:
                     k_vm = 10.0
 
-                lic_ms_cost = Decimal(ceil(float(req_line['item_count']) / 2)) * prices_dic['ms_lic_2sock']
+                lic_ms_cost = Decimal(ceil(float(req_line['item_count']) / 2.0)) * prices_dic['ms_lic_2sock']
                 lic_vmware_cost = int(req_line['item_count']) * (prices_dic['vmware_lic_2sock'] / Decimal(k_vm))
                 price_lic = lic_ms_cost + lic_vmware_cost
-                lic_ms_count = ceil(int(req_line['item_count']) / 2)
+                lic_ms_count = ceil(int(req_line['item_count']) / 2.0)
+#                print 'liccount = ' + str(lic_ms_count) + '  ' + 'reqline = ' + req_line['item_count']
                 lic_vmware_count = int(req_line['item_count']) / k_vm
                 supp_vmware_cost = int(req_line['item_count']) * (prices_dic['vmware_support_2sock'] / Decimal(k_vm))
                 price_support = supp_vmware_cost
@@ -208,6 +209,7 @@ def calculate_req_line(req_line):
                 lic_ms_cost = int(req_line['item_count']) * prices_dic['ms_lic_2sock']
                 price_lic = lic_ms_cost
                 lic_ms_count = int(req_line['item_count'])
+#                print req_line['item_count']
         else:
             if (req_line['platform_type'] <> u'itanium') and (req_line['itemtype1'] <> u'lb') and\
                (req_line['itemtype1'] <> u'dp') and (req_line['cluster_type'] == u'vcs') and \
@@ -256,5 +258,5 @@ def calculate_req_line(req_line):
 #            'price_hw' : price_hw,
 #            'price_lic' : price_lic,
 #            'price_support' : price_support}
-    print req_line
+#    print req_line
     return req_line

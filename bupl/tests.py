@@ -93,7 +93,7 @@ class EosTestCase(unittest.TestCase):
         Prices.objects.create(id=7, hw_class=2, hw_type="upg_sparc_hiend", price=12800)
         Prices.objects.create(id=8, hw_class=2, hw_type="upg_t4_mid", price=6700)
         Prices.objects.create(id=9, hw_class=1, hw_type="sparc_hiend", price=28000)
-        self.eos_vals = load_eos_from_xls_new(u'Testcase_v1.xls')
+        self.eos_vals = load_eos_from_xls_new(u'Testcase_v2.xlsx')
 
 
 

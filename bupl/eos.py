@@ -61,32 +61,32 @@ ru_vals = { 'new' : u'Новый',
 }
 
 xls_vals = { 'prjrow' : 2,
-             'prjcell' : 4,
-             'eos_start_row' : 10,
-             'itemtype1_col' : 14,
-             'itemname_col' : 4,
-             'servername_col': 6,
-             'cpucount_col' : 7,
-             'ramcount_col' : 8,
-             'hddcount_col' : 9,
-             'sancount_col' : 10,
-             'nascount_col' : 11,
-             'itemcount_col' : 5,
-             'platform_type_col' : 13,
-             'ostype_col' : 15,
-             'swaddons_col' : 16,
-             'itemstatus_col' : 3,
-             'lansegment_col' : 17,
-             'swtype_col' : 16,
-             'clustype_col' : 18,
-             'backuptype_col' : 19,
-             'project_id' : 1,
+             'prjcell' : 13,
+             'eos_start_row' : 11,
+             'itemtype1_col' : 24,
+             'itemname_col' : 13,
+             'servername_col': 15,
+             'cpucount_col' : 16,
+             'ramcount_col' : 17,
+             'hddcount_col' : 18,
+             'sancount_col' : 19,
+             'nascount_col' : 20,
+             'itemcount_col' : 14,
+             'platform_type_col' : 23,
+             'ostype_col' : 26,
+             'swaddons_col' : 27,
+             'itemstatus_col' : 12,
+             'lansegment_col' : 28,
+             'swtype_col' : 27,
+             'clustype_col' : 29,
+             'backuptype_col' : 30,
+             'project_id' : 10,
 }
 
 logger = getLogger(__name__)
 
 def eos_xls_check(xls_filename):
-    if not ('xlsx' in xls_filename)  and ('xls' in xls_filename):
+    if ('xlsx' in xls_filename) or ('xls' in xls_filename):
         try:
             xls_workbook = open_workbook(xls_filename)
             xls_worksheet = xls_workbook.sheet_by_name(u'Технические требования')
@@ -281,18 +281,18 @@ def export_eos_to_pdf(eos_items):
     prom_cost_sup = 0
 
     lic_and_support_data = {
-        'lic_vmware_count' : 0,
-        'lic_vmware_cost' : 0,
-        'lic_ms_count' : 0,
-        'lic_ms_cost' : 0,
-        'lic_symantec_count' : 0,
-        'lic_symantec_cost' : 0,
-        'supp_rhel_count' : 0,
-        'supp_rhel_cost' : 0,
-        'supp_vmware_count' : 0,
-        'supp_vmware_cost' : 0,
-        'supp_symantec_count' : 0,
-        'supp_symantec_cost' : 0,
+        'lic_vmware_count' : Decimal(0),
+        'lic_vmware_cost' : Decimal(0),
+        'lic_ms_count' : Decimal(0),
+        'lic_ms_cost' : Decimal(0),
+        'lic_symantec_count' : Decimal(0),
+        'lic_symantec_cost' : Decimal(0),
+        'supp_rhel_count' : Decimal(0),
+        'supp_rhel_cost' : Decimal(0),
+        'supp_vmware_count' : Decimal(0),
+        'supp_vmware_cost' : Decimal(0),
+        'supp_symantec_count' : Decimal(0),
+        'supp_symantec_cost' : Decimal(0),
     }
 
     total_lic_counter = 0
@@ -343,11 +343,12 @@ def export_eos_to_pdf(eos_items):
 
     for key in eos_items.keys():
         for val in lic_and_support_data.keys():
-#            print eos_items[key]
             lic_and_support_data[val] += Decimal(eos_items[key][val])
             if 'count' in val:
                 if 'lic' in val:
                     total_lic_counter += lic_and_support_data[val]
+#                    if val == 'lic_ms_count':
+#                        print 'lic_ms_count = '+ str(lic_and_support_data[val])
                 else:
                     total_supp_counter += lic_and_support_data[val]
 
@@ -371,7 +372,7 @@ def export_eos_to_pdf(eos_items):
             test_cost_sw += Decimal(eos_items[key]['price_lic'])
             test_cost_sup += Decimal(eos_items[key]['price_support'])
 
-#    print lic_and_support_data
+    print lic_and_support_data
     total_cost = prom_cost + test_nt_cost + test_cost
     total_cost_hw = prom_cost_hw + test_nt_cost_hw + test_cost_hw
     total_cost_sw = prom_cost_sw + test_nt_cost_sw + test_cost_sw
@@ -614,7 +615,7 @@ def load_eos_from_xls_new(xls_file):
             xls_worksheet = xls_workbook.sheet_by_name(u'Технические требования')
         except:
             return None
-
+        print xls_worksheet.cell_value(xls_vals['prjrow'], xls_vals['prjcell'])
         EOS_VALS['prjnum'] = str(xls_worksheet.cell_value(xls_vals['prjrow'], xls_vals['prjcell'])).split(".")[0]
         num_rows = xls_worksheet.nrows - 1
         curr_row = xls_vals['eos_start_row']

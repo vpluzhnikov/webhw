@@ -22,7 +22,7 @@ def check_filetype(f, name):
     """
     Checks extension for uploaded file
     """
-    if ( ('xls' in name) and not ('xlsx' in name) ):
+    if ( ('xls' in name) or ('xlsx' in name) ):
         return True
     else:
         return False
