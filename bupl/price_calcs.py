@@ -138,8 +138,10 @@ def calculate_req_line(req_line):
             elif (int(req_line['cpu_count']) > 24) or ((req_line['itemtype1'] <> u'db') and
                                                        (req_line['cluster_type'] <> u'vcs')):
                 san_price = prices_dic['san_stor_mid']
+                print "+++++" + str(san_price)
             else:
                 san_price = prices_dic['san_stor_mid'] + prices_dic['san_stor_vplex']
+                print "====" + str(san_price)
 
     elif (req_line['itemstatus'] == u'test-nt') and (req_line['itemtype1'] <> u'mqdmz'):
         san_price = prices_dic['san_stor_hiend']
