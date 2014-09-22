@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 __author__ = 'vs'
 
 from logging import getLogger
@@ -25,7 +27,6 @@ from reportlab.lib.fonts import addMapping
 from reportlab.lib.pagesizes import A4, landscape
 from reportlab.pdfbase import pdfmetrics
 from reportlab.lib.enums import TA_JUSTIFY, TA_CENTER, TA_RIGHT
-
 
 ru_vals = { 'new' : u'Новый',
             'upgrade' : u'Апгрейд',
@@ -80,6 +81,7 @@ xls_vals = { 'prjrow' : 2,
              'swtype_col' : 27,
              'clustype_col' : 29,
              'backuptype_col' : 30,
+             'irestype_col' : 25,
              'project_id' : 10,
 }
 
@@ -372,7 +374,7 @@ def export_eos_to_pdf(eos_items):
             test_cost_sw += Decimal(eos_items[key]['price_lic'])
             test_cost_sup += Decimal(eos_items[key]['price_support'])
 
-    print lic_and_support_data
+#    print lic_and_support_data
     total_cost = prom_cost + test_nt_cost + test_cost
     total_cost_hw = prom_cost_hw + test_nt_cost_hw + test_cost_hw
     total_cost_sw = prom_cost_sw + test_nt_cost_sw + test_cost_sw
@@ -615,14 +617,23 @@ def load_eos_from_xls_new(xls_file):
             xls_worksheet = xls_workbook.sheet_by_name(u'Технические требования')
         except:
             return None
-        print xls_worksheet.cell_value(xls_vals['prjrow'], xls_vals['prjcell'])
         EOS_VALS['prjnum'] = str(xls_worksheet.cell_value(xls_vals['prjrow'], xls_vals['prjcell'])).split(".")[0]
         num_rows = xls_worksheet.nrows - 1
         curr_row = xls_vals['eos_start_row']
         req_count = 0
         while curr_row <= num_rows:
             req_line = {}
-            xls_value = xls_worksheet.cell_value(curr_row, xls_vals['itemtype1_col'])
+            xls_line = {}
+
+            for key in xls_vals.keys():
+                if '_col' in key:
+                    try:
+                        xls_line[key] = unicode(xls_worksheet.cell_value(curr_row, xls_vals[key]))
+                    except:
+                        xls_line[key] = ""
+#            print xls_line
+
+            xls_value = xls_line['itemtype1_col']
             if xls_value == u'Сервер БД':
                 req_line['itemtype1']='db'
             elif xls_value ==  u'Сервер приложений':
@@ -635,33 +646,35 @@ def load_eos_from_xls_new(xls_file):
             else:
                 req_line['itemtype1']='other'
 
-            req_line['itemname']=xls_worksheet.cell_value(curr_row, xls_vals['itemname_col'])
+            xls_value = xls_line['itemname_col']
+            req_line['itemname'] = xls_value
 
-            req_line['servername']=xls_worksheet.cell_value(curr_row, xls_vals['servername_col'])
+            req_line['servername']=xls_line['servername_col']
             if req_line['servername'] == '':
                 req_line['itemtype2'] = 'new'
             else:
                 req_line['itemtype2'] = 'upgrade'
-            req_line['cpu_count']= str(xls_worksheet.cell_value(curr_row, xls_vals['cpucount_col'])).split(".")[0]
+
+            req_line['cpu_count']= xls_line['cpucount_col'].split(".")[0]
             if req_line['cpu_count'] == '':
                 req_line['cpu_count'] = 0
-            req_line['ram_count']= str(xls_worksheet.cell_value(curr_row, xls_vals['ramcount_col'])).split(".")[0]
+            req_line['ram_count']= xls_line['ramcount_col'].split(".")[0]
             if req_line['ram_count'] == '':
                 req_line['ram_count'] = 0
-            req_line['hdd_count']= str(xls_worksheet.cell_value(curr_row, xls_vals['hddcount_col'])).split(".")[0]
+            req_line['hdd_count']= xls_line['hddcount_col'].split(".")[0]
             if req_line['hdd_count'] == '':
                 req_line['hdd_count'] = 0
-            req_line['san_count']= str(xls_worksheet.cell_value(curr_row, xls_vals['sancount_col'])).split(".")[0]
+            req_line['san_count']= xls_line['sancount_col'].split(".")[0]
             if req_line['san_count'] == '':
                 req_line['san_count'] = 0
-            req_line['nas_count']= str(xls_worksheet.cell_value(curr_row, xls_vals['nascount_col'])).split(".")[0]
+            req_line['nas_count']= xls_line['nascount_col'].split(".")[0]
             if req_line['nas_count'] == '':
                 req_line['nas_count'] = 0
-            req_line['item_count']= str(xls_worksheet.cell_value(curr_row, xls_vals['itemcount_col'])).split(".")[0]
+            req_line['item_count']= xls_line['itemcount_col'].split(".")[0]
             if req_line['item_count'] == '':
                 req_line['item_count'] = 0
 
-            xls_value = xls_worksheet.cell_value(curr_row, xls_vals['platform_type_col'])
+            xls_value = xls_line['platform_type_col']
             if xls_value == u'x86' and req_line['itemtype1'] <> 'mqdmz':
                 req_line['platform_type']='x86'
             elif xls_value == u'Power':
@@ -687,7 +700,7 @@ def load_eos_from_xls_new(xls_file):
             else:
                 req_line['platform_type']='---'
 
-            xls_value = xls_worksheet.cell_value(curr_row, xls_vals['ostype_col'])
+            xls_value = xls_line['ostype_col']
             if u'aix' in  xls_value.lower():
                 req_line['ostype']='aix'
             elif u'solaris' in  xls_value.lower():
@@ -712,9 +725,9 @@ def load_eos_from_xls_new(xls_file):
                 else:
                     req_line['ostype']='---'
 
-            req_line['swaddons']=xls_worksheet.cell_value(curr_row, xls_vals['swaddons_col'])
+            req_line['swaddons']=xls_line['swaddons_col']
 
-            xls_value = xls_worksheet.cell_value(curr_row, xls_vals['itemstatus_col'])
+            xls_value = xls_line['itemstatus_col']
             if u'пром' in xls_value.lower():
                 req_line['itemstatus'] = 'prom'
             elif u'нт' in xls_value.lower():
@@ -736,7 +749,7 @@ def load_eos_from_xls_new(xls_file):
             else:
                 req_line['itemstatus'] = 'test-other'
 
-            xls_value = xls_worksheet.cell_value(curr_row, xls_vals['lansegment_col'])
+            xls_value = xls_line['lansegment_col']
             if xls_value == u'ALPHA':
                 req_line['lan_segment'] = 'alpha'
             elif xls_value == u'SIGMA':
@@ -748,8 +761,8 @@ def load_eos_from_xls_new(xls_file):
             else:
                 req_line['lan_segment'] = 'other'
 
-            xls_value = xls_worksheet.cell_value(curr_row, xls_vals['swtype_col']).lower()
-            if u'oracle' in xls_value:
+            xls_value = xls_line['swtype_col'].lower()
+            if (u'oracle' in xls_value) and (not u'java' in xls_value):
                 req_line['db_type']='oracle'
                 req_line['app_type']='---'
             elif u'db2' in xls_value:
@@ -792,10 +805,47 @@ def load_eos_from_xls_new(xls_file):
                 req_line['db_type'] = '---'
                 req_line['app_type']='---'
 
-#            print "db_type - " +  req_line['db_type']
+            xls_value = xls_line['irestype_col'].lower()
+#            print 'xls_value = ' + xls_value
+            if (u'oracle' in xls_value) and (not u'as' in xls_value):
+                req_line['db_type']='oracle'
+                req_line['app_type']='---'
+            elif u'db2' in xls_value:
+                req_line['db_type']='db2'
+                req_line['app_type']='---'
+            elif u'ms sql' in xls_value:
+                req_line['db_type'] = 'mssql'
+                req_line['app_type']='---'
+            elif u'mq series' in xls_value:
+                req_line['db_type'] = '---'
+                req_line['app_type']='mq'
+            elif u'message broker' in xls_value:
+                req_line['db_type'] = '---'
+                req_line['app_type']='mb'
+            elif (u'websphere' in xls_value) and (not u'message broker' in xls_value):
+                req_line['db_type'] = '---'
+                req_line['app_type']='was'
+            elif (u'web-' in xls_value) or (u'iis' in xls_value):
+                req_line['db_type'] = '---'
+                req_line['app_type']='iis'
+            elif (u'weblogic' in xls_value) or (u'wls' in xls_value):
+                req_line['db_type'] = '---'
+                req_line['app_type']='wls'
+            elif (u'eas server' in xls_value) or (u'sybase' in xls_value):
+                req_line['db_type'] = '---'
+                req_line['app_type']='sybase_as'
+            elif (u'prpc' in xls_value):
+                req_line['db_type'] = '---'
+                req_line['app_type']='prpc'
+            else:
+                req_line['db_type'] = '---'
+                req_line['app_type']='---'
+#            print 'db_type = ' + req_line['db_type']
+#            print 'app_type = ' + req_line['app_type']
+            #            print "db_type - " +  req_line['db_type']
 #            print "app_type - " +  req_line['app_type']
 
-            xls_value = xls_worksheet.cell_value(curr_row, xls_vals['clustype_col'])
+            xls_value = xls_line['clustype_col']
             if (u'тр' in xls_value.lower()) or (u'лок' in xls_value.lower()):
                 req_line['cluster_type'] = 'vcs'
             elif (u'на уровне приложения' in xls_value.lower()) :
@@ -803,7 +853,7 @@ def load_eos_from_xls_new(xls_file):
             else:
                 req_line['cluster_type'] = 'none'
 
-            xls_value = xls_worksheet.cell_value(curr_row, xls_vals['backuptype_col'])
+            xls_value = xls_line['backuptype_col']
             if xls_value == u'НЕТ':
                 req_line['backup_type'] = 'no'
             else:

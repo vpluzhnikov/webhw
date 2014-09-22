@@ -19,7 +19,11 @@ def load_tasks(filename):
                 'ManualStart',
                 'ManualFinish',
                 'LateStart',
-                'LateFinish',]
+                'LateFinish',
+                'b408001',
+                'b408009',
+                'b608000',
+                'b60800b',]
     TASKS = []
     tree = ET.parse(filename)
     root = tree.getroot()
@@ -64,8 +68,8 @@ def load_tasks(filename):
     return TASKS
 
 if __name__ == "__main__":
-    print load_tasks('/users/vs/dev/webhw/bupl/task_list_v1.2.xml')
+    print load_tasks('/users/vs/dev/webhw/bupl/task_list_v1.3.xml')
 
 #python manage.py shell
 #from bupl.tasks_loader import load_tasks
-#print load_tasks('/users/vs/dev/webhw/bupl/task_list_v1.2.xml')
+#print load_tasks('/users/vs/dev/webhw/bupl/task_list_v1.3.xml')

@@ -138,10 +138,10 @@ def calculate_req_line(req_line):
             elif (int(req_line['cpu_count']) > 24) or ((req_line['itemtype1'] <> u'db') and
                                                        (req_line['cluster_type'] <> u'vcs')):
                 san_price = prices_dic['san_stor_mid']
-                print "+++++" + str(san_price)
+#                print "+++++" + str(san_price)
             else:
                 san_price = prices_dic['san_stor_mid'] + prices_dic['san_stor_vplex']
-                print "====" + str(san_price)
+#                print "====" + str(san_price)
 
     elif (req_line['itemstatus'] == u'test-nt') and (req_line['itemtype1'] <> u'mqdmz'):
         san_price = prices_dic['san_stor_hiend']
@@ -243,6 +243,10 @@ def calculate_req_line(req_line):
     req_line['price_hw'] = str(Decimal(price_hw).quantize(Decimal(10) ** -2))
     req_line['price_lic'] = str(Decimal(price_lic).quantize(Decimal(10) ** -2))
     req_line['price_support'] = str(Decimal(price_support).quantize(Decimal(10) ** -2))
+#    print 'Price = ' + req_line['price']
+#    print 'Price_HW = ' + req_line['price_hw']
+#    print 'Price_lic = ' + req_line['price_lic']
+#    print 'Price_support' + req_line['price_support']
     req_line['lic_ms_cost'] = str(lic_ms_cost)
     req_line['lic_ms_count'] = str(lic_ms_count)
     req_line['supp_rhel_cost'] = str(supp_rhel_cost)

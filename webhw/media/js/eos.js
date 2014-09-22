@@ -171,6 +171,7 @@ function prepareReqForm(num_req) {
         $("#san_count").val('0');
         $("#nas_count").val('0');
         $("#item_count").val('0');
+        $("#itemname").val('Не указано');
         $("#ostype").val('---');
         $("#ostype").show();
         $("#platform_type").val('---');
@@ -198,6 +199,7 @@ function prepareReqForm(num_req) {
         $("#utilization").css({'color':'black'});
         $("#add_req_modal").show();
         $("#edit_req_modal").hide();
+
     }
     if (num_req >= 0) {
         var req_line = {}
@@ -221,6 +223,8 @@ function prepareReqForm(num_req) {
         $("#backup_type").val(req_line["backup_type"]);
         $("#edit_req_modal").show();
         $("#add_req_modal").hide();
+        $("#itemname").val(req_line["itemname"]);
+
 
 
         if ((req_line["itemtype1"] == 'lb') || (req_line["itemtype1"] == 'dp') || (req_line["itemtype1"] == 'mqdmz')) {
@@ -920,6 +924,7 @@ $("#boc_form").ready(function ()
                     req_line["san_count"] = data["san_count_"+i];
                     req_line["nas_count"] = data["nas_count_"+i];
                     req_line["item_count"] = data["item_count_"+i];
+                    req_line["itemname"] = data["itemname_"+i];
                     req_line["ostype"] = data["ostype_"+i];
                     req_line["platform_type"] = data["platform_type_"+i];
                     req_line["lan_segment"] = data["lan_segment_"+i];

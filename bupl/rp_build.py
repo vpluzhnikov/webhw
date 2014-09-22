@@ -77,6 +77,7 @@ tasks_id_values  = { "aix_standalone" : "1.2.1",
                      "san_upgrade_cluster_test" : "2.2.15",
                      "san_upgrade_standalone_test" : "2.2.14",
                      "nas_upgrade_test" : "2.2.18",
+                     "sudir" : "1.3.22"
                      }
 
 
@@ -142,6 +143,9 @@ def prepocess_super_plan(eos_data):
 
 
 def prepare_resource_plan(eos_items):
+
+    sudir_included = False
+
     try:
         project_id = str(eos_items['project_id'])
     except:
@@ -176,7 +180,7 @@ def prepare_resource_plan(eos_items):
 
         req_line_tasks = []
 
-        print eos_items[key]
+#        print eos_items[key]
         if (eos_items[key]['platform_type'] == 'x86'):
             if (int(eos_items[key]['cpu_count']) > 24) or (eos_items[key]['itemtype1'] == u'mqdmz'):
                 if ((eos_items[key]['itemtype1'] == u'mqdmz') or (eos_items[key]['ostype'] == u'windows')):
@@ -431,6 +435,16 @@ def prepare_resource_plan(eos_items):
 #                block_id = techporject.add_task(taskid=task, linked_with_block=block_id,
 #                    task_additional_name = task_details)
 #    print project_tasks
+    if project_tasks['prom']:
+        project_tasks['prom'].append({'task_details' : u'Интеграционное решение','tasks' : [tasks_id_values["sudir"]]})
+        sudir_included = True
+    else:
+        for key in project_tasks.keys():
+            if project_tasks[key] and (not sudir_included):
+                project_tasks[key].append({'task_details' : u'Интеграционное решение',
+                                           'tasks' : [tasks_id_values["sudir"]]})
+                sudir_included = True
+
     for key in project_tasks:
         if project_tasks[key]:
             techporject.add_summary_task(name=project_id + "_" + ru_vals_4project[key])
