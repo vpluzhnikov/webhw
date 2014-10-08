@@ -310,6 +310,8 @@ def export_eos_to_pdf(eos_items):
     test_cost_sw = 0
     test_cost_sup = 0
 
+    dc_cost = Decimal(0)
+
     project_id = str(eos_items['project_id'])
     project_name = eos_items['project_name']
     eos_items.pop("project_id", None)
@@ -341,9 +343,10 @@ def export_eos_to_pdf(eos_items):
 #        Title = Paragraph(u'Экспресс оценка для Программы ТАБС', styles["Heading1"])
         SubTitle = Paragraph(project_name, styles["SubTitle"])
     Elements = [Sblogo, lh1, lh2, Spacer(0, 0.2 * cm), Title, SubTitle]
-    logger.error("FINNNNISSHHHH")
+#    logger.error("FINNNNISSHHHH")
 
     for key in eos_items.keys():
+        dc_cost += Decimal(eos_items[key]['dc_price'])
         for val in lic_and_support_data.keys():
             lic_and_support_data[val] += Decimal(eos_items[key][val])
             if 'count' in val:
@@ -464,7 +467,17 @@ def export_eos_to_pdf(eos_items):
         Elements.append(table_supp)
         Elements.append(Spacer(0, 0.1 * cm))
 
-
+    Elements.append(Spacer(0, 0.2 * cm))
+    Elements.append(Paragraph(u'Информация о стоимости ЦОД', styles["Heading2"]))
+    Elements.append(Spacer(0, 0.1 * cm))
+    if dc_cost == 0:
+        Elements.append(Paragraph(u'Дополнительного места в ЦОД не требуется', styles["Heading3"]))
+    else:
+#        data_dc = [['Стоимость аренды ЦОД за год (руб.)', str(dc_cost.quantize(Decimal(10) ** -2))], ]
+#        table_dc = Table(data_dc, style=ts, hAlign='LEFT')
+        Elements.append(Paragraph(u'Стоимость аренды ЦОД '+ str(dc_cost.quantize(Decimal(10) ** -2)) +u' руб. за год',
+            styles['Normal']))
+        Elements.append(Spacer(0, 0.1 * cm))
     Elements.append(PageBreak())
 
     #Промышелнные среды

@@ -144,7 +144,10 @@ class Prices(models.Model):
 #    id = models.CharField(max_length=765, primary_key=True)
     hw_class = models.DecimalField(u'Код оборудования', max_digits=14, decimal_places=2)
     hw_type = models.CharField(u'Тип оборудования', max_length=765)
-    price = models.DecimalField(u'Стоимость (без НДС)', max_digits=65, decimal_places=30)
+    price = models.DecimalField(u'Стоимость (без НДС, $)', max_digits=65, decimal_places=30)
+    dc_rent_price = models.DecimalField(u'Стоимость аренды (без НДС, руб.)', max_digits=65, decimal_places=30)
+    dc_book_price = models.DecimalField(u'Стоимость бронирования (без НДС, руб.)', max_digits=65, decimal_places=30)
+    dc_startup_price = models.DecimalField(u'Стоимость подключения (без НДС, руб.)', max_digits=65, decimal_places=30)
     hw_full_name = models.CharField(u'Описание', max_length=765)
     class Meta:
         db_table = u'prices'
