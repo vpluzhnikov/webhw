@@ -72,6 +72,8 @@ function renderEos() {
     for (var i =0; i < eos_items.length; ++i) {
         e_item = eos_items[i];
 //        console.log(e_item);
+        dc_total_cost += parseFloat(e_item["dc_price"]);
+        console.log(parseFloat(dc_total_cost));
         if (e_item["itemstatus"] == 'prom'){
             $("#prom_body").append("<table class=\"appended_table\"> <tr>"+
                 "<td width=\"62px\"> <label class=\"main_window_data\">"+ru_vals[e_item["itemtype2"]]+"</label></td>" +
@@ -123,7 +125,6 @@ function renderEos() {
             test_other_cost_sup += parseFloat(e_item["price_support"]);
 
         }
-        dc_total_cost += parseFloat(e_item["dc_price"]);
 
     }
     var total_cost = prom_cost + test_nt_cost + test_other_cost;
@@ -132,30 +133,29 @@ function renderEos() {
     var total_cost_sup = prom_cost_sup + test_nt_cost_sup + test_other_cost_sup;
 
     $("#prom_count").html('Кол-во ' + prom_count);
-    $("#prom_cost").html('Стоимость ' + prom_cost.toFixed(1) +'$');
-    $("#prom_hw_cost").html('Оборудование ' + prom_cost_hw.toFixed(1) +'$');
-    $("#prom_sw_cost").html('Лицензии ' + prom_cost_sw.toFixed(1) +'$');
-    $("#prom_sup_cost").html('Поддержка ' + prom_cost_sup.toFixed(1) +'$');
+    $("#prom_cost").html('Стоимость ' + prom_cost.toFixed(2) +'$');
+    $("#prom_hw_cost").html('Оборудование ' + prom_cost_hw.toFixed(2) +'$');
+    $("#prom_sw_cost").html('Лицензии ' + prom_cost_sw.toFixed(2) +'$');
+    $("#prom_sup_cost").html('Поддержка ' + prom_cost_sup.toFixed(2) +'$');
 
     $("#test_nt_count").html('Кол-во ' + test_nt_count);
-    $("#test_nt_cost").html('Стоимость ' + test_nt_cost.toFixed(1) +'$');
-    $("#test_nt_hw_cost").html('Оборудование ' + test_nt_cost_hw.toFixed(1) +'$');
-    $("#test_nt_sw_cost").html('Лицензии ' + test_nt_cost_sw.toFixed(1) +'$');
-    $("#test_nt_sup_cost").html('Поддержка ' + test_nt_cost_sup.toFixed(1) +'$');
-
+    $("#test_nt_cost").html('Стоимость ' + test_nt_cost.toFixed(2) +'$');
+    $("#test_nt_hw_cost").html('Оборудование ' + test_nt_cost_hw.toFixed(2) +'$');
+    $("#test_nt_sw_cost").html('Лицензии ' + test_nt_cost_sw.toFixed(2) +'$');
+    $("#test_nt_sup_cost").html('Поддержка ' + test_nt_cost_sup.toFixed(2) +'$');
 
     $("#test_other_count").html('Кол-во ' + test_other_count);
-    $("#test_other_cost").html('Стоимость ' + test_other_cost.toFixed(1) +'$');
-    $("#test_other_hw_cost").html('Оборудование ' + test_other_cost_hw.toFixed(1) +'$');
-    $("#test_other_sw_cost").html('Лицензии ' + test_other_cost_sw.toFixed(1) +'$');
-    $("#test_other_sup_cost").html('Поддержка ' + test_other_cost_sup.toFixed(1) +'$');
+    $("#test_other_cost").html('Стоимость ' + test_other_cost.toFixed(2) +'$');
+    $("#test_other_hw_cost").html('Оборудование ' + test_other_cost_hw.toFixed(2) +'$');
+    $("#test_other_sw_cost").html('Лицензии ' + test_other_cost_sw.toFixed(2) +'$');
+    $("#test_other_sup_cost").html('Поддержка ' + test_other_cost_sup.toFixed(2) +'$');
 
 
-    $("#total_cost").html('Общая стоимость КТС ' + total_cost.toFixed(1) +'$');
-    $("#total_cost_hw").html('Оборудование ' + total_cost_hw.toFixed(1) +'$');
-    $("#total_cost_sw").html('Лицензии ' + total_cost_sw.toFixed(1) +'$');
-    $("#total_cost_sup").html('Поддержка за год ' + total_cost_sup.toFixed(1) +'$');
-    $("#total_dc_cost").html('Стоимость аренды ЦОД за год ' + total_cost_sup.toFixed(1) +'0 руб.');
+    $("#total_cost").html('Общая стоимость КТС ' + total_cost.toFixed(2) +'$');
+    $("#total_cost_hw").html('Оборудование ' + total_cost_hw.toFixed(2) +'$');
+    $("#total_cost_sw").html('Лицензии ' + total_cost_sw.toFixed(2) +'$');
+    $("#total_cost_sup").html('Поддержка за год ' + total_cost_sup.toFixed(2) +'$');
+    $("#total_dc_cost").html('Стоимость аренды ЦОД за год ' + dc_total_cost.toFixed(2) +' руб.');
 
 
 }
