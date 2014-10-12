@@ -412,6 +412,7 @@ def prepare_resource_plan(eos_items):
             if eos_items[key]['app_type'] == 'iis':
                 req_line_tasks.append(tasks_id_values["iis"])
             if eos_items[key]['app_type'] == 'prpc':
+                req_line_tasks.append(tasks_id_values["was_standalone"])
                 req_line_tasks.append(tasks_id_values["prpc"])
             if eos_items[key]['app_type'] == 'ad':
                 req_line_tasks.append(tasks_id_values["ad"])

@@ -147,11 +147,17 @@ def calculate_req_line(req_line):
 
     if cpu_price <> 0:
 #        print "cpuprice - " + str(cpu_price)
+#        print "cpu dc_book_price - " + str(dc_book_price)
+#        print "cpu dc_rent_price - " + str(dc_rent_price)
+#        print "cpu dc_startup_price - " + str(dc_startup_price)
         price_hw += int(req_line['cpu_count']) * int(req_line['item_count']) * cpu_price
         dc_price += int(req_line['cpu_count']) * int(req_line['item_count']) *\
                     (12 * dc_rent_price + 3 * dc_book_price + dc_startup_price)
     elif appliance_price <> 0:
         price_hw += int(req_line['item_count']) * appliance_price * (int(req_line['utilization']) / Decimal(100))
+#        print "applicance dc_book_price - " + str(dc_book_price)
+#        print "applicance dc_rent_price - " + str(dc_rent_price)
+#        print "applicance dc_startup_price - " + str(dc_startup_price)
         if (req_line['itemtype1'] == u'mqdmz'):
 #            print req_line
             lic_ms_cost = int(req_line['item_count']) * prices_dic['ms_lic_2sock']['price']
@@ -170,6 +176,9 @@ def calculate_req_line(req_line):
 
     if intdisks_price <> 0:
 #        print "intdisks_price - " + str(intdisks_price)
+#        print "intdisks dc_book_price - " + str(dc_book_price)
+#        print "intdisks dc_rent_price - " + str(dc_rent_price)
+#        print "intdisks dc_startup_price - " + str(dc_startup_price)
         price_hw += int(req_line['hdd_count']) * int(req_line['item_count']) * intdisks_price
         dc_price += int(req_line['hdd_count']) * int(req_line['item_count']) *\
                     (12 * dc_rent_price + 3 * dc_book_price + dc_startup_price)
@@ -247,6 +256,9 @@ def calculate_req_line(req_line):
 
     if san_price <> 0:
 #        print "san_price - " + str(san_price)
+#        print "san dc_book_price - " + str(dc_book_price)
+#        print "san dc_rent_price - " + str(dc_rent_price)
+#        print "san dc_startup_price - " + str(dc_startup_price)
         price_hw += int(req_line['san_count']) * int(req_line['item_count']) * san_price
         dc_price += int(req_line['san_count']) * int(req_line['item_count']) *\
                     (12 * dc_rent_price + 3 * dc_book_price + dc_startup_price)
@@ -261,15 +273,25 @@ def calculate_req_line(req_line):
 
     if backup_price <> 0:
 #        print "backup_price - " + str(backup_price)
+#        print "backup dc_book_price - " + str(dc_book_price)
+#        print "backup dc_rent_price - " + str(dc_rent_price)
+#        print "backup dc_startup_price - " + str(dc_startup_price)
         price_hw += (int(req_line['san_count']) + int(req_line['nas_count'])) * int(req_line['item_count']) * \
                     backup_price
         dc_price += (int(req_line['san_count']) + int(req_line['nas_count'])) * int(req_line['item_count']) *\
                     (12 * dc_rent_price + 3 * dc_book_price + dc_startup_price)
 
 #   Hardware price calculation for nas storage
-    price_hw += int(req_line['nas_count']) * int(req_line['item_count']) * prices_dic['nas_stor']['price']
-    dc_price += int(req_line['nas_count']) * int(req_line['item_count']) *\
-                (12 * dc_rent_price + 3 * dc_book_price + dc_startup_price)
+    if int(req_line['nas_count']) > 0:
+        dc_book_price = prices_dic['nas_stor']['dc_book_price']
+        dc_rent_price = prices_dic['nas_stor']['dc_rent_price']
+        dc_startup_price = prices_dic['nas_stor']['dc_startup_price']
+        price_hw += int(req_line['nas_count']) * int(req_line['item_count']) * prices_dic['nas_stor']['price']
+        dc_price += int(req_line['nas_count']) * int(req_line['item_count']) *\
+                    (12 * dc_rent_price + 3 * dc_book_price + dc_startup_price)
+#        print "nas dc_book_price - " + str(dc_book_price)
+#        print "nas dc_rent_price - " + str(dc_rent_price)
+#        print "nas dc_startup_price - " + str(dc_startup_price)
 
 #   Licenses and support price calculation
     if (req_line['itemtype2'] <> u'upgrade'):
@@ -368,7 +390,8 @@ def calculate_req_line(req_line):
     req_line['supp_symantec_cost'] = str(supp_symantec_cost)
     req_line['supp_symantec_count'] = str(supp_symantec_count)
     req_line['dc_price'] = str(Decimal(dc_price).quantize(Decimal(10) ** -2))
-
+#    print 'Full DC price - ' + req_line['dc_price']
+#    print "-----------------------------------------------------------------"
 #    return {'total_price' : total_price,
 #            'price_hw' : price_hw,
 #            'price_lic' : price_lic,
