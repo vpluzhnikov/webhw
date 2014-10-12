@@ -20,6 +20,8 @@
     <link rel="stylesheet" href="{{MEDIA_URL}}/css/jquery.arcticmodal-0.3.css" type="text/css"/>
     <link rel="stylesheet" href="{{MEDIA_URL}}/css/themes/simple.css" type="text/css"/>
 
+{#    <script type="text/javascript">#}
+{#    </script>#}
 </head>
 <body>
 <img src="{{ MEDIA_URL }}/images/sb-logo.jpg" align="right" width="50" height="50" >
@@ -40,12 +42,11 @@
 {#    <input type="file" id="xls_file" style="display: none">#}
     <p></p>
     <hr>
-    <div id="prom_header">
+    <div id="prom_header" onclick="hideShowAll('#prom_body');return false;">
         <table id="prom_table">
             <tr>
-                <td width="30px"><a class="name_in_table">Промышленные среды: </a></td>
-                <td width="10px"><a id="prom_count">Кол-во 0</a></td>
-                <td width="20px"><a id="prom_cost">Стоимость 0$</a></td>
+                <td><a class="name_in_table">Промышленные среды </a></td>
+
 {#                <td width="20px"><a id="prom_hw_cost">Оборудование 0$</a></td>#}
 {#                <td width="20px"><a id="prom_sw_cost">Лицензии 0$</a></td>#}
 {#                <td width="20px"><a id="prom_sup_cost">Поддержка 0$</a></td>#}
@@ -53,14 +54,19 @@
         </table>
         <div id="prom_body">
         </div>
+        <table id="prom_table1">
+            <tr>
+                <td width="40px"><a id="prom_count">Количество 0</a></td>
+                <td width="60px"><a id="prom_cost">Стоимость 0$</a></td>
+            </tr>
+        </table>
     </div>
     <hr>
-    <div id="test_nt_header">
+    <div id="test_nt_header" onclick="hideShowAll('#test_nt_body');return false;">
         <table id="test_nt_table">
             <tr>
-                <td width="30px"><a class="name_in_table">Среды нагрузочного тестирования: </a></td>
-                <td width="10px"><a id="test_nt_count">Кол-во 0</a></td>
-                <td width="20px"><a id="test_nt_cost">Стоимость 0$</a></td>
+                <td width="30px"><a class="name_in_table">Среды нагрузочного тестирования </a></td>
+
 {#                <td width="20px"><a id="test_nt_hw_cost">Оборудование 0$</a></td>#}
 {#                <td width="20px"><a id="test_nt_sw_cost">Лицензии 0$</a></td>#}
 {#                <td width="20px"><a id="test_nt_sup_cost">Поддержка 0$</a></td>#}
@@ -68,14 +74,19 @@
         </table>
         <div id="test_nt_body">
         </div>
+        <table id="test_nt_table1">
+              <tr>
+                <td width="40px"><a id="test_nt_count">Количество 0</a></td>
+                <td width="60px"><a id="test_nt_cost">Стоимость 0$</a></td>
+              </tr>
+        </table>
     </div>
     <hr>
-    <div id="test_other_header">
+    <div id="test_other_header" onclick="hideShowAll('#test_other_body');return false;">
         <table id="test_other_table">
             <tr>
-                <td width="30px"><a class="name_in_table">Прочие тестовые среды: </a></td>
-                <td width="10px"><a id="test_other_count">Кол-во 0</a></td>
-                <td width="20px"><a id="test_other_cost">Стоимость 0$</a></td>
+                <td width="30px"><a class="name_in_table">Прочие тестовые среды </a></td>
+
 {#                <td width="20px"><a id="test_other_hw_cost">Оборудование 0$</a></td>#}
 {#                <td width="20px"><a id="test_other_sw_cost">Лицензии 0$</a></td>#}
 {#                <td width="20px"><a id="test_other_sup_cost">Поддержка 0$</a></td>#}
@@ -84,6 +95,12 @@
     </div>
     <div id="test_other_body">
     </div>
+    <table id="test_other_table1">
+        <tr>
+            <td width="40px"><a id="test_other_count">Кол-во 0</a></td>
+            <td width="60px"><a id="test_other_cost">Стоимость 0$</a></td>
+        </tr>
+    </table>
     <hr>
     <table id="cost_footer">
         <tr>
@@ -310,8 +327,8 @@
 </div>
 <img class="img-center" src="{{ MEDIA_URL }}/images/loading.gif" id="load_img" width="100" height="100" style="display: none">
 
-<div style="position: relative">
-    <p style="position: relative; bottom: 0; width:100%; text-align: center"> <a id="methology" class="button is-link" onclick="window.open('eos/media/doc/Methodology.docx');">Методология расчета стоимости</a>
+<div style="position:relative; width:100%; text-align: center">
+    <p> <a id="methology" class="button is-link" onclick="window.open('eos/media/doc/Methodology.docx');">Методология расчета стоимости</a>
         <a id="template" class="button is-link" onclick="window.open('eos/media/doc/template.xlsx');">Шаблон для импорта данных</a>
     </p>
 </div>

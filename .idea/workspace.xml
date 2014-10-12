@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="16d88876-88d8-4668-91b5-3c169be72a6c" name="Default" comment="- Fully">
+    <list default="true" id="16d88876-88d8-4668-91b5-3c169be72a6c" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bupl/price_calcs.py" afterPath="$PROJECT_DIR$/bupl/price_calcs.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bupl/rp_build.py" afterPath="$PROJECT_DIR$/bupl/rp_build.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bupl/tests.py" afterPath="$PROJECT_DIR$/bupl/tests.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webhw/media/css/popup.css" afterPath="$PROJECT_DIR$/webhw/media/css/popup.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webhw/media/css/themes/simple.css" afterPath="$PROJECT_DIR$/webhw/media/css/themes/simple.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webhw/media/js/eos.js" afterPath="$PROJECT_DIR$/webhw/media/js/eos.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webhw/templates/new_start.html" afterPath="$PROJECT_DIR$/webhw/templates/new_start.html" />
     </list>
     <ignored path="webhw.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,7 +29,7 @@
       <file leaf-file-name="eos.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bupl/eos.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="348" column="51" selection-start="10469" selection-end="10477" vertical-scroll-proportion="-6.3076925">
+            <state line="56" column="0" selection-start="1530" selection-end="1928" vertical-scroll-proportion="-12.115385">
               <folding />
             </state>
           </provider>
@@ -43,10 +44,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="price_calcs.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="price_calcs.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bupl/price_calcs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="394" column="24" selection-start="21991" selection-end="21991" vertical-scroll-proportion="13.489879">
+            <state line="394" column="24" selection-start="21991" selection-end="21991" vertical-scroll-proportion="-256.30768">
               <folding />
             </state>
           </provider>
@@ -72,13 +73,38 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="new_start.html" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="new_start.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/webhw/templates/new_start.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="90" column="49" selection-start="4437" selection-end="4437" vertical-scroll-proportion="-3.34">
+            <state line="27" column="63" selection-start="1595" selection-end="1595" vertical-scroll-proportion="-0.78723407">
               <folding>
-                <element signature="n#style#0;n#p#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="tag#form#0;tag#body#0;tag#html#0" expanded="false" />
+                <element signature="tag#div#0;tag#form#0;tag#body#0;tag#html#0" expanded="false" />
+                <element signature="tag#div#1;tag#form#0;tag#body#0;tag#html#0" expanded="false" />
+                <element signature="tag#div#2;tag#form#0;tag#body#0;tag#html#0" expanded="false" />
+                <element signature="tag#div#3;tag#form#0;tag#body#0;tag#html#0" expanded="false" />
+                <element signature="tag#table#1;tag#form#0;tag#body#0;tag#html#0" expanded="false" />
+                <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="tag#div#0;tag#body#0;tag#html#0" expanded="false" />
+                <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#table#0;n#div#2;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#label#0;n#td#2;n#tr#1;n#table#0;n#div#4;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#select#0;n#td#3;n#tr#1;n#table#0;n#div#4;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#label#0;n#td#0;n#tr#2;n#table#0;n#div#4;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#select#0;n#td#1;n#tr#2;n#table#0;n#div#4;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#img#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="popup.css" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/webhw/media/css/popup.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="46" column="0" selection-start="1034" selection-end="1034" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -86,7 +112,16 @@
       <file leaf-file-name="eos.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/webhw/media/js/eos.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="145" column="0" selection-start="7073" selection-end="7073" vertical-scroll-proportion="-21.036364">
+            <state line="190" column="30" selection-start="10569" selection-end="10569" vertical-scroll-proportion="-85.96154">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="simple.css" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/webhw/media/css/themes/simple.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="1" column="36" selection-start="37" selection-end="52" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -113,8 +148,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/bbb.xml" />
-        <option value="$PROJECT_DIR$/bupl/respl.py" />
         <option value="$PROJECT_DIR$/webhw/urls.py" />
         <option value="$PROJECT_DIR$/bupl/views.py" />
         <option value="$PROJECT_DIR$/bupl/rp.py" />
@@ -123,12 +156,14 @@
         <option value="$PROJECT_DIR$/webhw/settings.py" />
         <option value="$PROJECT_DIR$/bupl/tasks_loader.py" />
         <option value="$PROJECT_DIR$/bupl/models.py" />
-        <option value="$PROJECT_DIR$/webhw/templates/new_start.html" />
         <option value="$PROJECT_DIR$/bupl/eos.py" />
-        <option value="$PROJECT_DIR$/webhw/media/js/eos.js" />
         <option value="$PROJECT_DIR$/bupl/rp_build.py" />
         <option value="$PROJECT_DIR$/bupl/tests.py" />
         <option value="$PROJECT_DIR$/bupl/price_calcs.py" />
+        <option value="$PROJECT_DIR$/webhw/media/css/popup.css" />
+        <option value="$PROJECT_DIR$/webhw/media/js/eos.js" />
+        <option value="$PROJECT_DIR$/webhw/media/css/themes/simple.css" />
+        <option value="$PROJECT_DIR$/webhw/templates/new_start.html" />
       </list>
     </option>
   </component>
@@ -250,6 +285,54 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="media" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webhw" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webhw" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webhw" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="media" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webhw" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webhw" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webhw" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="media" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="themes" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -448,8 +531,8 @@
       <method />
     </configuration>
     <list size="2">
-      <item index="0" class="java.lang.String" itemvalue="Python.test" />
-      <item index="1" class="java.lang.String" itemvalue="Django server.webhw" />
+      <item index="0" class="java.lang.String" itemvalue="Django server.webhw" />
+      <item index="1" class="java.lang.String" itemvalue="Python.test" />
     </list>
     <recent_temporary>
       <list size="1">
@@ -702,7 +785,11 @@
       <created>1412797605623</created>
       <updated>1412797605623</updated>
     </task>
-    <option name="localTasksCounter" value="56" />
+    <task id="LOCAL-00056" summary="- DC cost calculation fully implemented">
+      <created>1413120678049</created>
+      <updated>1413120678049</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -764,7 +851,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Minor bug fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="- DC cost calculation fully implemented" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -777,7 +864,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="Fixed some minor import errors" />
     <MESSAGE value="Discarded old table interface and fixed calculation algorithm" />
     <MESSAGE value="Optimized import opertaion and bug fixes" />
     <MESSAGE value="Bug fixes and changed output format of pdf  file" />
@@ -802,6 +888,7 @@
     <MESSAGE value="- Added links for methodology and template&#10;- Check data type in xlsx template&#10;- Added checks for IR type&#10;- Correst TestCase implemented" />
     <MESSAGE value="- Preliminary support for DC cost calculation" />
     <MESSAGE value="- Minor bug fixes" />
+    <MESSAGE value="- DC cost calculation fully implemented" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -809,33 +896,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/webhw/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Library/Caches/PyCharm20/python_stubs/596071422/__builtin__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4874" column="8" selection-start="165958" selection-end="165958" vertical-scroll-proportion="0.33204633" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webhw/upload_handlers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="45" selection-start="1209" selection-end="1209" vertical-scroll-proportion="0.7528958" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webhw/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="110" column="21" selection-start="4071" selection-end="4071" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/__future__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="125" column="0" selection-start="4222" selection-end="4222" vertical-scroll-proportion="3.6196911" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/bupl/tasks_loader.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="74" column="64" selection-start="2544" selection-end="2607" vertical-scroll-proportion="0.7972973" />
@@ -860,39 +920,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bupl/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="59" selection-start="1788" selection-end="1788" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webhw/media/js/eos.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="145" column="0" selection-start="7073" selection-end="7073" vertical-scroll-proportion="-21.036364">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webhw/templates/new_start.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="90" column="49" selection-start="4437" selection-end="4437" vertical-scroll-proportion="-3.34">
-          <folding>
-            <element signature="n#style#0;n#p#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/bupl/rp_build.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="414" column="16" selection-start="23152" selection-end="23152" vertical-scroll-proportion="-6.8846154">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bupl/eos.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="348" column="51" selection-start="10469" selection-end="10477" vertical-scroll-proportion="-6.3076925">
           <folding />
         </state>
       </provider>
@@ -908,8 +938,89 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/bupl/price_calcs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="394" column="24" selection-start="21991" selection-end="21991" vertical-scroll-proportion="13.489879">
+        <state line="394" column="24" selection-start="21991" selection-end="21991" vertical-scroll-proportion="-256.30768">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bupl/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="42" column="59" selection-start="1788" selection-end="1788" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bupl/eos.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="56" column="0" selection-start="1530" selection-end="1928" vertical-scroll-proportion="-12.115385">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webhw/media/css/kanso.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.8659794">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webhw/media/css/jquery-ui-1.8.16.custom.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-2.969072">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webhw/media/css/themes/dark.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webhw/media/css/popup.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="46" column="0" selection-start="1034" selection-end="1034" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webhw/media/js/eos.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="190" column="30" selection-start="10569" selection-end="10569" vertical-scroll-proportion="-85.96154">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webhw/media/css/themes/simple.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="36" selection-start="37" selection-end="52" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webhw/templates/new_start.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="63" selection-start="1595" selection-end="1595" vertical-scroll-proportion="-0.78723407">
+          <folding>
+            <element signature="tag#form#0;tag#body#0;tag#html#0" expanded="false" />
+            <element signature="tag#div#0;tag#form#0;tag#body#0;tag#html#0" expanded="false" />
+            <element signature="tag#div#1;tag#form#0;tag#body#0;tag#html#0" expanded="false" />
+            <element signature="tag#div#2;tag#form#0;tag#body#0;tag#html#0" expanded="false" />
+            <element signature="tag#div#3;tag#form#0;tag#body#0;tag#html#0" expanded="false" />
+            <element signature="tag#table#1;tag#form#0;tag#body#0;tag#html#0" expanded="false" />
+            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="tag#div#0;tag#body#0;tag#html#0" expanded="false" />
+            <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#table#0;n#div#2;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#label#0;n#td#2;n#tr#1;n#table#0;n#div#4;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#select#0;n#td#3;n#tr#1;n#table#0;n#div#4;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#label#0;n#td#0;n#tr#2;n#table#0;n#div#4;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#select#0;n#td#1;n#tr#2;n#table#0;n#div#4;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

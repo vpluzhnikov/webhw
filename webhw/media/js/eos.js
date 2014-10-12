@@ -22,8 +22,26 @@ var ru_vals = { 'new' : "Новый",
     'm_series' : "Oracle M-series",
     'itanium' : "HP Itanium",
     'x86' : "Intel x86",
-    '---' : "---"
+    '---' : "---",
+    'prom' : "Пром",
+    'test-nt' : "НТ",
+    'test-dev' : "DEV",
+    'test-sst1' : "ССТ1",
+    'test-sst2' : "ССТ2",
+    'test-ift' : "ИФТ",
+    'test-obuch' : "ОБУЧ",
+    'test-psi' : "ПСИ",
+    'test-hf' : "HF",
+    'test-other' : "Другое"
 };
+
+function hideShowAll(el){
+    if ($(el).is(":visible")) {
+        $(el).fadeOut(500); }
+    else {$(el).fadeIn(500); }
+    return true;
+};
+
 
 function editReq(id){
     window.alert("edit " + id);
@@ -69,18 +87,67 @@ function renderEos() {
     $("#prom_body").empty();
     $("#test_nt_body").empty();
     $("#test_other_body").empty();
+    $("#prom_body").append("<table class=\"appended_table_h\"> <tr>"+
+        "<td class=\"inv\" width=\"62px\"> <label class=\"main_window_data\">  </label></td>" +
+        "<td width=\"172px\"> <label class=\"main_window_data\"> Тип позииции </label></td>" +
+        "<td width=\"82px\"> <label class=\"main_window_data\"> Кол-во </label></td>"+
+        "<td width=\"112px\"> <label class=\"main_window_data\"> Архитектура </label></td>"+
+        "<td width=\"82px\"> <label class=\"main_window_data\"> CPU </label></td>"+
+        "<td width=\"82px\"> <label class=\"main_window_data\"> ОЗУ </label></td>"+
+        "<td width=\"112px\"> <label class=\"main_window_data\"> Внутренее СХД </label></td>"+
+        "<td width=\"82px\"> <label class=\"main_window_data\"> SAN СХД </label></td>"+
+        "<td width=\"82px\"> <label class=\"main_window_data\"> NAS СХД </label></td>"+
+        "<td width=\"172px\"> <label class=\"main_window_data\"> Общая стоимость $</label></td>"+
+        "<td class=\"inv\" width=\"40px\"> <label class=\"main_window_data\"></label></td>"+
+        "<td class=\"inv\" width=\"40px\"> <label class=\"main_window_data\"></label></td>"+
+        "</tr> </table>");
+    $("#test_nt_body").append("<table class=\"appended_table_h\"> <tr>"+
+        "<td class=\"inv\" width=\"62px\"> <label class=\"main_window_data\">  </label></td>" +
+        "<td width=\"172px\"> <label class=\"main_window_data\"> Тип позииции </label></td>" +
+        "<td width=\"82px\"> <label class=\"main_window_data\"> Кол-во </label></td>"+
+        "<td width=\"112px\"> <label class=\"main_window_data\"> Архитектура </label></td>"+
+        "<td width=\"82px\"> <label class=\"main_window_data\"> CPU </label></td>"+
+        "<td width=\"82px\"> <label class=\"main_window_data\"> ОЗУ </label></td>"+
+        "<td width=\"112px\"> <label class=\"main_window_data\"> Внутренее СХД </label></td>"+
+        "<td width=\"82px\"> <label class=\"main_window_data\"> SAN СХД </label></td>"+
+        "<td width=\"82px\"> <label class=\"main_window_data\"> NAS СХД </label></td>"+
+        "<td width=\"172px\"> <label class=\"main_window_data\"> Общая стоимость $</label></td>"+
+        "<td class=\"inv\" width=\"40px\"> <label class=\"main_window_data\"></label></td>"+
+        "<td class=\"inv\" width=\"40px\"> <label class=\"main_window_data\"></label></td>"+
+        "</tr> </table>");
+    $("#test_other_body").append("<table class=\"appended_table_h\"> <tr>"+
+        "<td class=\"inv\" width=\"62px\"> <label class=\"main_window_data\">  </label></td>" +
+        "<td width=\"62px\"> <label class=\"main_window_data\"> Среда </label></td>" +
+        "<td width=\"162px\"> <label class=\"main_window_data\"> Тип позииции </label></td>" +
+        "<td width=\"72px\"> <label class=\"main_window_data\"> Кол-во </label></td>"+
+        "<td width=\"112px\"> <label class=\"main_window_data\"> Архитектура </label></td>"+
+        "<td width=\"72px\"> <label class=\"main_window_data\"> CPU </label></td>"+
+        "<td width=\"72px\"> <label class=\"main_window_data\"> ОЗУ </label></td>"+
+        "<td width=\"112px\"> <label class=\"main_window_data\"> Внутренее СХД </label></td>"+
+        "<td width=\"82px\"> <label class=\"main_window_data\"> SAN СХД </label></td>"+
+        "<td width=\"82px\"> <label class=\"main_window_data\"> NAS СХД </label></td>"+
+        "<td width=\"172px\"> <label class=\"main_window_data\"> Общая стоимость $</label></td>"+
+        "<td class=\"inv\" width=\"40px\"> <label class=\"main_window_data\"></label></td>"+
+        "<td class=\"inv\" width=\"40px\"> <label class=\"main_window_data\"></label></td>"+
+        "</tr> </table>");
+
     for (var i =0; i < eos_items.length; ++i) {
         e_item = eos_items[i];
 //        console.log(e_item);
         dc_total_cost += parseFloat(e_item["dc_price"]);
-        console.log(parseFloat(dc_total_cost));
+
         if (e_item["itemstatus"] == 'prom'){
             $("#prom_body").append("<table class=\"appended_table\"> <tr>"+
                 "<td width=\"62px\"> <label class=\"main_window_data\">"+ru_vals[e_item["itemtype2"]]+"</label></td>" +
                 "<td width=\"172px\"> <label class=\"main_window_data\">"+ru_vals[e_item["itemtype1"]]+"</label></td>" +
-                "<td width=\"112px\"> <label class=\"main_window_data\"> Кол-во: "+e_item["item_count"]+"</label></td>"+
-                "<td width=\"112px\"> <label class=\"main_window_data\"> Тип: "+ru_vals[e_item["platform_type"]]+"</label></td>"+
-                "<td width=\"172px\"> <label class=\"main_window_data\"> Стоимость "+e_item["price"]+"$</label></td>"+
+                "<td width=\"82px\"> <label class=\"main_window_data\"> "+e_item["item_count"]+"</label></td>"+
+                "<td width=\"112px\"> <label class=\"main_window_data\"> "+ru_vals[e_item["platform_type"]]+"</label></td>"+
+                "<td width=\"82px\"> <label class=\"main_window_data\"> "+e_item["cpu_count"]+"</label></td>"+
+                "<td width=\"82px\"> <label class=\"main_window_data\"> "+e_item["ram_count"]+"</label></td>"+
+                "<td width=\"112px\"> <label class=\"main_window_data\"> "+e_item["hdd_count"]+"</label></td>"+
+                "<td width=\"82px\"> <label class=\"main_window_data\"> "+e_item["san_count"]+"</label></td>"+
+                "<td width=\"82px\"> <label class=\"main_window_data\"> "+e_item["nas_count"]+"</label></td>"+
+                "<td width=\"172px\"> <label class=\"main_window_data\"> "+e_item["price"]+"$</label></td>"+
                 "<td width=\"40px\"> <a onclick=\"prepareReqForm("+ i +")\" class=\"button is-inverse has-fixed-icon\"><i class=\"fa fa-pencil-square-o\"></i></a> </td>" +
                 "<td width=\"40px\"> <a onclick=\"deleteReq("+ i +")\" class=\"button is-inverse has-fixed-icon\"><i class=\"fa fa-trash-o\"></i></a> </td>" +
                 "</tr> </table>");
@@ -95,9 +162,14 @@ function renderEos() {
             $("#test_nt_body").append("<table class=\"appended_table\"> <tr>"+
                 "<td width=\"62px\"> <label class=\"main_window_data\">"+ru_vals[e_item["itemtype2"]]+"</label></td>" +
                 "<td width=\"172px\"> <label class=\"main_window_data\">"+ru_vals[e_item["itemtype1"]]+"</label></td>" +
-                "<td width=\"112px\"> <label class=\"main_window_data\"> Кол-во: "+e_item["item_count"]+"</label></td>"+
-                "<td width=\"112px\"> <label class=\"main_window_data\"> Тип: "+ru_vals[e_item["platform_type"]]+"</label></td>"+
-                "<td width=\"172px\"> <label class=\"main_window_data\"> Стоимость "+e_item["price"]+"$</label></td>"+
+                "<td width=\"82px\"> <label class=\"main_window_data\"> "+e_item["item_count"]+"</label></td>"+
+                "<td width=\"112px\"> <label class=\"main_window_data\"> "+ru_vals[e_item["platform_type"]]+"</label></td>"+
+                "<td width=\"82px\"> <label class=\"main_window_data\"> "+e_item["cpu_count"]+"</label></td>"+
+                "<td width=\"82px\"> <label class=\"main_window_data\"> "+e_item["ram_count"]+"</label></td>"+
+                "<td width=\"112px\"> <label class=\"main_window_data\"> "+e_item["hdd_count"]+"</label></td>"+
+                "<td width=\"82px\"> <label class=\"main_window_data\"> "+e_item["san_count"]+"</label></td>"+
+                "<td width=\"82px\"> <label class=\"main_window_data\"> "+e_item["nas_count"]+"</label></td>"+
+                "<td width=\"172px\"> <label class=\"main_window_data\"> "+e_item["price"]+"$</label></td>"+
                 "<td width=\"40px\"> <a onclick=\"prepareReqForm("+ i +")\" class=\"button is-inverse has-fixed-icon\"><i class=\"fa fa-pencil-square-o\"></i></a> </td>" +
                 "<td width=\"40px\"> <a onclick=\"deleteReq("+ i +")\" class=\"button is-inverse has-fixed-icon\"><i class=\"fa fa-trash-o\"></i></a> </td>" +
                 "</tr> </table>");
@@ -111,10 +183,16 @@ function renderEos() {
         else {
             $("#test_other_body").append("<table class=\"appended_table\"> <tr>"+
                 "<td width=\"62px\"> <label class=\"main_window_data\">"+ru_vals[e_item["itemtype2"]]+"</label></td>" +
-                "<td width=\"172px\"> <label class=\"main_window_data\">"+ru_vals[e_item["itemtype1"]]+"</label></td>" +
-                "<td width=\"112px\"> <label class=\"main_window_data\"> Кол-во: "+e_item["item_count"]+"</label></td>"+
-                "<td width=\"112px\"> <label class=\"main_window_data\"> Тип: "+ru_vals[e_item["platform_type"]]+"</label></td>"+
-                "<td width=\"172px\"> <label class=\"main_window_data\"> Стоимость "+e_item["price"]+"$</label></td>"+
+                "<td width=\"62px\"> <label class=\"main_window_data\">"+ru_vals[e_item["itemstatus"]]+"</label></td>" +
+                "<td width=\"162px\"> <label class=\"main_window_data\">"+ru_vals[e_item["itemtype1"]]+"</label></td>" +
+                "<td width=\"72px\"> <label class=\"main_window_data\"> "+e_item["item_count"]+"</label></td>"+
+                "<td width=\"112px\"> <label class=\"main_window_data\"> "+ru_vals[e_item["platform_type"]]+"</label></td>"+
+                "<td width=\"72px\"> <label class=\"main_window_data\"> "+e_item["cpu_count"]+"</label></td>"+
+                "<td width=\"72px\"> <label class=\"main_window_data\"> "+e_item["ram_count"]+"</label></td>"+
+                "<td width=\"112px\"> <label class=\"main_window_data\"> "+e_item["hdd_count"]+"</label></td>"+
+                "<td width=\"82px\"> <label class=\"main_window_data\"> "+e_item["san_count"]+"</label></td>"+
+                "<td width=\"82px\"> <label class=\"main_window_data\"> "+e_item["nas_count"]+"</label></td>"+
+                "<td width=\"172px\"> <label class=\"main_window_data\"> "+e_item["price"]+"$</label></td>"+
                 "<td width=\"40px\"> <a onclick=\"prepareReqForm("+ i +")\" class=\"button is-inverse has-fixed-icon\"><i class=\"fa fa-pencil-square-o\"></i></a> </td>" +
                 "<td width=\"40px\"> <a onclick=\"deleteReq("+ i +")\" class=\"button is-inverse has-fixed-icon\"><i class=\"fa fa-trash-o\"></i></a> </td>" +
                 "</tr> </table>");
@@ -132,19 +210,19 @@ function renderEos() {
     var total_cost_sw = prom_cost_sw + test_nt_cost_sw + test_other_cost_sw;
     var total_cost_sup = prom_cost_sup + test_nt_cost_sup + test_other_cost_sup;
 
-    $("#prom_count").html('Кол-во ' + prom_count);
+    $("#prom_count").html('Количество ' + prom_count);
     $("#prom_cost").html('Стоимость ' + prom_cost.toFixed(2) +'$');
     $("#prom_hw_cost").html('Оборудование ' + prom_cost_hw.toFixed(2) +'$');
     $("#prom_sw_cost").html('Лицензии ' + prom_cost_sw.toFixed(2) +'$');
     $("#prom_sup_cost").html('Поддержка ' + prom_cost_sup.toFixed(2) +'$');
 
-    $("#test_nt_count").html('Кол-во ' + test_nt_count);
+    $("#test_nt_count").html('Количество ' + test_nt_count);
     $("#test_nt_cost").html('Стоимость ' + test_nt_cost.toFixed(2) +'$');
     $("#test_nt_hw_cost").html('Оборудование ' + test_nt_cost_hw.toFixed(2) +'$');
     $("#test_nt_sw_cost").html('Лицензии ' + test_nt_cost_sw.toFixed(2) +'$');
     $("#test_nt_sup_cost").html('Поддержка ' + test_nt_cost_sup.toFixed(2) +'$');
 
-    $("#test_other_count").html('Кол-во ' + test_other_count);
+    $("#test_other_count").html('Количество ' + test_other_count);
     $("#test_other_cost").html('Стоимость ' + test_other_cost.toFixed(2) +'$');
     $("#test_other_hw_cost").html('Оборудование ' + test_other_cost_hw.toFixed(2) +'$');
     $("#test_other_sw_cost").html('Лицензии ' + test_other_cost_sw.toFixed(2) +'$');

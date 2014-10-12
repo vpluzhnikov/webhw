@@ -1,11 +1,14 @@
 
-body {  display:block; width:980px; height:36px; text-align:left;
+body {  display:block; width:1200px; height:840px; text-align:left;
     font:12px/18px "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
     overflow: scroll;
 }
 
 table.appended_table {table-layout: fixed ;
-    width: 80%;}
+    width: 100%;}
+
+table.appended_table_h {table-layout: fixed ;
+    width: 100%;}
 
 table.modal_table {
     width: 100%;
@@ -29,15 +32,23 @@ table.modal_table_1 td {
 #prom_table, #test_nt_table, #test_other_table
 {
   table-layout: fixed ;
-width: 60%;}
+width: 100%;}
+
+#prom_table1, #test_nt_table1, #test_other_table1
+{table-layout:fixed;
+width: 50%;}
 
 #lan_segment {width: 113px;}
 #ostype {width: 115px;}
 #platform_type, #db_type {width: 100px;}
 
+.appended_table_h td
+{background: #ebf1f4;}
 
+.appended_table_h td.inv
+{background: none;}
 
-#prom_table td, #test_nt_table td, #test_other_table td
+#prom_table td, #test_nt_table td, #test_other_table td     /*for the first part of head of table*/
 {
     background: #e7edf0; /* ��� ������ �������� */
     /*#656d78*/
@@ -53,6 +64,25 @@ width: 60%;}
 
     font:12px Verdana,sans-serif;
    padding: 7px;
+    outline:none;
+}
+
+#prom_table1 td, #test_nt_table1 td, #test_other_table1 td          /* for second part of table (total)*/
+{
+    background: #e7edf0; /* ��� ������ �������� */
+    /*#656d78*/
+    /*#F0F0F0 what was before*/
+    background: -moz-linear-gradient(top, #FFFFFF, #e7edf0); /* Firefox 3.6+ */
+    /* Chrome 1-9, Safari 4-5 */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFFFFF), color-stop(100%,#e7edf0));
+    /* Chrome 10+, Safari 5.1+ */
+    background: -webkit-linear-gradient(top, #FFFFFF, #e7edf0);
+    background: -o-linear-gradient(top, #FFFFFF, #e7edf0); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #FFFFFF, #e7edf0); /* IE10 */
+    background: linear-gradient(top, #FFFFFF, #e7edf0); /* CSS3 */
+
+    font:12px Verdana,sans-serif;
+    padding-left: 7px;
     outline:none;
 }
 
