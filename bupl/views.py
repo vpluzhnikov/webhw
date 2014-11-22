@@ -4,13 +4,16 @@ from django.template.context import RequestContext
 from django.http import HttpResponse, HttpResponseServerError, HttpResponseNotFound
 from django.shortcuts import render_to_response, redirect
 from django.utils.simplejson import dumps, loads
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required, permission_required
+
 
 from webhw.settings import MEDIA_URL
 from webhw.common import get_session_key, whoami, get_client_ip
 from webhw.settings import BOC_WORK_DIR
 from webhw.xlsfiles import handle_xls_file
 
-from bupl.forms import BocForm, EosForm
+from bupl.forms import BocForm, EosForm, LoginForm
 from bupl.models import Projects
 from bupl.rp_build import prepare_resource_plan
 
@@ -24,7 +27,7 @@ import mimetypes
 mimetypes.init()
 logger = getLogger(__name__)
 
-
+@login_required
 def eos_main(request):
 
     if request.method == 'POST':
@@ -63,7 +66,6 @@ def get_loaded_eos(request):
             request.session['eos_data'] = {}
             return HttpResponse(dumps(EOS_DATA))
 
-
 def get_prj_list(request):
     """
     Returns a JSON with project details to client
@@ -88,13 +90,14 @@ def calc_req(request):
     req_line = loads(request.POST['json'])
     return HttpResponse(dumps(calculate_req_line(req_line)))
 
-
+@permission_required('bupl.can_export_eos')
 def export_to_pdf(request):
     eos_items = loads(request.POST['json'])
 #    print 'export ---------'
     print eos_items
     return HttpResponse(dumps({'filename' : export_eos_to_pdf(eos_items)}))
 
+@permission_required('bupl.can_export_rp')
 def build_resource_plan(request):
     eos_items = loads(request.POST['json'])
     return HttpResponse(dumps({'filename' : prepare_resource_plan(eos_items)}))
@@ -104,7 +107,7 @@ def get_exported_file(request, filename):
         if 'eos' in filename:
             file_path = path.join(BOC_WORK_DIR, filename + ".pdf")
         elif 'tp' in filename:
-            file_path = path.join(BOC_WORK_DIR, filename + ".xml")
+            file_path = path.join(BOC_WORK_DIR, filename + ".tar")
         print file_path
         fsock = open(file_path,"r")
         file_name = path.basename(file_path)
@@ -139,3 +142,31 @@ def eos_get_prj_name(request):
     except:
         return HttpResponse(dumps({'project_name' : '', 'project_id' : ''}))
 
+def login_view(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            UF_FORM = form.cleaned_data
+            username = UF_FORM['user']
+            password = UF_FORM['password']
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return redirect('/eos')
+                else:
+                    return HttpResponse('Lockes account')
+            else:
+                return HttpResponse('Unknown user')
+        else:
+            return redirect('/eos/login')
+
+    else:
+        logger.info("Empty login form prepared from %s for user from %s, "
+                    "session id %s" % (whoami(), get_client_ip(request), get_session_key(request)))
+        form = LoginForm()
+        return render_to_response("login.html", {'form': form, 'MEDIA_URL' : MEDIA_URL},
+            context_instance=RequestContext(request))
+
+def logout_view(request):
+    logout(request)

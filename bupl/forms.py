@@ -32,3 +32,8 @@ class EosForm(forms.Form):
 #    prjname = forms.CharField(label='Название проекта',
 #        widget=forms.TextInput(attrs={'size':'70', 'readonly':'readonly'}), required=False)
     xls_file = forms.FileField(label='', required=False)
+
+class LoginForm(forms.Form):
+    user = forms.CharField(label=u'Имя пользователя:',
+        widget=forms.TextInput(attrs={'size':'30'}), required=True)
+    password = forms.CharField(label=u'Пароль:', widget=forms.PasswordInput())

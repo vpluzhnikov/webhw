@@ -3,6 +3,8 @@ __author__ = 'vs'
 import inspect
 from django.http import HttpResponse
 from django.core.servers.basehttp import FileWrapper
+import tarfile
+import os
 
 
 def whoami():
@@ -28,3 +30,7 @@ def return_file(infile, name):
     response = HttpResponse(content, content_type='text/plain')
     response['Content-Disposition'] = 'attachment; filename=' + name
     return response
+
+def make_tarfile(output_filename, source_dir):
+    with tarfile.open(output_filename, "w:gz") as tar:
+        tar.add(source_dir, arcname=os.path.basename(source_dir))

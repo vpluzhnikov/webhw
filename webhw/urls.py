@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from bupl.views import eos_get_prj_name, eos_main, calc_req, export_to_pdf, get_exported_file, \
-    get_loaded_eos, get_prj_list, build_resource_plan
+    get_loaded_eos, get_prj_list, build_resource_plan, login_view, logout_view
 from webhw import settings
 
 # Uncomment the next two lines to enable the admin:
@@ -11,6 +11,8 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'webhw.views.home', name='home'),
     # url(r'^webhw/', include('webhw.foo.urls')),
+    url(r'^eos/login$', login_view),
+    url(r'^eos/logout$', logout_view),
     url(r'^eos$', eos_main),
     url(r'^eos/calc_req$', calc_req),
     url(r'^eos/export_to_pdf$', export_to_pdf),

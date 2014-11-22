@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 from bupl.rp import ProjectPlan
 
-from os import path
+from os import path, mkdir, removedirs, access, R_OK
+from shutil import rmtree
 from time import time
+from webhw.common import make_tarfile
 
 from bupl.eos import ru_vals
 
@@ -436,6 +438,8 @@ def prepare_resource_plan(eos_items):
 #                block_id = techporject.add_task(taskid=task, linked_with_block=block_id,
 #                    task_additional_name = task_details)
 #    print project_tasks
+
+
     if project_tasks['prom']:
         project_tasks['prom'].append({'task_details' : u'Интеграционное решение','tasks' : [tasks_id_values["sudir"]]})
         sudir_included = True
@@ -446,8 +450,24 @@ def prepare_resource_plan(eos_items):
                                            'tasks' : [tasks_id_values["sudir"]]})
                 sudir_included = True
 
+    try:
+        if access(BOC_WORK_DIR+project_id, R_OK):
+            print "Directory exists"
+            rmtree(BOC_WORK_DIR+project_id)
+
+        mkdir(BOC_WORK_DIR+project_id)
+        PROJECT_DIR = BOC_WORK_DIR+project_id
+    except:
+        PROJECT_DIR = BOC_WORK_DIR
+
+    print PROJECT_DIR
+
     for key in project_tasks:
         if project_tasks[key]:
+#            print "key = " + key
+            techporject = ProjectPlan(project_id, path.join(PROJECT_DIR, filename +"_"+ ru_vals_4project[key] + ".xml"))
+            techporject.add_extednded_attrs()
+            techporject.add_calendar()
             techporject.add_summary_task(name=project_id + "_" + ru_vals_4project[key])
             for req_line_tasks in project_tasks[key]:
                 block_id = None
@@ -458,6 +478,10 @@ def prepare_resource_plan(eos_items):
     #                           str(eos_items[key]['san_count'])
                     block_id = techporject.add_task(taskid=task, linked_with_block=block_id,
                         task_additional_name = req_line_tasks['task_details'])
-    techporject.export_project_xml()
+            techporject.export_project_xml()
 
+    try:
+        make_tarfile(BOC_WORK_DIR+ filename + ".tar", PROJECT_DIR)
+    except:
+        filename = None
     return filename
