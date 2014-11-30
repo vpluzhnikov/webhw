@@ -24,6 +24,13 @@
 {#    </script>#}
 </head>
 <body>
+<div id="user_details" class="user_details">
+    <label id="username_label">Пользователь: {{ username }},</label>
+{#    <a class="button is-link" onclick="window.open('eos/logout');">выйти</a>#}
+{#    <label id="logout">выйти</label>#}
+    <a href="eos/logout">выйти</a>
+</div>
+
 <img src="{{ MEDIA_URL }}/images/sb-logo.jpg" align="right" width="50" height="50" >
 <form id="boc_form" enctype="multipart/form-data" method="post">
     <table>
@@ -31,12 +38,16 @@
             <td> <a id="load" class="button is-inverse has-icon-spacing"><i class="fa fa-upload"></i> Импорт</a> </td>
             <td> <a id="save" class="button is-inverse has-icon-spacing"><i class="fa fa-money"></i> Экспорт оценки</a> </td>
             <td> <a id="rp_save" class="button is-inverse has-icon-spacing"><i class="fa fa-tasks"></i> Экспорт техплана</a> </td>
+            <td> <a id="super_rp_save" class="button is-inverse has-icon-spacing"><i class="fa fa-tasks"></i> Подготовка техплана для списка проектов</a> </td>
             <td> <a id="add_req" class="button is-inverse has-fixed-icon"><i class="fa fa-plus"></i> Добавить элемент</a></td>
 
         </tr>
-{#        <tr>#}
-{#        </tr>#}
    </table>
+
+    <div id="error_message_section" style="position:relative; color: red; text-align: center; display: none">
+        <label id="error_message_text" ></label>
+    </div>
+
     {{ form.as_table }}
 
     <p></p>

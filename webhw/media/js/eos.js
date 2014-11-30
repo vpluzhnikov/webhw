@@ -35,6 +35,32 @@ var ru_vals = { 'new' : "Новый",
     'test-other' : "Другое"
 };
 
+function show_error(text) {
+    $("#error_message_text").text(text);
+    $("#error_message_section").show();
+    $("#error_message_section").fadeOut(3000);
+}
+
+function if_user_logged_in() {
+    var url_check_user = "/eos/check_user";
+    var userdata;
+    $.ajax({
+        url: url_check_user,
+        async: false,
+        dataType: 'json',
+        success: function(data, status){
+            error = data.error;
+            console.log(data);
+            userdata = data;
+        }
+    });
+    if (userdata.valid == "yes") {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 function hideShowAll(el){
     if ($(el).is(":visible")) {
         $(el).fadeOut(500); }
@@ -458,6 +484,7 @@ function formCheck() {
 
 $("#load").click(function ()
     {
+        $("#id_file_type").val("basic");
         $("#id_xls_file").click();
     }
 );
@@ -470,35 +497,47 @@ $("#id_xls_file").change(function ()
 }
 );
 
+$("#super_rp_save").click(function(){
+    if (if_user_logged_in()) {
+        $("#id_file_type").val("super_plan");
+        $("#id_xls_file").click();
+    } else {
+        show_error("Нет прав на выполнение операции");
+    }
+})
 
 $("#save").add("#rp_save").click(function (event)
     {
-        $("#prj_function").val(event.target.id);
-        console.log(event.target.id)
+        if (if_user_logged_in()) {
+            $("#prj_function").val(event.target.id);
+            console.log(event.target.id)
 
-        var url_get_prj_list = "/eos/get_prj_list"
-        $.ajax({
-            url:url_get_prj_list ,
-            async:false,
-            dataType:'json',
-            success:function (data, status) {
-//                console.log(data);
-                curr_project = $('#prjnum').val()
-                curr_project_name = $('#prjname').val()
+            var url_get_prj_list = "/eos/get_prj_list"
+            $.ajax({
+                url:url_get_prj_list ,
+                async:false,
+                dataType:'json',
+                success:function (data, status) {
+    //                console.log(data);
+                    curr_project = $('#prjnum').val()
+                    curr_project_name = $('#prjname').val()
 
-                for (var i=0;i<data.prjcount;i++) {
-                    $('#prjselect').append('<option value='+data[i]+'>'+data[i]+'</option>');
+                    for (var i=0;i<data.prjcount;i++) {
+                        $('#prjselect').append('<option value='+data[i]+'>'+data[i]+'</option>');
+                    }
+                    if (curr_project != '') {
+                        $('#prjselect').val(curr_project);
+                        $('#prjname').val(curr_project_name);
+                    }
+
                 }
-                if (curr_project != '') {
-                    $('#prjselect').val(curr_project);
-                    $('#prjname').val(curr_project_name);
-                }
+            });
 
-            }
-        });
-
-        $('#prjselect_dialog').arcticmodal();
-
+            $('#prjselect_dialog').arcticmodal();
+//        }
+    } else{
+            show_error("Нет прав на выполнение операции");
+        }
     }
 );
 
@@ -972,6 +1011,9 @@ $("#boc_form").ready(function ()
         var url_get_loaded_eos = "/eos/get_loaded_eos"
         var url_eos_addreq = "/eos/calc_req";
 
+        $("#prom_body").hide();
+        $("#test_nt_body").hide();
+        $("#test_other_body").hide();
 
         $.ajax({
             url:url_get_loaded_eos,
@@ -1065,3 +1107,4 @@ $("#boc_form").ready(function ()
     }
 
 );
+

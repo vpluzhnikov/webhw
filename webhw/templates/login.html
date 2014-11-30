@@ -18,16 +18,20 @@
 
 </head>
 <body>
-{#<img src="{{ MEDIA_URL }}/images/sb-logo.jpg" align="right" width="50" height="50">#}
-<form id="login_form" enctype="multipart/form-data" method="post">
-    {{ form.as_p }}
-    <table>
-        <tr>
-            <td><a id="login" class="button is-inverse has-icon-spacing"><i class="fa fa-key"></i> Войти</a></td>
-            <td><a id="guest_login" class="button is-inverse has-icon-spacing"><i class="fa fa-user"></i> Гость</a>
-            </td>
-        </tr>
-    </table>
+    <img src="{{ MEDIA_URL }}/images/sb-logo.jpg" align="right" width="50" height="50">
+    <div id="login_body" class="login_window">
+        <hr>
+        <form id="login_form" enctype="multipart/form-data" method="post">
+            {{ form.as_p }}
+            <table>
+                <tr>
+                    <td><a id="login" class="button is-inverse has-icon-spacing"><i class="fa fa-key"></i> Войти</a></td>
+                    <td><a id="guest_login" class="button is-inverse has-icon-spacing"><i class="fa fa-user"></i> Гость</a>
+                    </td>
+                </tr>
+            </table>
+            <hr>
+    </div>
 </body>
 <script src="{{ MEDIA_URL }}/js/login.js"></script>
 </html>

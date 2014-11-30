@@ -34,6 +34,9 @@ def eos_main(request):
         form = EosForm(request.POST, request.FILES)
         if form.is_valid():
             UF_FORM = form.cleaned_data
+            print UF_FORM
+#        if 'file_type' in UF_FORM.keys():
+#            logger.error("!!!!!!!! " + UF_FORM['file_type'])
         if 'X-Progress-ID' in request.GET:
             request.session['X-Progress-ID'] = request.GET['X-Progress-ID']
         logger.info("Starting file  %s proccessing in %s for user from %s" % (request.FILES['xls_file'].name, whoami(),
@@ -55,7 +58,8 @@ def eos_main(request):
         form = EosForm()
 #        return render_to_response('confupload_form.html', {'form': form, 'MEDIA_URL' : MEDIA_URL},
 #            context_instance=RequestContext(request))
-        return render_to_response("new_start.html", {'form': form, 'MEDIA_URL' : MEDIA_URL},
+        return render_to_response("new_start.html", {'form': form, 'MEDIA_URL' : MEDIA_URL,
+                                                     'username' : request.user},
             context_instance=RequestContext(request))
 
 
@@ -94,7 +98,7 @@ def calc_req(request):
 def export_to_pdf(request):
     eos_items = loads(request.POST['json'])
 #    print 'export ---------'
-    print eos_items
+#    print eos_items
     return HttpResponse(dumps({'filename' : export_eos_to_pdf(eos_items)}))
 
 @permission_required('bupl.can_export_rp')
@@ -170,3 +174,11 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
+    return redirect('/eos/login')
+
+def check_user(request):
+    print request.user;
+    if (request.user.is_authenticated()) and (request.user.username <> 'anonymous'):
+        return HttpResponse(dumps({'valid' : 'yes'}))
+    else:
+        return HttpResponse(dumps({'valid' : 'no'}))

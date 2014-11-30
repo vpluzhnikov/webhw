@@ -10,14 +10,12 @@ $("#guest_login").click(function ()
 {
     $("#id_user").val("anonymous")
     $("#id_password").val("password")
-    window.alert("anonymous");
     $("#login_form").submit();
 }
     );
 
 $("#login").click(function ()
     {
-        window.alert("realuser");
         $("#login_form").submit();
     }
 );

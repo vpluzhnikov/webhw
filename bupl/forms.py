@@ -31,7 +31,8 @@ class EosForm(forms.Form):
 #    prjselect = forms.ChoiceField(choices=PRJLIST, label='Номер проекта:', required=False)
 #    prjname = forms.CharField(label='Название проекта',
 #        widget=forms.TextInput(attrs={'size':'70', 'readonly':'readonly'}), required=False)
-    xls_file = forms.FileField(label='', required=False)
+    xls_file = forms.FileField(label='', required=False, )
+    file_type = forms.CharField(required=False, max_length=50, widget=forms.HiddenInput())
 
 class LoginForm(forms.Form):
     user = forms.CharField(label=u'Имя пользователя:',
