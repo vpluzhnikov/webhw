@@ -15,7 +15,7 @@ from webhw.xlsfiles import handle_xls_file
 
 from bupl.forms import BocForm, EosForm, LoginForm
 from bupl.models import Projects
-from bupl.rp_build import prepare_resource_plan
+from bupl.rp_build import prepare_resource_plan, prepare_global_plan
 
 from logging import getLogger
 from eos import export_eos_to_pdf, load_eos_from_xls_new
@@ -34,24 +34,30 @@ def eos_main(request):
         form = EosForm(request.POST, request.FILES)
         if form.is_valid():
             UF_FORM = form.cleaned_data
-            print UF_FORM
-#        if 'file_type' in UF_FORM.keys():
-#            logger.error("!!!!!!!! " + UF_FORM['file_type'])
-        if 'X-Progress-ID' in request.GET:
-            request.session['X-Progress-ID'] = request.GET['X-Progress-ID']
-        logger.info("Starting file  %s proccessing in %s for user from %s" % (request.FILES['xls_file'].name, whoami(),
-                                                                              get_client_ip(request)))
-        fileattr = handle_xls_file(request.FILES['xls_file'], get_session_key(request) + '_' +
-                                                          request.FILES['xls_file'].name)
-        if not fileattr == None:
-            request.session['xlsfilepath'] = fileattr['filename']
-            logger.info("Sucsessfully handeled file  %s in %s" % (request.FILES['xls_file'].name, whoami()))
-            request.session['eos_data'] = load_eos_from_xls_new(fileattr['filename'])
-            logger.error(request.session['eos_data'])
-            return redirect('/eos')
-        else:
-            logger.info("File type %s is not good, reported from %s" % (request.FILES['xls_file'].name, whoami()))
-            return HttpResponse('Bad file type or file corrupted')
+#        if 'X-Progress-ID' in request.GET:
+#            request.session['X-Progress-ID'] = request.GET['X-Progress-ID']
+            logger.info("Starting file  %s proccessing in %s for user from %s" % (request.FILES['xls_file'].name,
+                                                                                  whoami(), get_client_ip(request)))
+            fileattr = handle_xls_file(request.FILES['xls_file'], get_session_key(request) + '_' +
+                                                                  request.FILES['xls_file'].name)
+            if not fileattr == None:
+                request.session['xlsfilepath'] = fileattr['filename']
+                logger.info("Sucsessfully handeled file  %s in %s" % (request.FILES['xls_file'].name, whoami()))
+                if UF_FORM['file_type'] == 'super_plan':
+                    tarfile = prepare_global_plan(fileattr['filename'])
+                    fsock = open(tarfile,"r")
+                    response = HttpResponse(fsock, mimetype='application/zip')
+                    response['Content-Disposition'] = 'attachment; filename=multiple_plans.tar'
+#                    return HttpResponse('super_plan')
+                    return response
+                else:
+                    request.session['eos_data'] = load_eos_from_xls_new(fileattr['filename'])
+                    logger.error(request.session['eos_data'])
+                    return redirect('/eos')
+            else:
+                logger.info("File type %s is not good, reported from %s" % (request.FILES['xls_file'].name, whoami()))
+                return HttpResponse('Bad file type or file corrupted')
+
     else:
         logger.info("Empty upload form prepared from %s for user from %s, "
                 "session id %s" % (whoami(), get_client_ip(request), get_session_key(request)))
@@ -121,7 +127,7 @@ def get_exported_file(request, filename):
         if (mime_type_guess is not None) and (not 'tp' in filename):
             response = HttpResponse(fsock, mimetype=mime_type_guess[0])
         elif 'tp' in filename:
-            response = HttpResponse(fsock, mimetype='application/x-ms-project')
+            response = HttpResponse(fsock, mimetype='application/zip')
         response['Content-Disposition'] = 'attachment; filename=' + file_name
     except IOError:
         response = HttpResponseNotFound()

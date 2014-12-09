@@ -3,6 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="16d88876-88d8-4668-91b5-3c169be72a6c" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bupl/rp_build.py" afterPath="$PROJECT_DIR$/bupl/rp_build.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bupl/views.py" afterPath="$PROJECT_DIR$/bupl/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webhw/settings.py" afterPath="$PROJECT_DIR$/webhw/settings.py" />
     </list>
     <ignored path="webhw.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -25,28 +28,39 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="eos.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bupl/eos.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="settings.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/webhw/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="80" column="15" selection-start="2868" selection-end="2868" vertical-scroll-proportion="0.0">
+            <state line="9" column="63" selection-start="285" selection-end="285" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="eos.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/webhw/media/js/eos.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="507" column="0" selection-start="22076" selection-end="22076" vertical-scroll-proportion="0.66587114">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bupl/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="105" column="43" selection-start="4294" selection-end="4321" vertical-scroll-proportion="0.7752809">
+            <state line="52" column="0" selection-start="2391" selection-end="2391" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#50#100#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="xlsfiles.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/webhw/xlsfiles.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="6" column="4" selection-start="108" selection-end="108" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -55,46 +69,7 @@
       <file leaf-file-name="new_start.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/webhw/templates/new_start.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="40" column="37" selection-start="2301" selection-end="2314" vertical-scroll-proportion="-2.5192308">
-              <folding>
-                <element signature="n#style#0;n#div#0;n#form#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#2;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#table#0;n#div#2;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#label#0;n#td#2;n#tr#1;n#table#0;n#div#4;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#select#0;n#td#3;n#tr#1;n#table#0;n#div#4;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#label#0;n#td#0;n#tr#2;n#table#0;n#div#4;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#select#0;n#td#1;n#tr#2;n#table#0;n#div#4;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="eos.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/webhw/media/js/eos.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="487" column="20" selection-start="21681" selection-end="21681" vertical-scroll-proportion="-5.3461537">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="popup.css" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/webhw/media/css/popup.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="71" column="13" selection-start="1585" selection-end="1585" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="rp.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bupl/rp.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="40" column="37" selection-start="2301" selection-end="2314" vertical-scroll-proportion="-0.7692308">
               <folding />
             </state>
           </provider>
@@ -103,8 +78,10 @@
       <file leaf-file-name="rp_build.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bupl/rp_build.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="90" column="23" selection-start="3681" selection-end="3700" vertical-scroll-proportion="-1.5">
+              <folding>
+                <element signature="e#24#55#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -130,7 +107,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/webhw/settings.py" />
         <option value="$PROJECT_DIR$/webhw/permition_register.py" />
         <option value="$PROJECT_DIR$/webhw/templates/login.html" />
         <option value="$PROJECT_DIR$/webhw/media/css/popup.css" />
@@ -139,6 +115,8 @@
         <option value="$PROJECT_DIR$/webhw/templates/new_start.html" />
         <option value="$PROJECT_DIR$/bupl/forms.py" />
         <option value="$PROJECT_DIR$/webhw/media/js/eos.js" />
+        <option value="$PROJECT_DIR$/webhw/settings.py" />
+        <option value="$PROJECT_DIR$/bupl/rp_build.py" />
         <option value="$PROJECT_DIR$/bupl/views.py" />
       </list>
     </option>
@@ -234,6 +212,46 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="webhw" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="media" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webhw" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webhw" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webhw" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="media" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webhw" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webhw" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="bupl" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -246,15 +264,15 @@
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="recentsLimit" value="5" />
     <property name="options.lastSelected" value="reference.settingsdialog.IDE.editor.colors.Font" />
-    <property name="restartRequiresConfirmation" value="true" />
+    <property name="recentsLimit" value="5" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="restartRequiresConfirmation" value="true" />
     <property name="FullScreen" value="true" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="dynamic.classpath" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -356,6 +374,25 @@
       <option name="PARAMETERS" value="" />
       <method />
     </configuration>
+    <configuration default="true" type="tests" factoryName="Unittests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <module name="webhw" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PUREUNITTEST" value="true" />
+      <method />
+    </configuration>
     <configuration default="true" type="Python.DjangoServer" factoryName="Django server">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -375,25 +412,6 @@
       <option name="runNoReload" value="false" />
       <option name="useCustomRunCommand" value="false" />
       <option name="customRunCommand" value="" />
-      <method />
-    </configuration>
-    <configuration default="true" type="tests" factoryName="Unittests">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <module name="webhw" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="" />
-      <option name="CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="FOLDER_NAME" value="" />
-      <option name="TEST_TYPE" value="TEST_SCRIPT" />
-      <option name="PATTERN" value="" />
-      <option name="USE_PATTERN" value="false" />
-      <option name="PUREUNITTEST" value="true" />
       <method />
     </configuration>
     <configuration default="true" type="tests" factoryName="Doctests">
@@ -737,19 +755,22 @@
       <created>1417375829279</created>
       <updated>1417375829279</updated>
     </task>
-    <option name="localTasksCounter" value="60" />
+    <task id="LOCAL-00060" summary="- Full support for authentication system&#10;- Preliminary support for grouped resource plans generation in UI">
+      <created>1417375845546</created>
+      <updated>1417375845547</updated>
+    </task>
+    <option name="localTasksCounter" value="61" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="829" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32958803" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32958803" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32958803" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18364419" sideWeight="0.68502825" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18651363" sideWeight="0.68502825" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3985932" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31497175" sideWeight="0.45050216" order="10" side_tool="true" content_ui="tabs" />
@@ -760,6 +781,7 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32958803" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32958803" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -855,25 +877,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/webhw/common.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webhw/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="80" column="15" selection-start="2868" selection-end="2868" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webhw/permition_register.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="13" selection-start="667" selection-end="667" vertical-scroll-proportion="0.8733624" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/bupl/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="8" column="15" selection-start="232" selection-end="232" vertical-scroll-proportion="0.35955057" />
@@ -881,16 +884,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/webhw/media/css/themes/dark.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/webhw/media/css/themes/simple.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="103" column="21" selection-start="3082" selection-end="3082" vertical-scroll-proportion="0.9550562">
-          <folding />
-        </state>
+        <state line="103" column="21" selection-start="3082" selection-end="3082" vertical-scroll-proportion="0.9550562" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/webhw/urls.py">
@@ -902,35 +901,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/webhw/media/js/login.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="34" selection-start="366" selection-end="366" vertical-scroll-proportion="0.7860262">
-          <folding />
-        </state>
+        <state line="18" column="34" selection-start="366" selection-end="366" vertical-scroll-proportion="0.7860262" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/webhw/templates/login.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="39" selection-start="564" selection-end="564" vertical-scroll-proportion="0.38186157">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webhw/templates/new_start.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="37" selection-start="2301" selection-end="2314" vertical-scroll-proportion="-2.5192308">
-          <folding>
-            <element signature="n#style#0;n#div#0;n#form#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#table#0;n#div#2;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#label#0;n#td#2;n#tr#1;n#table#0;n#div#4;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#select#0;n#td#3;n#tr#1;n#table#0;n#div#4;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#label#0;n#td#0;n#tr#2;n#table#0;n#div#4;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#select#0;n#td#1;n#tr#2;n#table#0;n#div#4;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#3;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
+        <state line="10" column="39" selection-start="564" selection-end="564" vertical-scroll-proportion="0.38186157" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/bupl/forms.py">
@@ -940,37 +916,69 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/webhw/media/js/eos.js">
+    <entry file="file://$PROJECT_DIR$/bupl/rp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="487" column="20" selection-start="21681" selection-end="21681" vertical-scroll-proportion="-5.3461537">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-23.179775">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/webhw/media/css/popup.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="71" column="13" selection-start="1585" selection-end="1585" vertical-scroll-proportion="0.0">
+        <state line="71" column="13" selection-start="1585" selection-end="1585" vertical-scroll-proportion="3.1004367">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bupl/rp.py">
+    <entry file="file://$PROJECT_DIR$/webhw/templates/new_start.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="40" column="37" selection-start="2301" selection-end="2314" vertical-scroll-proportion="-0.7692308">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webhw/xlsfiles.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="4" selection-start="108" selection-end="108" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/bupl/rp_build.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
+        <state line="90" column="23" selection-start="3681" selection-end="3700" vertical-scroll-proportion="-1.5">
+          <folding>
+            <element signature="e#24#55#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/bupl/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="105" column="43" selection-start="4294" selection-end="4321" vertical-scroll-proportion="0.7752809">
+        <state line="52" column="0" selection-start="2391" selection-end="2391" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#50#100#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bupl/eos.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="119" column="12" selection-start="3764" selection-end="3768" vertical-scroll-proportion="0.33167082">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webhw/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="63" selection-start="285" selection-end="285" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webhw/media/js/eos.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="507" column="0" selection-start="22076" selection-end="22076" vertical-scroll-proportion="0.66587114">
           <folding />
         </state>
       </provider>

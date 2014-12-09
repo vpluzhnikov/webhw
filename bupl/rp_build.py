@@ -1,14 +1,20 @@
 # -*- coding: utf-8 -*-
 from bupl.rp import ProjectPlan
 
+from logging import getLogger
 from os import path, mkdir, removedirs, access, R_OK
 from shutil import rmtree
 from time import time
 from webhw.common import make_tarfile
+from eos import load_eos_from_xls_new
+
 
 from bupl.eos import ru_vals
 
-from webhw.settings import BOC_WORK_DIR
+from webhw.settings import BOC_WORK_DIR, GLOBAL_PLAN_WORK_DIR
+
+logger = getLogger(__name__)
+
 
 ru_vals_4project = {'prom': u'ПРОМ',
                     'test-nt': u'НТ',
@@ -82,8 +88,34 @@ tasks_id_values  = { "aix_standalone" : "1.2.1",
                      "sudir" : "1.3.22"
                      }
 
+def prepare_global_plan(filename):
+    REQS = load_eos_from_xls_new(filename)
+    prepocess_super_plan(REQS)
+    try:
+        if access(GLOBAL_PLAN_WORK_DIR, R_OK):
+            print "Directory exists"
+            try:
+                make_tarfile(BOC_WORK_DIR + "global_plan.tar", GLOBAL_PLAN_WORK_DIR)
+                tarfile =  BOC_WORK_DIR + "global_plan.tar"
+            except:
+                tarfile = None
+                logger.error("Error while creating tarball for GLOBAL_PLAN_WORK_DIR")
+    except:
+        logger.error("Access denied for GLOBAL_PLAN_WORK_DIR")
+
+    return tarfile
+
 
 def prepocess_super_plan(eos_data):
+    try:
+        if access(GLOBAL_PLAN_WORK_DIR, R_OK):
+            print "Directory exists"
+            rmtree(GLOBAL_PLAN_WORK_DIR)
+
+        mkdir(GLOBAL_PLAN_WORK_DIR)
+    except:
+        logger.error("Error occured while recreating directory GLOBAL_PLAN_WORK_DIR ")
+
     ALL_PRJS = {}
     for i in range(eos_data['req_count']):
         if eos_data['project_id_'+str(i+1)] in ALL_PRJS.keys():
@@ -127,7 +159,7 @@ def prepocess_super_plan(eos_data):
         full_counter += len(ALL_PRJS[prj])
         ALL_PRJS[prj]['project_id'] = prj
         ALL_PRJS[prj]['project_name'] = prj
-        prepare_resource_plan(ALL_PRJS[prj])
+        prepare_resource_plan(ALL_PRJS[prj], GLOBAL_PLAN_WORK_DIR, compress=False)
     print full_counter
 
 #            req_line["lic_symantec_count"] = eos_data["lic_symantec_count_"+str(i+1)]
@@ -144,7 +176,7 @@ def prepocess_super_plan(eos_data):
 #            req_line["supp_vmware_cost"] = eos_data["supp_vmware_cost_"+str(i+1)]
 
 
-def prepare_resource_plan(eos_items):
+def prepare_resource_plan(eos_items, workdir = BOC_WORK_DIR, compress = True):
 
     sudir_included = False
 
@@ -161,7 +193,7 @@ def prepare_resource_plan(eos_items):
     else:
         filename = 'tp_' + project_id
 
-    techporject = ProjectPlan(project_id, path.join(BOC_WORK_DIR, filename + ".xml"))
+    techporject = ProjectPlan(project_id, path.join(workdir, filename + ".xml"))
     techporject.add_extednded_attrs()
     techporject.add_calendar()
 
@@ -451,14 +483,14 @@ def prepare_resource_plan(eos_items):
                 sudir_included = True
 
     try:
-        if access(BOC_WORK_DIR+project_id, R_OK):
+        if access(workdir+project_id, R_OK):
             print "Directory exists"
-            rmtree(BOC_WORK_DIR+project_id)
+            rmtree(workdir+project_id)
 
-        mkdir(BOC_WORK_DIR+project_id)
-        PROJECT_DIR = BOC_WORK_DIR+project_id
+        mkdir(workdir+project_id)
+        PROJECT_DIR = workdir+project_id
     except:
-        PROJECT_DIR = BOC_WORK_DIR
+        PROJECT_DIR = workdir
 
     print PROJECT_DIR
 
@@ -479,9 +511,12 @@ def prepare_resource_plan(eos_items):
                     block_id = techporject.add_task(taskid=task, linked_with_block=block_id,
                         task_additional_name = req_line_tasks['task_details'])
             techporject.export_project_xml()
-
-    try:
-        make_tarfile(BOC_WORK_DIR+ filename + ".tar", PROJECT_DIR)
-    except:
+    if compress:
+        try:
+            make_tarfile(workdir + filename + ".tar", PROJECT_DIR)
+        except:
+            filename = None
+            logger.error("Error compressing %s directory" % PROJECT_DIR)
+    else:
         filename = None
     return filename
