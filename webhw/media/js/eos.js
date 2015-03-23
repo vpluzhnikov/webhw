@@ -21,7 +21,8 @@ var ru_vals = { 'new' : "Новый",
     't_series' : "Oracle T-series",
     'm_series' : "Oracle M-series",
     'itanium' : "HP Itanium",
-    'x86' : "Intel x86",
+    'x86' : "x86 (физический)",
+    'x86_vm' : "x86 (виртуальный)",
     '---' : "---",
     'prom' : "Пром",
     'test-nt' : "НТ",
@@ -666,13 +667,13 @@ $("#itemtype1").change(function() {
             $("#app_type_label").fadeIn(300);
             $("#app_type").fadeIn(300);
             $("#new_params").fadeIn(300);
-            $("#cpu_count").val('6');
-            $("#ram_count").val('48');
+            $("#cpu_count").val('4');
+            $("#ram_count").val('24');
             $("#hdd_count").val('100');
             $("#san_count").val('0');
             $("#nas_count").val('0');
             $("#ostype").val('linux');
-            $("#platform_type").val('x86');
+            $("#platform_type").val('x86_vm');
 
             $("#ostype").show();
             $("#platform_type").show();
@@ -696,7 +697,7 @@ $("#itemtype1").change(function() {
             $("#san_count").val('0');
             $("#nas_count").val('0');
             $("#ostype").val('windows');
-            $("#platform_type").val('x86');
+            $("#platform_type").val('x86_vm');
 
             $("#ostype").show();
             $("#platform_type").show();
@@ -846,13 +847,13 @@ $("#ostype").change(function() {
         }
     }
     if ($(this).val() == 'linux') {
-        $("#platform_type").val('x86');
+        $("#platform_type").val('x86_vm');
         if ($("#db_type").val() == 'mssql') {
             $("#db_type").val('---');
         }
     }
     if ($(this).val() == 'windows') {
-        $("#platform_type").val('x86');
+        $("#platform_type").val('x86_vm');
     }
 });
 
@@ -877,6 +878,12 @@ $("#platform_type").change(function() {
     }
     if ($(this).val() == 'itanium') {
         $("#ostype").val('hpux');
+        if ($("#db_type").val() == 'mssql') {
+            $("#db_type").val('---');
+        }
+    }
+    if ($(this).val() == 'x86_vm') {
+        $("#ostype").val('linux');
         if ($("#db_type").val() == 'mssql') {
             $("#db_type").val('---');
         }
