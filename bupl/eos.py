@@ -689,7 +689,9 @@ def load_eos_from_xls_new(xls_file):
                 req_line['item_count'] = 0
 
             xls_value = xls_line['platform_type_col']
-            if xls_value == u'x86' and req_line['itemtype1'] <> 'mqdmz':
+            if xls_value == u'x86_vm' and req_line['itemtype1'] <> 'mqdmz':
+                req_line['platform_type']='x86_vm'
+            elif xls_value == u'x86' and req_line['itemtype1'] <> 'mqdmz':
                 req_line['platform_type']='x86'
             elif xls_value == u'Power':
                 req_line['platform_type']='power'
@@ -734,7 +736,7 @@ def load_eos_from_xls_new(xls_file):
                         req_line['ostype']='aix'
                     elif (req_line['platform_type'] == 't_series') or (req_line['platform_type'] == 'm_series'):
                         req_line['ostype']='solaris'
-                    elif req_line['platform_type'] == 'x86':
+                    elif 'x86' in req_line['platform_type']:
                         req_line['ostype']='linux'
                 else:
                     req_line['ostype']='---'

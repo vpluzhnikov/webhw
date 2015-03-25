@@ -215,8 +215,8 @@ def prepare_resource_plan(eos_items, workdir = BOC_WORK_DIR, compress = True):
         req_line_tasks = []
 
 #        print eos_items[key]
-        if (eos_items[key]['platform_type'] == 'x86'):
-            if (int(eos_items[key]['cpu_count']) > 24) or (eos_items[key]['itemtype1'] == u'mqdmz'):
+        if ('x86' in eos_items[key]['platform_type']):
+            if (eos_items[key]['platform_type'] == 'x86') or (eos_items[key]['itemtype1'] == u'mqdmz'):
                 if ((eos_items[key]['itemtype1'] == u'mqdmz') or (eos_items[key]['ostype'] == u'windows')):
                     if (eos_items[key]['cluster_type'] == u'vcs'):
                         if eos_items[key]['itemstatus'] == u'prom':
@@ -259,7 +259,7 @@ def prepare_resource_plan(eos_items, workdir = BOC_WORK_DIR, compress = True):
                                 req_line_tasks.append(tasks_id_values["nas_upgrade"])
                             else:
                                 req_line_tasks.append(tasks_id_values["nas_upgrade_test"])
-            elif (int(eos_items[key]['cpu_count']) < 24):
+            elif (eos_items[key]['platform_type'] == 'x86_vm'):
                 if (eos_items[key]['ostype'] == u'windows'):
                     if (eos_items[key]['itemstatus'] == u'prom') and (int(eos_items[key]['cpu_count']) > 0):
                         req_line_tasks.append(tasks_id_values["x86_vm"])

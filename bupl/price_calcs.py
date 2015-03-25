@@ -59,14 +59,14 @@ def calculate_req_line(req_line):
 
 
 #   Hardware price calculation for CPUs or Appliances
-    if (req_line['platform_type'] == u'x86') and (req_line['itemtype1'] <> u'mqdmz'):
-        if (int(req_line['cpu_count']) > 24):
+    if (u'x86' in req_line['platform_type']) and (req_line['itemtype1'] <> u'mqdmz'):
+        if (req_line['platform_type'] == 'x86'):
             cpu_price = prices_dic['x86_mid']['price']
             dc_book_price = prices_dic['x86_mid']['dc_book_price']
             dcmcod_rent_price = prices_dic['x86_mid']['dcmcod_rent_price']
             drdc_rent_price = prices_dic['x86_mid']['drdc_rent_price']
             dc_startup_price = prices_dic['x86_mid']['dc_startup_price']
-        else:
+        elif (req_line['platform_type'] == 'x86_vm'):
             cpu_price = prices_dic['x86_ent']['price']
             dc_book_price = prices_dic['x86_ent']['dc_book_price']
             dcmcod_rent_price = prices_dic['x86_ent']['dcmcod_rent_price']
@@ -181,6 +181,7 @@ def calculate_req_line(req_line):
 
     elif appliance_price <> 0:
         price_hw += int(req_line['item_count']) * appliance_price * (int(req_line['utilization']) / Decimal(100))
+#        print "applicance price - " + str(appliance_price)
 #        print "applicance dc_book_price - " + str(dc_book_price)
 #        print "applicance dcmcod_rent_price - " + str(dcmcod_rent_price)
 #        print "applicance drdc_rent_price - " + str(drdc_rent_price)
@@ -200,8 +201,7 @@ def calculate_req_line(req_line):
                         (12 * dcmcod_rent_price + 3 * dc_book_price + dc_startup_price)
 
 #   Hardware price calculation for internal storage
-    if (req_line['platform_type'] == u'x86') and (int(req_line['cpu_count']) < 24) and \
-       (req_line['itemtype1'] <> u'mqdmz'):
+    if (req_line['platform_type'] == u'x86_vm') and (req_line['itemtype1'] <> u'mqdmz'):
         intdisks_price = prices_dic['int_stor']['price']
         dc_book_price = prices_dic['int_stor']['dc_book_price']
         dcmcod_rent_price = prices_dic['int_stor']['dcmcod_rent_price']
@@ -262,8 +262,8 @@ def calculate_req_line(req_line):
                         drdc_rent_price = prices_dic['san_stor_hiend']['drdc_rent_price']
                         dc_startup_price = prices_dic['san_stor_hiend']['dc_startup_price']
 
-        elif (req_line['platform_type'] == u'x86'):
-            if (req_line['itemtype1'] == u'db') and (int(req_line['cpu_count']) > 24):
+        elif (u'x86' in req_line['platform_type']):
+            if (req_line['itemtype1'] == u'db') and (req_line['platform_type'] == 'x86'):
                 if (req_line['cluster_type'] == u'vcs'):
                     san_price = prices_dic['san_stor_repl']['price']
                     dc_book_price = prices_dic['san_stor_repl']['dc_book_price']
@@ -276,7 +276,7 @@ def calculate_req_line(req_line):
                     dcmcod_rent_price = prices_dic['san_stor_hiend']['dcmcod_rent_price']
                     drdc_rent_price = prices_dic['san_stor_hiend']['drdc_rent_price']
                     dc_startup_price = prices_dic['san_stor_hiend']['dc_startup_price']
-            elif (int(req_line['cpu_count']) > 24) or ((req_line['itemtype1'] <> u'db') and
+            elif (req_line['platform_type'] == 'x86') or ((req_line['itemtype1'] <> u'db') and
                                                        (req_line['cluster_type'] <> u'vcs')):
                 san_price = prices_dic['san_stor_mid']['price']
                 dc_book_price = prices_dic['san_stor_mid']['dc_book_price']
@@ -369,14 +369,15 @@ def calculate_req_line(req_line):
         else:
             dc_price += int(req_line['nas_count']) * int(req_line['item_count']) *\
                         (12 * dcmcod_rent_price + 3 * dc_book_price + dc_startup_price)
+#        print "nas price - " + str(prices_dic['nas_stor']['price'])
 #        print "nas dc_book_price - " + str(dc_book_price)
 #        print "nas dcmcod_rent_price - " + str(dcmcod_rent_price)
 #        print "nas dc_startup_price - " + str(dc_startup_price)
 
 #   Licenses and support price calculation
     if (req_line['itemtype2'] <> u'upgrade'):
-        if (req_line['platform_type'] == u'x86'):
-            if (int(req_line['cpu_count']) <= 24) and (req_line['ostype'] == u'windows') and\
+        if (u'x86' in req_line['platform_type']):
+            if (req_line['platform_type'] == 'x86_vm') and (req_line['ostype'] == u'windows') and\
                (int(req_line['cpu_count']) > 0):
                 if req_line['itemstatus'] == u'prom':
                     k_vm = 5.0
@@ -394,8 +395,7 @@ def calculate_req_line(req_line):
                                    (prices_dic['vmware_support_2sock']['price'] / Decimal(k_vm))
                 price_support = supp_vmware_cost
                 supp_vmware_count = int(req_line['item_count']) / k_vm
-
-            elif (int(req_line['cpu_count']) <= 24) and (req_line['ostype'] == u'linux') and \
+            elif (req_line['platform_type'] == 'x86_vm') and (req_line['ostype'] == u'linux') and \
                  (int(req_line['cpu_count']) > 0):
                 if req_line['itemstatus'] == u'prom':
                     k_vm = 5.0
@@ -412,12 +412,12 @@ def calculate_req_line(req_line):
                 supp_vmware_count = int(req_line['item_count']) / k_vm
                 supp_rhel_count += int(req_line['item_count']) / k_vm
 
-            elif (int(req_line['cpu_count']) > 24) and (req_line['ostype'] == u'linux'):
+            elif (req_line['platform_type'] == 'x86') and (req_line['ostype'] == u'linux'):
                 supp_rhel_cost = int(req_line['item_count']) * prices_dic['rhel_support_2sock']['price']
                 price_support = supp_rhel_cost
                 supp_rhel_count = int(req_line['item_count'])
 
-            elif (int(req_line['cpu_count']) > 24) and (req_line['ostype'] == u'windows'):
+            elif (req_line['platform_type'] == 'x86') and (req_line['ostype'] == u'windows'):
                 lic_ms_cost = int(req_line['item_count']) * prices_dic['ms_lic_2sock']['price']
                 price_lic = lic_ms_cost
                 lic_ms_count = int(req_line['item_count'])
