@@ -664,7 +664,7 @@ def load_eos_from_xls_new(xls_file):
             req_line['itemname'] = xls_value
 
             req_line['servername']=xls_line['servername_col']
-            if req_line['servername'] == '':
+            if (req_line['servername'] == '') or (u'Новый КТС' in req_line['servername']):
                 req_line['itemtype2'] = 'new'
             else:
                 req_line['itemtype2'] = 'upgrade'

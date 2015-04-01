@@ -316,7 +316,7 @@ class EosTestCase(unittest.TestCase):
             dcmcod_rent_price=5028.936875000000000000000000000000, dc_book_price=3411.143125000000000000000000000000,
             dc_startup_price=4223.773750000000000000000000000000, drdc_rent_price=3319.375000000000000000000000000000)
 
-        self.eos_vals = load_eos_from_xls_new(u'Testcase_v3.xlsx')
+        self.eos_vals = load_eos_from_xls_new(u'Testcase_v4.xlsx')
 
 
     def testEosCalc(self):
