@@ -23,6 +23,10 @@ def calculate_req_line(req_line):
     lic_ms_cost = 0
     lic_symantec_count = 0
     lic_symantec_cost = 0
+    lic_oracle_count = 0
+    lic_oracle_cost = 0
+    lic_mssql_count = 0
+    lic_mssql_cost = 0
 
     supp_rhel_count = 0
     supp_rhel_cost = 0
@@ -30,6 +34,8 @@ def calculate_req_line(req_line):
     supp_vmware_cost = 0
     supp_symantec_count = 0
     supp_symantec_cost = 0
+    supp_oracle_count = 0
+    supp_oracle_cost = 0
 
 
     k_vm = 1.0
@@ -435,28 +441,89 @@ def calculate_req_line(req_line):
                                       prices_dic['symantec_support']['price']
                     price_support = supp_symantec_cost
                     supp_symantec_count += int(req_line['item_count'])
-#                print "lic_symantec_cost - " + str(lic_symantec_cost)
-#                print "lic_symantec_count - " + str(lic_symantec_count)
-#                print "supp_sumantec_cost - " + str(supp_symantec_cost)
-#                print "supp_semantec_count - " + str(supp_symantec_count)
 
+    if (req_line['db_type'] == 'mssql') and (u'x86' in req_line['platform_type']):
+        lic_mssql_count = ceil((int(req_line['item_count'])* int(req_line['cpu_count'])) / 2.0)
+        lic_mssql_cost = int(lic_mssql_count) * prices_dic['mssql_lic_2core']['price']
+        price_lic = price_lic + lic_mssql_cost
 
-            #    if lic <> 0:
-#        print "lic - " + str(lic)
-#        price_lic = int(req_line['cpu_count']) * int(req_line['item_count']) * lic
-#    if support <> 0:
-#        print "support - " + str(support)
-#        price_support = int(req_line['cpu_count']) * int(req_line['item_count']) * support
+    if ('oracle' in req_line['db_type']):
+
+        lic_oracle_count = int(req_line['item_count'])* int(req_line['cpu_count'])
+        supp_oracle_count = lic_oracle_count
+
+        if (u'x86' in req_line['platform_type']):
+            if (req_line['db_type'] == 'oracle'):
+                lic_oracle_cost = lic_oracle_count * prices_dic['oracle_lic_x86']['price']
+                supp_oracle_cost = supp_oracle_count * prices_dic['oracle_supp_x86']['price']
+            elif (req_line['db_type'] == 'oracle_part'):
+                lic_oracle_cost = lic_oracle_count * (prices_dic['oracle_lic_x86']['price'] +
+                                                      prices_dic['oracle_lic_part_x86']['price'])
+                supp_oracle_cost = supp_oracle_count * (prices_dic['oracle_supp_x86']['price'] +
+                                                        prices_dic['oracle_supp_part_x86']['price'])
+            elif (req_line['db_type'] == 'oracle_rac'):
+                lic_oracle_cost = lic_oracle_count * (prices_dic['oracle_lic_x86']['price'] +
+                                                      prices_dic['oracle_lic_part_x86']['price'] +
+                                                      prices_dic['oracle_lic_rac_x86']['price'])
+                supp_oracle_cost = supp_oracle_count * (prices_dic['oracle_supp_x86']['price'] +
+                                                        prices_dic['oracle_supp_part_x86']['price'] +
+                                                        prices_dic['oracle_supp_rac_x86']['price'])
+        elif (u'_series' in req_line['platform_type']):
+            if (req_line['db_type'] == 'oracle'):
+                lic_oracle_cost = lic_oracle_count * prices_dic['oracle_lic_sparc']['price']
+                supp_oracle_cost = supp_oracle_count * prices_dic['oracle_supp_sparc']['price']
+            elif (req_line['db_type'] == 'oracle_part'):
+                lic_oracle_cost = lic_oracle_count * (prices_dic['oracle_lic_sparc']['price'] +
+                                                      prices_dic['oracle_lic_part_sparc']['price'])
+                supp_oracle_cost = supp_oracle_count * (prices_dic['oracle_supp_sparc']['price'] +
+                                                        prices_dic['oracle_supp_part_sparc']['price'])
+            elif (req_line['db_type'] == 'oracle_rac'):
+                lic_oracle_cost = lic_oracle_count * (prices_dic['oracle_lic_sparc']['price'] +
+                                                      prices_dic['oracle_lic_part_sparc']['price'] +
+                                                      prices_dic['oracle_lic_rac_sparc']['price'])
+                supp_oracle_cost = supp_oracle_count * (prices_dic['oracle_supp_sparc']['price'] +
+                                                        prices_dic['oracle_supp_part_sparc']['price'] +
+                                                        prices_dic['oracle_supp_rac_sparc']['price'])
+        elif (req_line['platform_type'] == u'power'):
+            if (req_line['db_type'] == 'oracle'):
+                lic_oracle_cost = lic_oracle_count * prices_dic['oracle_lic_power']['price']
+                supp_oracle_cost = supp_oracle_count * prices_dic['oracle_supp_power']['price']
+            elif (req_line['db_type'] == 'oracle_part'):
+                lic_oracle_cost = lic_oracle_count * (prices_dic['oracle_lic_power']['price'] +
+                                                      prices_dic['oracle_lic_part_power']['price'])
+                supp_oracle_cost = supp_oracle_count * (prices_dic['oracle_supp_power']['price'] +
+                                                        prices_dic['oracle_supp_part_power']['price'])
+            elif (req_line['db_type'] == 'oracle_rac'):
+                lic_oracle_cost = lic_oracle_count * (prices_dic['oracle_lic_power']['price'] +
+                                                      prices_dic['oracle_lic_part_power']['price'] +
+                                                      prices_dic['oracle_lic_rac_power']['price'])
+                supp_oracle_cost = supp_oracle_count * (prices_dic['oracle_supp_power']['price'] +
+                                                        prices_dic['oracle_supp_part_power']['price'] +
+                                                        prices_dic['oracle_supp_rac_power']['price'])
+        elif (req_line['platform_type'] == u'itanium'):
+            if (req_line['db_type'] == 'oracle'):
+                lic_oracle_cost = lic_oracle_count * prices_dic['oracle_lic_itanium']['price']
+                supp_oracle_cost = supp_oracle_count * prices_dic['oracle_supp_itanium']['price']
+            elif (req_line['db_type'] == 'oracle_part'):
+                lic_oracle_cost = lic_oracle_count * (prices_dic['oracle_lic_itanium']['price'] +
+                                                      prices_dic['oracle_lic_part_itanium']['price'])
+                supp_oracle_cost = supp_oracle_count * (prices_dic['oracle_supp_itanium']['price'] +
+                                                        prices_dic['oracle_supp_part_itanium']['price'])
+            elif (req_line['db_type'] == 'oracle_rac'):
+                lic_oracle_cost = lic_oracle_count * (prices_dic['oracle_lic_itanium']['price'] +
+                                                      prices_dic['oracle_lic_part_itanium']['price'] +
+                                                      prices_dic['oracle_lic_rac_itanium']['price'])
+                supp_oracle_cost = supp_oracle_count * (prices_dic['oracle_supp_itanium']['price'] +
+                                                        prices_dic['oracle_supp_part_itanium']['price'] +
+                                                        prices_dic['oracle_supp_rac_itanium']['price'])
+        price_lic = price_lic + lic_oracle_cost
+        price_support = price_support + supp_oracle_cost
 
     total_price = price_hw + price_lic + price_support
     req_line['price'] = str(Decimal(total_price).quantize(Decimal(10) ** -2))
     req_line['price_hw'] = str(Decimal(price_hw).quantize(Decimal(10) ** -2))
     req_line['price_lic'] = str(Decimal(price_lic).quantize(Decimal(10) ** -2))
     req_line['price_support'] = str(Decimal(price_support).quantize(Decimal(10) ** -2))
-#    print 'Price = ' + req_line['price']
-#    print 'Price_HW = ' + req_line['price_hw']
-#    print 'Price_lic = ' + req_line['price_lic']
-#    print 'Price_support' + req_line['price_support']
     req_line['lic_ms_cost'] = str(lic_ms_cost)
     req_line['lic_ms_count'] = str(lic_ms_count)
     req_line['supp_rhel_cost'] = str(supp_rhel_cost)
@@ -469,6 +536,14 @@ def calculate_req_line(req_line):
     req_line['lic_symantec_count'] = str(lic_symantec_count)
     req_line['supp_symantec_cost'] = str(supp_symantec_cost)
     req_line['supp_symantec_count'] = str(supp_symantec_count)
+
+    req_line['lic_oracle_count'] = str(lic_oracle_count)
+    req_line['lic_oracle_cost'] = str(lic_oracle_cost)
+    req_line['lic_mssql_count'] = str(lic_mssql_count)
+    req_line['lic_mssql_cost'] = str(lic_mssql_cost)
+    req_line['supp_oracle_count'] = str(supp_oracle_count)
+    req_line['supp_oracle_cost'] = str(supp_oracle_cost)
+
     req_line['dc_price'] = str(Decimal(dc_price).quantize(Decimal(10) ** -2))
 #    print 'Full DC price - ' + req_line['dc_price']
 #    print "-----------------------------------------------------------------"

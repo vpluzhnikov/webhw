@@ -66,6 +66,8 @@ xls_vals = { 'prjrow' : 2,
              'prjcell' : 13,
              'eos_start_row' : 11,
              'itemtype1_col' : 24,
+#             'itemname_col' : 11,
+# Temporary for Gorelov
              'itemname_col' : 13,
              'servername_col': 15,
              'cpucount_col' : 16,
@@ -290,12 +292,18 @@ def export_eos_to_pdf(eos_items):
         'lic_ms_cost' : Decimal(0),
         'lic_symantec_count' : Decimal(0),
         'lic_symantec_cost' : Decimal(0),
+        'lic_oracle_count' : Decimal(0),
+        'lic_oracle_cost' : Decimal(0),
+        'lic_mssql_count' : Decimal(0),
+        'lic_mssql_cost' : Decimal(0),
         'supp_rhel_count' : Decimal(0),
         'supp_rhel_cost' : Decimal(0),
         'supp_vmware_count' : Decimal(0),
         'supp_vmware_cost' : Decimal(0),
         'supp_symantec_count' : Decimal(0),
         'supp_symantec_cost' : Decimal(0),
+        'supp_oracle_count' : Decimal(0),
+        'supp_oracle_cost' : Decimal(0),
     }
 
     total_lic_counter = 0
@@ -421,20 +429,37 @@ def export_eos_to_pdf(eos_items):
             data_lic.append([
                 Paragraph(u'Microsoft Core Infrastructure Server (CIS) Suite Standard (2CPU)', styles["Normal"]),
                 Paragraph(str(lic_and_support_data['lic_ms_count']), styles["Normal"]),
-                Paragraph(str(lic_and_support_data['lic_ms_cost'].quantize(Decimal(10) ** -2)), styles["Normal"]),
+                Paragraph(str(lic_and_support_data['lic_ms_cost'].quantize(Decimal(10) ** -2)) + ' $',
+                    styles["Normal"]),
                 ])
         if lic_and_support_data['lic_vmware_count'] > 0:
             data_lic.append([
                 Paragraph(u'VMware vSphere 5 Enterprise Plus (2CPU)', styles["Normal"]),
                 Paragraph(str(lic_and_support_data['lic_vmware_count']), styles["Normal"]),
-                Paragraph(str(lic_and_support_data['lic_vmware_cost'].quantize(Decimal(10) ** -2)), styles["Normal"]),
+                Paragraph(str(lic_and_support_data['lic_vmware_cost'].quantize(Decimal(10) ** -2)) + ' $',
+                    styles["Normal"]),
             ])
         if lic_and_support_data['lic_symantec_count'] > 0:
             data_lic.append([
                 Paragraph(u'Symantec Storage Foundation HA/DR', styles["Normal"]),
                 Paragraph(str(lic_and_support_data['lic_symantec_count']), styles["Normal"]),
-                Paragraph(str(lic_and_support_data['lic_symantec_cost'].quantize(Decimal(10) ** -2)), styles["Normal"]),
+                Paragraph(str(lic_and_support_data['lic_symantec_cost'].quantize(Decimal(10) ** -2)) + ' $',
+                    styles["Normal"]),
             ])
+        if lic_and_support_data['lic_oracle_count'] > 0:
+            data_lic.append([
+                Paragraph(u'Oracle Database EE', styles["Normal"]),
+                Paragraph(str(lic_and_support_data['lic_oracle_count']), styles["Normal"]),
+                Paragraph(str(lic_and_support_data['lic_oracle_cost'].quantize(Decimal(10) ** -2)) + ' $',
+                    styles["Normal"]),
+                ])
+        if lic_and_support_data['lic_mssql_count'] > 0:
+            data_lic.append([
+                Paragraph(u'SQLSvrEntCore ALNG LicSApk MVL 2Lic CoreLic', styles["Normal"]),
+                Paragraph(str(lic_and_support_data['lic_mssql_count']), styles["Normal"]),
+                Paragraph(str(lic_and_support_data['lic_mssql_cost'].quantize(Decimal(10) ** -2)) + ' $',
+                    styles["Normal"]),
+                ])
         table_lic = Table(data_lic, style=ts, hAlign='LEFT')
         Elements.append(Paragraph(u'Лицензии на СПО:', styles["Heading3"]))
         Elements.append(table_lic)
@@ -449,20 +474,30 @@ def export_eos_to_pdf(eos_items):
             data_supp.append([
                 Paragraph(u'Red Hat Enterprise Linux Server 6 (2CPU)', styles["Normal"]),
                 Paragraph(str(lic_and_support_data['supp_rhel_count']), styles["Normal"]),
-                Paragraph(str(lic_and_support_data['supp_rhel_cost'].quantize(Decimal(10) ** -2)), styles["Normal"]),
+                Paragraph(str(lic_and_support_data['supp_rhel_cost'].quantize(Decimal(10) ** -2)) + ' $',
+                    styles["Normal"]),
             ])
         if lic_and_support_data['supp_vmware_count'] > 0:
             data_supp.append([
                 Paragraph(u'VMware vSphere 5 Enterprise Plus (2CPU)', styles["Normal"]),
                 Paragraph(str(lic_and_support_data['supp_vmware_count']), styles["Normal"]),
-                Paragraph(str(lic_and_support_data['supp_vmware_cost'].quantize(Decimal(10) ** -2)), styles["Normal"]),
+                Paragraph(str(lic_and_support_data['supp_vmware_cost'].quantize(Decimal(10) ** -2)) + ' $',
+                    styles["Normal"]),
             ])
         if lic_and_support_data['supp_symantec_count'] > 0:
             data_supp.append([
                 Paragraph(u'Symantec Storage Foundation HA/DR', styles["Normal"]),
                 Paragraph(str(lic_and_support_data['supp_symantec_count']), styles["Normal"]),
-                Paragraph(str(lic_and_support_data['supp_symantec_cost'].quantize(Decimal(10) ** -2)),styles["Normal"]),
+                Paragraph(str(lic_and_support_data['supp_symantec_cost'].quantize(Decimal(10) ** -2)) + ' $',
+                    styles["Normal"]),
             ])
+        if lic_and_support_data['supp_oracle_count'] > 0:
+            data_supp.append([
+                Paragraph(u'Oracle Database EE', styles["Normal"]),
+                Paragraph(str(lic_and_support_data['supp_oracle_count']), styles["Normal"]),
+                Paragraph(str(lic_and_support_data['supp_oracle_cost'].quantize(Decimal(10) ** -2)) + ' $',
+                    styles["Normal"]),
+                ])
         table_supp = Table(data_supp, style=ts, hAlign='LEFT')
         Elements.append(Paragraph(u'Поддержка на СПО:', styles["Heading3"]))
         Elements.append(table_supp)
@@ -502,10 +537,13 @@ def export_eos_to_pdf(eos_items):
                  Paragraph(u'Стоимость поддержки ($)', styles["TableTitleSmall"])
                 ]]
         for item in prom_items:
+            logger.error(item['itemtype1'])
+#            Temporary for Gorelov
             if item['itemtype1'] in [u'mqdmz', u'lb', u'dp']:
                 itemname = ru_vals[item['itemtype1']] + u" (Загрузка " + item["utilization"] + u"%)"
             else:
                 itemname = ru_vals[item['itemtype1']]
+#            itemname = item['itemname']
             data.append([Paragraph(item['item_count'], styles["Code"]),
                 Paragraph(ru_vals[item['itemtype2']], styles["Code"]),
                 Paragraph(itemname, styles["Code"]),
@@ -546,11 +584,13 @@ def export_eos_to_pdf(eos_items):
                  Paragraph(u'Стоимость лицензий ($)', styles["TableTitleSmall"]),
                  Paragraph(u'Стоимость поддержки ($)', styles["TableTitleSmall"])
                 ]]
+
         for item in test_nt_items:
             if item['itemtype1'] in [u'mqdmz', u'lb', u'dp']:
                 itemname = ru_vals[item['itemtype1']] + u" (Загрузка " + item["utilization"] + u"%)"
             else:
                 itemname = ru_vals[item['itemtype1']]
+#            itemname = item['itemname']
             data.append([Paragraph(item['item_count'], styles["Code"]),
                 Paragraph(ru_vals[item['itemtype2']], styles["Code"]),
                 Paragraph(itemname, styles["Code"]),
@@ -596,6 +636,7 @@ def export_eos_to_pdf(eos_items):
                 itemname = ru_vals[item['itemtype1']] + u" (Загрузка " + item["utilization"] + u"%)"
             else:
                 itemname = ru_vals[item['itemtype1']]
+#            itemname = item['itemname']
             data.append([Paragraph(item['item_count'], styles["Code"]),
                 Paragraph(ru_vals[item['itemtype2']], styles["Code"]),
                 Paragraph(itemname, styles["Code"]),
@@ -648,15 +689,17 @@ def load_eos_from_xls_new(xls_file):
 #            print xls_line
 
             xls_value = xls_line['itemtype1_col']
-            if xls_value == u'Сервер БД':
+            if xls_value == u'Сервер БД' or xls_value == u'Сервер_БД':
                 req_line['itemtype1']='db'
-            elif xls_value ==  u'Сервер приложений':
+            elif xls_value ==  u'Сервер приложений' or xls_value ==  u'Сервер_приложений':
                 req_line['itemtype1']='app'
-            elif xls_value ==  u'TS':
+            elif xls_value ==  u'TS' or xls_value ==  u'Терминальный_сервер':
                 req_line['itemtype1']='term'
-            elif xls_value ==  u'Сервер MQ (DMZ)':
+            elif xls_value ==  u'Сервер MQ (DMZ)' or xls_value ==  u'Сервер_MQ_Шлюз':
                 req_line['itemtype1']='mqdmz'
                 req_line['platform_type']='---'
+            elif xls_value == u'Сервер_архивной_СУБД':
+                req_line['itemtype1']='dbarch'
             else:
                 req_line['itemtype1']='other'
 

@@ -4,6 +4,7 @@ import inspect
 from django.http import HttpResponse
 from django.core.servers.basehttp import FileWrapper
 import tarfile
+import zipfile
 import os
 
 
@@ -34,3 +35,10 @@ def return_file(infile, name):
 def make_tarfile(output_filename, source_dir):
     with tarfile.open(output_filename, "w:gz") as tar:
         tar.add(source_dir, arcname=os.path.basename(source_dir))
+
+def make_zipfile(output_filename, source_dir):
+    zipf = zipfile.ZipFile(output_filename, 'w')
+    for root, dirs, files in os.walk(source_dir):
+        for file in files:
+            zipf.write(os.path.join(root, file), file)
+    zipf.close()

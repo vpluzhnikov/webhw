@@ -5,7 +5,7 @@ from logging import getLogger
 from os import path, mkdir, removedirs, access, R_OK
 from shutil import rmtree
 from time import time
-from webhw.common import make_tarfile
+from webhw.common import make_tarfile, make_zipfile
 from eos import load_eos_from_xls_new
 
 
@@ -95,8 +95,11 @@ def prepare_global_plan(filename):
         if access(GLOBAL_PLAN_WORK_DIR, R_OK):
             print "Directory exists"
             try:
-                make_tarfile(BOC_WORK_DIR + "global_plan.tar", GLOBAL_PLAN_WORK_DIR)
-                tarfile =  BOC_WORK_DIR + "global_plan.tar"
+#                make_tarfile(BOC_WORK_DIR + "global_plan.tar", GLOBAL_PLAN_WORK_DIR)
+                make_zipfile(BOC_WORK_DIR + "global_plan.zip", GLOBAL_PLAN_WORK_DIR)
+#                tarfile =  BOC_WORK_DIR + "global_plan.tar"
+                tarfile =  BOC_WORK_DIR + "global_plan.zip"
+
             except:
                 tarfile = None
                 logger.error("Error while creating tarball for GLOBAL_PLAN_WORK_DIR")
@@ -411,7 +414,7 @@ def prepare_resource_plan(eos_items, workdir = BOC_WORK_DIR, compress = True):
                     req_line_tasks.append(tasks_id_values["db2_cluster"])
                 else:
                     req_line_tasks.append(tasks_id_values["db2_standalone"])
-            elif eos_items[key]['db_type'] == 'oracle':
+            elif 'oracle' in eos_items[key]['db_type']:
                 if (eos_items[key]['cluster_type'] == u'vcs'):
                     req_line_tasks.append(tasks_id_values["oracle_cluster"])
                 else:
@@ -513,7 +516,7 @@ def prepare_resource_plan(eos_items, workdir = BOC_WORK_DIR, compress = True):
             techporject.export_project_xml()
     if compress:
         try:
-            make_tarfile(workdir + filename + ".tar", PROJECT_DIR)
+            make_zipfile(workdir + filename + ".zip", PROJECT_DIR)
         except:
             filename = None
             logger.error("Error compressing %s directory" % PROJECT_DIR)

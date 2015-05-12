@@ -47,7 +47,7 @@ def eos_main(request):
                     tarfile = prepare_global_plan(fileattr['filename'])
                     fsock = open(tarfile,"r")
                     response = HttpResponse(fsock, mimetype='application/zip')
-                    response['Content-Disposition'] = 'attachment; filename=multiple_plans.tar'
+                    response['Content-Disposition'] = 'attachment; filename=multiple_plans.zip'
 #                    return HttpResponse('super_plan')
                     return response
                 else:
@@ -117,7 +117,7 @@ def get_exported_file(request, filename):
         if 'eos' in filename:
             file_path = path.join(BOC_WORK_DIR, filename + ".pdf")
         elif 'tp' in filename:
-            file_path = path.join(BOC_WORK_DIR, filename + ".tar")
+            file_path = path.join(BOC_WORK_DIR, filename + ".zip")
         print file_path
         fsock = open(file_path,"r")
         file_name = path.basename(file_path)

@@ -883,23 +883,29 @@ $("#platform_type").change(function() {
         }
     }
     if ($(this).val() == 'x86_vm') {
-        $("#ostype").val('linux');
-        if ($("#db_type").val() == 'mssql') {
-            $("#db_type").val('---');
+        if ($("#ostype").val() != 'windows'){
+            $("#ostype").val('linux');
         }
+//        if ($("#db_type").val() == 'mssql') {
+//            $("#db_type").val('---');
+//        }
     }
     if ($(this).val() == 'x86') {
-        $("#ostype").val('linux');
-        if ($("#db_type").val() == 'mssql') {
-            $("#db_type").val('---');
+        if ($("#ostype").val() != 'windows'){
+            $("#ostype").val('linux');
         }
+//        if ($("#db_type").val() == 'mssql') {
+//            $("#db_type").val('---');
+//        }
     }
 });
 
 $("#db_type").change(function() {
     if ($(this).val() == 'mssql') {
         $("#ostype").val('windows');
-        $("#platform_type").val('x86');
+        if ($("#platform_type").val() != 'x86_vm') {
+            $("#platform_type").val('x86');
+        }
     }
 });
 
@@ -1076,12 +1082,18 @@ $("#boc_form").ready(function ()
                     req_line["lic_ms_cost"] = data["lic_ms_cost_"+i];
                     req_line["lic_vmware_count"] = data["lic_vmware_count_"+i];
                     req_line["lic_vmware_cost"] = data["lic_vmware_cost_"+i];
+                    req_line["lic_oracle_count"] = data["lic_oracle_count_"+i];
+                    req_line["lic_oracle_cost"] = data["lic_oracle_cost_"+i];
+                    req_line["lic_mssql_count"] = data["lic_mssql_count_"+i];
+                    req_line["lic_mssql_cost"] = data["lic_mssql_cost_"+i];
                     req_line["supp_symantec_count"] = data["supp_symantec_count_"+i];
                     req_line["supp_symantec_cost"] = data["supp_symantec_cost_"+i];
                     req_line["supp_rhel_count"] = data["supp_rhel_count_"+i];
                     req_line["supp_rhel_cost"] = data["supp_rhel_cost_"+i];
                     req_line["supp_vmware_count"] = data["supp_vmware_count_"+i];
                     req_line["supp_vmware_cost"] = data["supp_vmware_cost_"+i];
+                    req_line["supp_oracle_count"] = data["supp_oracle_count_"+i];
+                    req_line["supp_oracle_cost"] = data["supp_oracle_cost_"+i];
 
 
 //                    console.log(req_line);
