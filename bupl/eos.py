@@ -689,6 +689,7 @@ def load_eos_from_xls_new(xls_file):
 #            print xls_line
 
             xls_value = xls_line['itemtype1_col']
+#            print xls_value
             if xls_value == u'Сервер БД' or xls_value == u'Сервер_БД':
                 req_line['itemtype1']='db'
             elif xls_value ==  u'Сервер приложений' or xls_value ==  u'Сервер_приложений':
