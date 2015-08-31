@@ -468,7 +468,7 @@ def export_eos_to_pdf(eos_items):
     if total_supp_counter == 0:
         Elements.append(Paragraph(u'Дополнительной поддержки на СПО не требуется', styles["Heading3"]))
     else:
-        data_supp = [['Наименование позиции', 'Кол-во едеиниц', 'Стоимость'],
+        data_supp = [['Наименование позиции', 'Кол-во единиц', 'Стоимость'],
                 ]
         if lic_and_support_data['supp_rhel_count'] > 0:
             data_supp.append([
@@ -701,6 +701,16 @@ def load_eos_from_xls_new(xls_file):
                 req_line['platform_type']='---'
             elif xls_value == u'Сервер_архивной_СУБД':
                 req_line['itemtype1']='dbarch'
+            elif xls_value == u'IBM_DataPower':
+                req_line['platform_type'] = '---'
+                req_line['ostype'] = '---'
+                req_line['itemtype1'] = 'dp'
+                req_line['utilization'] = '100'
+            elif xls_value == u'Балансировщик':
+                req_line['platform_type'] = '---'
+                req_line['ostype'] = '---'
+                req_line['itemtype1'] = 'lb'
+                req_line['utilization'] = '100'
             else:
                 req_line['itemtype1']='other'
 
@@ -739,22 +749,22 @@ def load_eos_from_xls_new(xls_file):
                 req_line['platform_type']='x86'
             elif xls_value == u'Power':
                 req_line['platform_type']='power'
-            elif xls_value == u'SPARC T':
+            elif (xls_value == u'SPARC T') or (xls_value == u'SPARC_T'):
                 req_line['platform_type']='t_series'
-            elif xls_value == u'SPARC 64':
+            elif (xls_value == u'SPARC 64') or (xls_value == u'SPARC_M'):
                 req_line['platform_type']='m_series'
             elif xls_value == u'Itanium':
                 req_line['platform_type']='itanium'
-            elif xls_value == u'DataPower':
-                req_line['platform_type']='---'
-                req_line['ostype']='---'
-                req_line['itemtype1']='dp'
-                req_line['utilization']='100'
-            elif xls_value == u'Alteon':
-                req_line['platform_type']='---'
-                req_line['ostype']='---'
-                req_line['itemtype1']='lb'
-                req_line['utilization']='100'
+#            elif xls_value == u'DataPower':
+#                req_line['platform_type']='---'
+#                req_line['ostype']='---'
+#                req_line['itemtype1']='dp'
+#                req_line['utilization']='100'
+#            elif xls_value == u'Alteon':
+#                req_line['platform_type']='---'
+#                req_line['ostype']='---'
+#                req_line['itemtype1']='lb'
+#                req_line['utilization']='100'
             elif xls_value == u'Другое':
                 req_line['platform_type']='---'
             else:
